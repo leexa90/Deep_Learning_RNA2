@@ -92,7 +92,7 @@ import sys
 if len(sys.argv) >= 2:
     val_id = int(sys.argv[1])
 else:
-    val_id = 0
+    val_id = 1
     
 data1_keys = [x for x in data1 if  len(data1[x][0]) <= 500] # the short ones get val-train split
 random.shuffle(data1_keys)
@@ -370,8 +370,12 @@ for i in data_test:
 # Create some wrappers for simplicity
 print  (data2_name_val  )
 epsilon = 1e-3
-def batch_normalization(x,is_training):
-    x = tf.layers.batch_normalization(x,axis=-1,training=is_training, momentum=0.99)
+def batch_normalization(x,is_training=0):
+    mean,var = tf.nn.moments(x,[0,1,2],keep_dims=False)
+    scale = tf.Variable(tf.ones([x.shape[-1]]))
+    beta = tf.Variable(tf.zeros([x.shape[-1]]))
+    #epsilon = tf.Variable(tf.constant([1e-3,]*x.shape[0]))
+    x = tf.nn.batch_normalization(x,mean,var,beta,scale,epsilon)
     return x
 def conv2d(x, W, b, strides=(1,1),relu=True,padding='SAME',name=''):
     if name != '': # Conv2D wrapper, with bias and relu activation
@@ -717,7 +721,7 @@ with tf.control_dependencies(update_ops):
     #extra_optimizer = tf.train.AdamOptimizer(epsilon = 0.0001,learning_rate=learning_rate).minimize(cost)
 normal= tf.train.MomentumOptimizer(learning_rate=learning_rate,momentum=0.5).minimize(cost)
 def accuracy(mat_model,answer):
-    score = [[],[],[]]
+    score = [[0],[0],[0]]
     for i in range(0,answer.shape[1]):
         if np.sum(answer[i,:]) != 0:
             for j in range(i+1,answer.shape[1]):
@@ -731,7 +735,7 @@ def accuracy(mat_model,answer):
 saver = tf.train.Saver()
 # Initializing the variables
 init = tf.global_variables_initializer();sess = tf.Session();sess.run(init)
-#saver.restore(sess,'./model300_reweigh_loss_213_55.ckpt')
+#saver.restore(sess,'./model300_reweigh_loss_3_46.ckpt')
 # Training cycle
 result = {}
 random.seed(0)
@@ -776,27 +780,27 @@ for epoch in range(training_epochs):
                                                       above_zero : batch_y_nan,
                                                       ss_2d : batch_y_ss,
                                                       phase : True, learning_rate : lr, dropout : 0.8})
-    for batch in range(0,len(shuffle),num):
-        batch_list = shuffle[batch:batch+num] 
-        batch_x = np.array([[data2_x[i]] for i in batch_list])
-        batch_y = np.array([data2_y[i]for i in batch_list])
-        batch_y_nan = np.array([data2_y_nan[i]  for i in batch_list])
-        batch_y_ss = np.array([data2_y_ss[i]  for i in batch_list ])
-        batch_x = np.swapaxes(np.swapaxes(batch_x,1,3),1,2)
-        pred = sess.run( out_softmax, feed_dict={x: batch_x,
-                                                 resi_map0: batch_y,
-                                                 above_zero : batch_y_nan,
-                                                 ss_2d : batch_y_ss,
-                                                 phase : False,learning_rate : lr, dropout : 1})
-        c  = sess.run( cost, feed_dict={x: batch_x,resi_map0: batch_y,
-                                                     above_zero : batch_y_nan, ss_2d : batch_y_ss,
-                                                     phase : False, learning_rate : lr, dropout : 1})
-        for k in range(len(batch_y)):
-            train_acc += [accuracy(np.argmax(pred[k],2),np.argmax(batch_y[k],2)),]
-        # Compute average loss
-        avg_cost += [c,]
+
     if True:
         val_acc = []
+        train_acc = []
+        avg_cost  = []
+        for i in range(0,len(data2_x)):
+            batch_x, batch_y = np.array([[data2_x[i],],]),np.array([data2_y[i],])
+            batch_y_nan,batch_y_ss = np.array([data2_y_nan[i]]),np.array([data2_y_ss[i]])
+            batch_x = np.swapaxes(np.swapaxes(batch_x,1,3),1,2)
+            pred = sess.run( out_softmax, feed_dict={x: batch_x,resi_map0: batch_y,
+                                                         above_zero : batch_y_nan, ss_2d : batch_y_ss,
+                                                            phase : False, learning_rate : lr, dropout : 1})
+            c  = sess.run( cost, feed_dict={x: batch_x,resi_map0: batch_y,
+                                                         above_zero : batch_y_nan, ss_2d : batch_y_ss,
+                                                            phase : False, learning_rate : lr, dropout : 1})
+            for k in range(len(batch_y)):
+                train_acc += [accuracy(np.argmax(
+                    pred[k]+np.transpose(pred[k],(1,0,2)),2),
+                                       np.argmax(batch_y[k],2)),]
+            # Compute average loss
+            avg_cost += [c,]
         for i in range(len(data2_x_val)):
                 batch_x, batch_y = np.array([[data2_x_val[i],],]),np.array([data2_y_val[i],])
                 batch_y_nan,batch_y_ss = np.array([data2_y_nan_val[i]]),np.array([data2_y_ss_val[i]])
