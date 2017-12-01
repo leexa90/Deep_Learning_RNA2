@@ -29,11 +29,13 @@ import tensorflow as tf
 import numpy as np
 import matplotlib.pyplot as plt
 import random
-#data = np.load('../../../../data_all.npy.zip')['data_all'].item()
-data1 = np.load('../data_lim5000_nan_excludeTest.npy.zip')['data_lim5000_nan_excludeTest.npy'].item() #contains 480 train examples
-data2 = np.load('../data_lim5000_ss_excludeTest.npy.zip')['data_lim5000_ss_excludeTest.npy'].item() #might have 494
-data3 = np.load('../data_lim5000_extra_excludeTest.npy').item() #might have 494
-data4 = np.load('../data_lim5000_MSA_excludeTest.npy').item() #might have 494
+
+
+# something is wrong with code. Could be double refering and overwriting data1,data2etc files
+data1 = np.load('../data_lim5000_nan.npy.zip')['data_lim5000_nan.npy'].item()
+data2 = np.load('../data_lim5000_ss.npy.zip')['data_lim5000_ss'].item()
+data3 = np.load('../data_lim5000_extra.npy').item()
+data4 = np.load('../data_lim5000_MSA.npy').item()
 
 data1_t = np.load('../data_lim5000_nan.npy.zip')['data_lim5000_nan.npy'].item()
 data2_t = np.load('../data_lim5000_ss.npy.zip')['data_lim5000_ss'].item()
@@ -46,7 +48,7 @@ puzzle = ['3OX0', '3OWZ', '3OXJ', '3OXE', '3OWZ', '3OWW', '3OXM', '3OWW', '3OWI'
           '4TZV', '4TZW', '4TZZ', '4LCK', '4TZZ', '4TZP', '4LCK', '4TZP', '5EAQ', '5DQK',
           '5EAO', '5DH6', '5DI2', '5DH8', '5DH7', '5DI4', '4R4V', '5V3I', '4R4P', '3V7E',
           '3V7E', '4L81', '4OQU', '4P9R', '4P95', '4QLM', '4QLN', '4XWF', '4XW7', '4GXY',
-          '5DDO', '5DDO', '5TPY']
+          '5DDO', '5DDO', '5TPY','5T5A']
 
 data_test = {}
 data_train = {}
@@ -197,7 +199,7 @@ for i in data1_keys_train:
                         
             except ValueError:
                 print ('%s had ValueError, probably some of inputs are of wrong dimention. Data thrown away ' %i)
-
+                print (data2_t[i][0].shape),
 
 train_n = len(data_train)
 for i in data1_keys_val:
@@ -264,15 +266,15 @@ for i in data1_keys_test:
                 mat_pairres_con = np.zeros((len(temp1[1]),len(temp1[1]),10))
                 for ii in range(0,len(temp1[1])):
                     for jj in range(ii,len(temp1[1])):
-                        temp_paires = sorted((data4[i][1][ii].upper(),
-                                              data4[i][1][jj].upper()))
+                        temp_paires = sorted((data4_t[i][1][ii].upper(),
+                                              data4_t[i][1][jj].upper()))
                         if tuple(temp_paires) in pair_wise_res:
                             index = pair_wise_res[tuple(temp_paires)]
                             mat_pairres_con[ii,jj,index] = 1
                             mat_pairres_con[jj,ii,index] = 1
-                data2[i][0] = np.reshape(data2[i][0],(len(data2[i][0]),len(data2[i][0]),1))
-                temp2 = data2[i]
-                temp2[0] = np.concatenate((data2[i][0],mat_pairres,mat_pairres_con),axis=2)
+                data2_t[i][0] = np.reshape(data2_t[i][0],(len(data2_t[i][0]),len(data2_t[i][0]),1))
+                temp2 = data2_t[i]
+                temp2[0] = np.concatenate((data2_t[i][0],mat_pairres,mat_pairres_con),axis=2)
                 temp3 = data3_t[i]
                 temp4 = data4_t[i]
                 tempF = np.concatenate((np.array(make_array(temp1[1])).T,np.array([temp2[1]]),temp3,(np.array(make_array(temp4[1])).T),np.array([make_array2(temp4[2])])))
@@ -721,11 +723,13 @@ with tf.control_dependencies(update_ops):
     #extra_optimizer = tf.train.AdamOptimizer(epsilon = 0.0001,learning_rate=learning_rate).minimize(cost)
 normal= tf.train.MomentumOptimizer(learning_rate=learning_rate,momentum=0.5).minimize(cost)
 def accuracy(mat_model,answer):
+    skip = []
+    answer
     mat_model = np.reshape(mat_model,(mat_model.shape[1],mat_model.shape[1]))
     answer = np.reshape(answer,(answer.shape[1],answer.shape[1]))
     score = [[0],[0],[0]]
     for i in range(0,answer.shape[1]):
-        if np.sum(answer[i,:]) != 0:
+        if np.sum(answer[i,:]) != 0 or np.sum(answer[i,:]) != 1:
             for j in range(i+1,answer.shape[1]):
                 if np.sum(answer[j,:]) != 0:
                     if answer[i,j] == mat_model[i,j]:
@@ -737,6 +741,14 @@ def accuracy(mat_model,answer):
 saver = tf.train.Saver()
 # Initializing the variables
 init = tf.global_variables_initializer();sess = tf.Session();sess.run(init)
+import os
+saved_files = [xxx[:-5] for xxx in os.listdir('.') if (xxx.startswith('model') and xxx.endswith('.ckpt.meta'))]
+next_epoch = 0
+if len(saved_files) >= 1:
+    last_file = sorted(saved_files,key=lambda x : int(x.split('_')[-2]))[-1]
+    next_epoch = int(last_file.split('_')[-2])
+    print ('starting from :' ,last_file)
+    saver.restore(sess,'./'+last_file)
 #saver.restore(sess,'./model300_reweigh_loss_3_46.ckpt')
 # Training cycle
 result = {}
@@ -758,30 +770,31 @@ for epoch in range(training_epochs):
     shuffle = range(len(data2_x))
     random.shuffle(shuffle)
     num = 1
-    for batch in range(0,len(shuffle),num):
-        batch_list = shuffle[batch:batch+num] 
-        counter += 1
-        if epoch %2 == 0:
-            lr = 1+np.cos(1.0*batch*3.142/len(shuffle))
-        elif epoch %2 == 1:
-            lr = 1+np.cos(-1.0*batch*3.142/len(shuffle))
-        if epoch < training_epochs//2:
-            lr = lr/10
-        elif epoch < 3*training_epochs//4:
-            lr = lr/100
-        else:
-            lr = lr/1000          
-        batch_x = np.array([[data2_x[i]] for i in batch_list])
-        batch_y = np.array([data2_y[i]for i in batch_list])
-        batch_y_nan = np.array([data2_y_nan[i]  for i in batch_list])
-        batch_y_ss = np.array([data2_y_ss[i]  for i in batch_list ])
-        batch_x = np.swapaxes(np.swapaxes(batch_x,1,3),1,2)
-        # Run optimization op (backprop) and cost op (to get loss value)
-        _, c = sess.run([extra_optimizer, cost], feed_dict={x: batch_x,
-                                                      resi_map0: batch_y,
-                                                      above_zero : batch_y_nan,
-                                                      ss_2d : batch_y_ss,
-                                                      phase : True, learning_rate : lr, dropout : 0.8})
+    if False:
+        for batch in range(0,len(shuffle),num):
+            batch_list = shuffle[batch:batch+num] 
+            counter += 1
+            if epoch %2 == 0:
+                lr = 1+np.cos(1.0*batch*3.142/len(shuffle))
+            elif epoch %2 == 1:
+                lr = 1+np.cos(-1.0*batch*3.142/len(shuffle))
+            if epoch < training_epochs//2:
+                lr = lr/10
+            elif epoch < 3*training_epochs//4:
+                lr = lr/100
+            else:
+                lr = lr/1000          
+            batch_x = np.array([[data2_x[i]] for i in batch_list])
+            batch_y = np.array([data2_y[i]for i in batch_list])
+            batch_y_nan = np.array([data2_y_nan[i]  for i in batch_list])
+            batch_y_ss = np.array([data2_y_ss[i]  for i in batch_list ])
+            batch_x = np.swapaxes(np.swapaxes(batch_x,1,3),1,2)
+            # Run optimization op (backprop) and cost op (to get loss value)
+            _, c = sess.run([extra_optimizer, cost], feed_dict={x: batch_x,
+                                                          resi_map0: batch_y,
+                                                          above_zero : batch_y_nan,
+                                                          ss_2d : batch_y_ss,
+                                                          phase : True, learning_rate : lr, dropout : 0.8})
 
     if True:
         val_acc = []
@@ -813,20 +826,49 @@ for epoch in range(training_epochs):
                                                      above_zero : batch_y_nan, ss_2d : batch_y_ss,
                                                         phase : False, learning_rate : lr, dropout : 1})
                 val_acc += [accuracy((pred[k]+np.transpose(pred[k],(1,0,2)))//1,batch_y[k]),]
+                if True:
+                    temp_pred = pred[k]+np.transpose(pred[k],(1,0,2))
+                    f, ax = plt.subplots(1,5,figsize=(19,5));k=0
+                    ax[0].imshow(temp_pred[:,:,0]>=1)
+                    ax[1].imshow(temp_pred[:,:,0]>=1.6)
+                    ax[2].imshow(temp_pred[:,:,0]>=1.5)
+                    ax[-2].imshow(temp_pred[:,:,0] *200//20)
+                    ax[-1].imshow(batch_y[k,:,:,0]>=1)
+                    ax[0].set_xlabel('pred bal_acc=%s (thres-50)'%np.round(accuracy(temp_pred[:,:,0]>=1,batch_y[k,:,:,0]>=1),2))
+                    ax[1].set_xlabel('pred bal_acc=%s (thres-20)'%np.round(accuracy(temp_pred[:,:,0]>=1.6,batch_y[k,:,:,0]>=1),2))
+                    ax[2].set_xlabel('pred bal_acc=%s (thres-25)'%np.round(accuracy(temp_pred[:,:,0]>=1.5,batch_y[k,:,:,0]>=1),2))
+                    ax[-2].set_xlabel('probabilities logloss=%s' %cost_i)
+                    ax[-1].set_xlabel('actual')
+                    plt.savefig(   'VAL/'+ data2_name_val[i]+'.png');plt.close()
         test_acc = []
         for i in range(len(data2_x_test)):
-                batch_x, batch_y = np.array([[data2_x_test[i],],]),np.array([data2_y_test[i],])
-                batch_y_nan,batch_y_ss = np.array([data2_y_nan_test[i]]),np.array([data2_y_ss_test[i]])
-                batch_x = np.swapaxes(np.swapaxes(batch_x,1,3),1,2)
-                cost_i  = sess.run( cost, feed_dict={x: batch_x,resi_map0: batch_y,
-                                                     above_zero : batch_y_nan, ss_2d : batch_y_ss,
-                                                     phase : False, learning_rate : lr, dropout : 1})
-                test_cost += [cost_i,]
-                pred =sess.run( out_softmax, feed_dict={x: batch_x,resi_map0: batch_y,
-                                                     above_zero : batch_y_nan, ss_2d : batch_y_ss,
-                                                        phase : False, learning_rate : lr, dropout : 1})
-                test_acc += [accuracy((pred[k]+np.transpose(pred[k],(1,0,2)))//1,batch_y[k]),]
-        print (np.mean(test_acc))
+            batch_x, batch_y = np.array([[data2_x_test[i],],]),np.array([data2_y_test[i],])
+            batch_y_nan,batch_y_ss = np.array([data2_y_nan_test[i]]),np.array([data2_y_ss_test[i]])
+            batch_x = np.swapaxes(np.swapaxes(batch_x,1,3),1,2)
+            cost_i  = sess.run( cost, feed_dict={x: batch_x,resi_map0: batch_y,
+                                                 above_zero : batch_y_nan, ss_2d : batch_y_ss,
+                                                 phase : False, learning_rate : lr, dropout : 0})
+            test_cost += [cost_i,]
+            pred =sess.run( out_softmax, feed_dict={x: batch_x,resi_map0: batch_y,
+                                                 above_zero : batch_y_nan, ss_2d : batch_y_ss,
+                                                    phase : False, learning_rate : lr, dropout : 0})
+            temp_pred = pred[k]+np.transpose(pred[k],(1,0,2))
+            test_acc += [accuracy(np.argmax(temp_pred,2),np.argmax(batch_y[k],2)),]
+            if True:
+                f, ax = plt.subplots(1,5,figsize=(19,5));k=0
+                ax[0].imshow(temp_pred[:,:,0]>=1)
+                ax[1].imshow(temp_pred[:,:,0]>=1.6)
+                ax[2].imshow(temp_pred[:,:,0]>=1.5)
+                ax[-2].imshow(temp_pred[:,:,0] *200//20)
+                ax[-1].imshow(batch_y[k,:,:,0]>=1)
+                ax[0].set_xlabel('pred bal_acc=%s (thres-50)'%np.round(accuracy(temp_pred[:,:,0]>=1,batch_y[k,:,:,0]>=1),2))
+                ax[1].set_xlabel('pred bal_acc=%s (thres-20)'%np.round(accuracy(temp_pred[:,:,0]>=1.6,batch_y[k,:,:,0]>=1),2))
+                ax[2].set_xlabel('pred bal_acc=%s (thres-25)'%np.round(accuracy(temp_pred[:,:,0]>=1.5,batch_y[k,:,:,0]>=1),2))
+                ax[-2].set_xlabel('probabilities logloss=%s' %cost_i)
+                ax[-1].set_xlabel('actual')
+                plt.savefig(    data2_name_test[i]+'.png');plt.close()
+                #plt.show();
+                #plt.clf()
     # Display logs per epoch step
     f1 = open('updates.log','w')
     text += str(np.mean(avg_cost))+'  '+str(np.mean(train_acc))+'\n'
@@ -839,16 +881,8 @@ for epoch in range(training_epochs):
     f1.close()
     save_path = saver.save(sess,'model300_reweigh_loss_%s_%s.ckpt' %(epoch,int(100*np.mean(val_acc))))
     result[epoch] = [avg_cost,val_cost]
-##        print (pred[0,0:10,0:10,0])
-##        print (batch_y[0,0:3,0:3,0])
-##        print (sess.run( above_zero, feed_dict={x: batch_x,resi_map0: batch_y})[0,60:80,60:80,0])
-##        print (sess.run( conv2, feed_dict={x: batch_x,resi_map0: batch_y})[0,0:10,0:10,0])
-##        #print(sess.run( resi_map, feed_dict={x: batch_x,resi_map0: batch_y})[0,0:10,0:10,0])
-##        print (sess.run( y, feed_dict={x: batch_x,resi_map0: batch_y})[0,0:10,0:10,0])
 print ("Optimization Finished!")
 
-plt.plot(range(0,training_epochs),[result[i][0] for i in result],label='Train')
-plt.plot(range(0,training_epochs),[result[i][1] for i in result],label='Val')
-plt.legend();plt.ylabel('Logloss cost') ; plt.xlabel('epoch')
-plt.savefig('Train_curveLg.png')
 
+# combined 4lck predictions
+batch_x = np.reshape(np.concatenate((data2_x_test[-1],data2_x_test[-2]),1),(1,1,15,177))

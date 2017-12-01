@@ -1,0 +1,12 @@
+rna_helix.py  -o 0_0.pdb -seq ggauc gaucc -resnum 1-5 67-71
+rna_helix.py  -o 1_0.pdb -seq gggg cccc -resnum 10-13 18-21
+rna_helix.py  -o 2_0.pdb -seq ggca ugcu -resnum 22-25 47-50
+rna_helix.py  -o 3_0.pdb -seq ccu agg -resnum 27-29 44-46
+rna_helix.py  -o 4_0.pdb -seq ggg ccc -resnum 30-32 40-42
+rna_helix.py  -o 5_0.pdb -seq caccg cggug -resnum 53-57 62-66
+rna_helix.py  -o 6_0.pdb -seq gccc gggc -resnum 73-76 81-84
+rna_helix.py  -o 7_0.pdb -seq acg cgu -resnum 86-88 94-96
+
+
+rna_denovo_setup.py -fasta PA.fasta -secstruct_file PA.secstruct -working_res 1-96 -s  0_0.pdb  1_0.pdb  2_0.pdb  3_0.pdb  4_0.pdb  5_0.pdb  6_0.pdb  7_0.pdb  -fixed_stems -tag TPP_FL_sln  -nstruct 30 -j 16 -cycles 20000 -cst_file constraints -staged_constraints -minimize_rna
+#source README_FARFAR
