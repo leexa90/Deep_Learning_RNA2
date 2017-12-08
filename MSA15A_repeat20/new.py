@@ -8,7 +8,7 @@ import tensorflow as tf
 import numpy as np
 import matplotlib.pyplot as plt
 import random
-
+random.seed(1)
 # something is wrong with code. Could be double refering and overwriting data1,data2etc files
 data1 = np.load('../data_lim5000_nan.npy.zip')['data_lim5000_nan.npy'].item()
 data2 = np.load('../data_lim5000_ss.npy.zip')['data_lim5000_ss'].item()
@@ -79,7 +79,25 @@ else:
 data1_keys_test = [ x for x in data1_t if x[0:4].upper() in puzzle]    
 data1_keys = [x for x in data1 if  len(data1[x][0]) <= 500] # the short ones get val-train split
 random.shuffle(data1_keys)
-data1_keys_val = [x for x in data1_keys[val_id::3] if x[0:4].upper() not in puzzle] 
+data1_keys_val = ['4v9e_aa', '5lyu_a', '4qjd_b', '4pr6_b', '5fq5_a', '4cxg_a',
+                  '5m0h_a', '3amt_b', '4v8m_bd', '5x2h_b', '1e8s_c', '1c9s_w',
+                  '2gtt_x', '3j0o_h', '3j45_2', '3j7r_s6', '2nz4_p', '2der_c',
+                  '4cxg_2', '3p22_a', '3ivn_a', '3w3s_b', '3j0p_w', '5lzs_ii',
+                  '4ug0_s6', '3d2v_a', '2csx_c', '2oiu_q', '4kzd_r', '2j28_8',
+                  '5t5h_e', '1ffy_t', '5aka_7', '1pn7_c', '3j46_3', '4ue4_a',
+                  '1i6u_c', '3jcs_6', '1j1u_b', '3wc1_p', '3eph_e', '2qwy_a',
+                  '1un6_e', '1qzc_a', '4c4q_n', '4v6u_a1', '5xh6_b', '5mmm_z',
+                  '2hw8_b', '1mj1_q', '5o60_b', '2zy6_a', '5hr6_c', '4v5z_bg',
+                  '2zzm_b', '1p6v_b', '4v5z_ad', '2vpl_b', '1qzw_b', '4c7o_e',
+                  '2xxa_f', '2zjr_y', '5kpy_a', '4bbl_y', '1pn8_d', '1lng_b',
+                  '1m5o_b', '4kr6_d', '3nkb_b', '1gax_c', '4kr6_c', '2nue_c',
+                  '4v8b_ab', '5t83_a', '3p49_a', '3izd_a', '5ktj_a', '3j9w_bb',
+                  '3k0j_e', '5gap_v', '3ski_a', '2om7_g', '1ysh_b', '4v8p_b3',
+                  '4aob_a', '5lzs_2', '2wwb_d', '3iab_r', '4qjh_b', '4yco_d',
+                  '4tue_qv', '4kr7_x', '4adx_8', '2go5_9', '4v8m_be', '1emi_b',
+                  '3jb9_c', '5e54_a', '4p5j_a', '1zc8_h', '1y26_x', '1zc8_a',
+                  '1hc8_c', '3iyq_a', '5it9_i', '4wj3_q', '3suh_x', '1xjr_a',
+                  '4frg_b', '1zn1_c']
 data1_keys_train = [x for x in data1_keys if (x not in data1_keys_val and x[0:4].upper() not in puzzle)] +\
                    [x for x in data1 if  len(data1[x][0]) > 500]
 
@@ -667,32 +685,34 @@ for epoch in range(next_epoch,training_epochs):
     shuffle = range(len(data2_x))
     random.shuffle(shuffle)
     num = 1
-    for batch in range(0,len(shuffle),num):
-        batch_list = shuffle[batch:batch+num] 
-        counter += 1
-        if epoch %2 == 0:
-            lr = 1+np.cos(1.0*batch*3.142/len(shuffle))
-        elif epoch %2 == 1:
-            lr = 1+np.cos(1.0*batch*3.142/len(shuffle))
-        if epoch < training_epochs//2:
-            lr = lr/10
-        elif epoch < 3*training_epochs//4:
-            lr = lr/100
-        else:
-            lr = lr/1000          
-        batch_x = np.array([[data2_x[i]] for i in batch_list])
-        batch_y = np.array([data2_y[i]for i in batch_list])
-        batch_y_nan = np.array([data2_y_nan[i]  for i in batch_list])
-        batch_y_ss = np.array([data2_y_ss[i]  for i in batch_list ])
-        batch_x = np.swapaxes(np.swapaxes(batch_x,1,3),1,2)
-        # Run optimization op (backprop) and cost op (to get loss value)
-        _, c = sess.run([extra_optimizer, cost], feed_dict={x: batch_x,
-                                                      resi_map0: batch_y,
-                                                      above_zero : batch_y_nan,
-                                                      ss_2d : batch_y_ss,
-                                                      phase : True, learning_rate : lr, dropout : 0.0})
+    if True:
+        for batch in range(0,len(shuffle),num):
+            batch_list = shuffle[batch:batch+num] 
+            counter += 1
+            if epoch %2 == 0:
+                lr = 1+np.cos(1.0*batch*3.142/len(shuffle))
+            elif epoch %2 == 1:
+                lr = 1+np.cos(1.0*batch*3.142/len(shuffle))
+            if epoch < training_epochs//2:
+                lr = lr/10
+            elif epoch < 3*training_epochs//4:
+                lr = lr/100
+            else:
+                lr = lr/1000          
+            batch_x = np.array([[data2_x[i]] for i in batch_list])
+            batch_y = np.array([data2_y[i]for i in batch_list])
+            batch_y_nan = np.array([data2_y_nan[i]  for i in batch_list])
+            batch_y_ss = np.array([data2_y_ss[i]  for i in batch_list ])
+            batch_x = np.swapaxes(np.swapaxes(batch_x,1,3),1,2)
+            # Run optimization op (backprop) and cost op (to get loss value)
+            _, c = sess.run([extra_optimizer, cost], feed_dict={x: batch_x,
+                                                          resi_map0: batch_y,
+                                                          above_zero : batch_y_nan,
+                                                          ss_2d : batch_y_ss,
+                                                          phase : True, learning_rate : lr, dropout : 0.0})
 
     if True:
+        k,lr = 0,0
         val_acc = []
         train_acc = []
         avg_cost  = []
@@ -748,7 +768,7 @@ for epoch in range(next_epoch,training_epochs):
                     ax[2].set_xlabel('pred bal_acc=%s (thres-25)'%np.round(accuracy(temp_pred[:,:,0]>=1.5,batch_y[k,:,:,0]>=1),2))
                     ax[-2].set_xlabel('probabilities logloss=%s' %cost_i)
                     ax[-1].set_xlabel('actual')
-                    plt.savefig( data2_name_test[i]+'.png');plt.close()
+                    plt.savefig( data2_name_test[i]+'_%s.png'%thres_distance);plt.close()
     # Display logs per epoch step
     f1 = open('updates.log','w')
     text += str(np.mean(avg_cost))+'  '+str(np.mean(train_acc))+'\n'

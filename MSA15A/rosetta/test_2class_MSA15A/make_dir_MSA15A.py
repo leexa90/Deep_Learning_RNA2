@@ -1,9 +1,9 @@
-import numpy as np
-data = np.load('test.npy').item()
+#import numpy as np
+#data = np.load('test.npy').item()
 import os
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import shutil
-die #ensure that it cannot run#
+#die #ensure that it cannot run#
 for ii in ['5tpy_a', '4xwf_a', '4p95_a', '5ddo_a', '4l81_a', '4gxy_a',
           '4qln_a', '3oww_a', '5t5a_a', '5ddo_b', '4r4p_a', '3v7e_c',
           '5dqk_a', '4lck_c', '4lck_b']:

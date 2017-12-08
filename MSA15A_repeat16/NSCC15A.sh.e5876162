@@ -1,0 +1,137 @@
+new.py:89: RuntimeWarning: invalid value encountered in greater
+  a = (data1[i][2] > thres_distance)*1
+new.py:175: RuntimeWarning: invalid value encountered in greater
+  a = (data1[i][2] > thres_distance)*1
+new.py:218: RuntimeWarning: invalid value encountered in greater
+  a = (data1_t[i][2] > thres_distance)*1
+2017-12-01 17:12:49.902669: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1031] Found device 0 with properties: 
+name: Tesla K40t major: 3 minor: 5 memoryClockRate(GHz): 0.8755
+pciBusID: 0000:82:00.0
+totalMemory: 11.17GiB freeMemory: 11.10GiB
+2017-12-01 17:12:49.902701: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1121] Creating TensorFlow device (/device:GPU:0) -> (device: 0, name: Tesla K40t, pci bus id: 0000:82:00.0, compute capability: 3.5)
+2017-12-01 17:28:29.270964: E tensorflow/stream_executor/cuda/cuda_driver.cc:1080] failed to synchronize the stop event: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.270994: E tensorflow/stream_executor/cuda/cuda_timer.cc:54] Internal: error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.271002: E tensorflow/stream_executor/cuda/cuda_timer.cc:59] Internal: error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.271095: E tensorflow/stream_executor/cuda/cuda_dnn.cc:2449] failed to enqueue convolution on stream: CUDNN_STATUS_MAPPING_ERROR
+Traceback (most recent call last):
+  File "new.py", line 716, in <module>
+    batch_y_nan,batch_y_ss = np.array([data2_y_nan_val[i]]),np.array([data2_y_ss_val[i]])
+  File "/app/tensorflow/1.4/lib/python2.7/site-packages/tensorflow/python/client/session.py", line 889, in run
+    run_metadata_ptr)
+  File "/app/tensorflow/1.4/lib/python2.7/site-packages/tensorflow/python/client/session.py", line 1120, in _run
+    feed_dict_tensor, options, run_metadata)
+  File "/app/tensorflow/1.4/lib/python2.7/site-packages/tensorflow/python/client/session.py", line 1317, in _do_run
+    options, run_metadata)
+  File "/app/tensorflow/1.4/lib/python2.7/site-packages/tensorflow/python/client/session.py", line 1336, in _do_call
+    raise type(e)(node_def, op, message)
+tensorflow.python.framework.errors_impl.InternalError: cuDNN launch failure : input shape([1,224,1610,1610]) filter shape([5,5,224,1])
+	 [[Node: Conv2D_33 = Conv2D[T=DT_FLOAT, data_format="NHWC", padding="SAME", strides=[1, 1, 1, 1], use_cudnn_on_gpu=true, _device="/job:localhost/replica:0/task:0/device:GPU:0"](dropout_5/dropout/mul, Variable_50/read)]]
+
+Caused by op u'Conv2D_33', defined at:
+  File "new.py", line 611, in <module>
+    conv5d = conv2d(conv4,weights['5_wc1d'],biases['5_bc1d'])
+  File "new.py", line 342, in conv2d
+  File "/app/tensorflow/1.4/lib/python2.7/site-packages/tensorflow/python/ops/gen_nn_ops.py", line 631, in conv2d
+    data_format=data_format, name=name)
+  File "/app/tensorflow/1.4/lib/python2.7/site-packages/tensorflow/python/framework/op_def_library.py", line 787, in _apply_op_helper
+    op_def=op_def)
+  File "/app/tensorflow/1.4/lib/python2.7/site-packages/tensorflow/python/framework/ops.py", line 3073, in create_op
+    op_def=op_def)
+  File "/app/tensorflow/1.4/lib/python2.7/site-packages/tensorflow/python/framework/ops.py", line 1524, in __init__
+    self._traceback = self._graph._extract_stack()  # pylint: disable=protected-access
+
+InternalError (see above for traceback): cuDNN launch failure : input shape([1,224,1610,1610]) filter shape([5,5,224,1])
+	 [[Node: Conv2D_33 = Conv2D[T=DT_FLOAT, data_format="NHWC", padding="SAME", strides=[1, 1, 1, 1], use_cudnn_on_gpu=true, _device="/job:localhost/replica:0/task:0/device:GPU:0"](dropout_5/dropout/mul, Variable_50/read)]]
+
+2017-12-01 17:28:29.938301: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938688: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938696: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938706: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938709: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938713: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938716: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938719: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938722: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938726: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938729: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938732: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938735: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938739: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938742: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938745: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938748: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938752: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938755: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938758: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938762: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938765: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938768: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938771: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938775: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938778: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938782: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938785: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938788: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938791: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938794: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938800: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938803: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938806: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938810: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938813: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938816: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938818: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938822: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938835: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938838: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938842: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938848: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938852: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938855: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938858: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938861: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938864: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938867: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938870: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938874: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938877: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938880: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938883: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938887: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938890: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938893: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938897: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938900: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938905: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938908: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938912: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938915: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938918: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938921: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938924: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938928: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938931: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938934: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938937: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938940: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938943: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938947: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938950: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938953: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938956: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938959: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938962: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938966: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938969: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938972: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938975: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938979: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938982: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938985: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938988: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938994: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.938997: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.939000: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.939003: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.939007: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
+2017-12-01 17:28:29.939010: E tensorflow/stream_executor/event.cc:33] error destroying CUDA event in context 0x195d8580: CUDA_ERROR_ILLEGAL_ADDRESS
