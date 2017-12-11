@@ -690,14 +690,14 @@ def accuracy(mat_model,answer):
 saver = tf.train.Saver()
 # Initializing the variables
 init = tf.global_variables_initializer();sess = tf.Session();sess.run(init)
-saver.restore(sess,'./model300_reweigh_loss_58_80.ckpt')
+saver.restore(sess,'./model300_reweigh_loss_20_79.ckpt')
 # Training cycle
 result = {}
 random.seed(0)
 shuffle = range(len(data2_x))
 random.shuffle(shuffle)
 text = ''
-for epoch in range(training_epochs):
+for epoch in range(1):
     counter = 0
     avg_cost = []
     val_cost = []
@@ -710,7 +710,7 @@ for epoch in range(training_epochs):
     shuffle = range(len(data2_x))
     random.shuffle(shuffle)
     num = 1
-    for batch in range(0,len(shuffle),num):
+    for batch in range(0,len(shuffle),num)[0:1]:
         batch_list = shuffle[batch:batch+num] 
         counter += 1
         if epoch %2 == 0:
@@ -718,19 +718,19 @@ for epoch in range(training_epochs):
         elif epoch %2 == 1:
             lr = 1+np.cos(-1.0*batch*3.142/len(shuffle))
         lr = lr/10
-        die
         batch_x = np.array([[data2_x[i]] for i in batch_list])
         batch_y = np.array([data2_y[i]for i in batch_list])
         batch_y_nan = np.array([data2_y_nan[i]  for i in batch_list])
         batch_y_ss = np.array([data2_y_ss[i]  for i in batch_list ])
         batch_x = np.swapaxes(np.swapaxes(batch_x,1,3),1,2)
         # Run optimization op (backprop) and cost op (to get loss value)
-        _, c = sess.run([extra_optimizer, cost], feed_dict={x: batch_x,
-                                                      resi_map0: batch_y,
-                                                      above_zero : batch_y_nan,
-                                                      ss_2d : batch_y_ss,
-                                                      phase : True,learning_rate : lr})
+##        _, c = sess.run([extra_optimizer, cost], feed_dict={x: batch_x,
+##                                                      resi_map0: batch_y,
+##                                                      above_zero : batch_y_nan,
+##                                                      ss_2d : batch_y_ss,
+##                                                      phase : True,learning_rate : lr})
     for batch in range(0,len(shuffle),num):
+        batch_list = shuffle[batch:batch+num] 
         batch_x = np.array([[data2_x[i]] for i in batch_list])
         batch_y = np.array([data2_y[i]for i in batch_list])
         batch_y_nan = np.array([data2_y_nan[i]  for i in batch_list])

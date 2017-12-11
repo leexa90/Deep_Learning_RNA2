@@ -35,7 +35,7 @@ data_val = {}
 v16 - make 2 classes, <thres_distance , >=thres_distance
 
 '''
-thres_distance  = 16
+thres_distance  = 8
 def make_array(str):
     temp = [0,]*len(str)
     for i in range(len(str)):
