@@ -56,7 +56,7 @@ def get_mat(i):
     return temp_resi_map.astype(np.float32)   
 
 result = []
-for ii in models:
+for ii in sorted(models):
     answer = np.argmax(get_mat(solution[0]),2)[0:,0:] 
     if 'major' in ii or 'das' in ii or 'chen' in ii or 'flores' in ii: # first residue does not contain P atom
         None#answer = answer[:-1,:-1]
@@ -69,7 +69,7 @@ for ii in models:
                     score[answer[i,j]] += [1,]
                 else:
                     score[answer[i,j]] += [0,]
-    print i,np.mean([np.mean(score[0]),np.mean(score[1])])
+    print ii,np.mean([np.mean(score[0]),np.mean(score[1])])
     f, ax = plt.subplots(1,2,figsize=(10,5))
     acc = np.mean([np.mean(score[0]),np.mean(score[1])])
     ax[0].imshow(answer)
