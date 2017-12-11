@@ -88,10 +88,16 @@ def make_array2(str):
             temp[i] = int(str[i])*10
     return temp
 random.seed(0)
+import sys
+if len(sys.argv) >= 2:
+    val_id = int(sys.argv[1])
+else:
+    val_id = 0
+    
 data1_keys = [x for x in data1 if  len(data1[x][0]) <= 500] # the short ones get val-train split
 random.shuffle(data1_keys)
-data1_keys_train = data1_keys[0::3] + data1_keys[1::3] + [x for x in data1 if  len(data1[x][0]) > 500]
-data1_keys_val = data1_keys[2::3]
+data1_keys_val = data1_keys[val_id::3]
+data1_keys_train = [x for x in data1_keys if x not in data1_keys_val] + [x for x in data1 if  len(data1[x][0]) > 500]
 data1_keys_test = [ x for x in data1_t if x[0:4].upper() in puzzle]
 for i in data1_keys_train:
     if len(data1[i][0]) >= 35:
@@ -130,34 +136,57 @@ for i in data1_keys_train:
                 temp4 = data4[i]
                 tempF = np.concatenate((np.array(make_array(temp1[1])).T,np.array([temp2[1]]),temp3,(np.array(make_array(temp4[1])).T),np.array([make_array2(temp4[2])])))
                     #         [9-features, seq, exxist_seq, cat dist_map,cat dist_map (non-zero), ss_1d, ss_2d]
-                if len(data1[i][0]) <= 500:
-                    window = 35
-                    repeat = 25
-                    data_train[i+'_'+str(window)+'_'+str(repeat)] = [tempF, temp1[0],temp1[1],temp_resi_map,d,temp2[1],temp2[0]]
-                else:
-                    window = 500
-                    for repeat in range(0,len(data1[i][0]) - window+1,250):
-                        if np.mean(d[repeat:repeat+window,repeat:repeat+window,:]) > 0.9: 
-                            data_train[i+'_'+str(window)+'_'+str(repeat)] = [tempF[:,repeat:repeat+window],
-                                                   temp1[0][repeat:repeat+window],
-                                                   temp1[1][repeat:repeat+window],
-                                                   temp_resi_map[repeat:repeat+window,repeat:repeat+window,:],
-                                                   d[repeat:repeat+window,repeat:repeat+window,:],
-                                                   temp2[1][repeat:repeat+window],
-                                                   temp2[0][repeat:repeat+window,repeat:repeat+window]]
-##                for window_tup in [(35,3),(50,3),(75,3),(100,3),(150,3),(200,3),(300,3),(400,3),(800,3)]:
-##                    window, jump = window_tup[0], window_tup[1]
-##                    for repeat in range(0,len(data1[i][0]) - window+1,jump):
+##                if len(data1[i][0]) <= 500:
+##                    window = 35
+##                    repeat = 25
+##                    data_train[i+'_'+str(window)+'_'+str(repeat)] = [tempF, temp1[0],temp1[1],temp_resi_map,d,temp2[1],temp2[0]]
+##                else:
+##                    window = 500
+##                    for repeat in range(0,len(data1[i][0]) - window+1,250):
 ##                        if np.mean(d[repeat:repeat+window,repeat:repeat+window,:]) > 0.9: 
-##                            data_train[i+'_'+str(window)+'_'+str(repeat)] = [tempF[:,repeat:repeat+window],
+##                            data_train[i+'_'+str(35)+'_'+str(repeat)] = [tempF[:,repeat:repeat+window],
 ##                                                   temp1[0][repeat:repeat+window],
 ##                                                   temp1[1][repeat:repeat+window],
 ##                                                   temp_resi_map[repeat:repeat+window,repeat:repeat+window,:],
 ##                                                   d[repeat:repeat+window,repeat:repeat+window,:],
 ##                                                   temp2[1][repeat:repeat+window],
 ##                                                   temp2[0][repeat:repeat+window,repeat:repeat+window]]
+                if len(temp2[0]) <=800:
+                    data_train[i+'_ori'] = [tempF, temp1[0],temp1[1],temp_resi_map,d,temp2[1],temp2[0]]                 
+                if 2*len(data1[i][0])//3 <= 800:                    
+                    window = 2*len(data1[i][0])//3
+                    for repeat in (0,1*len(data1[i][0])//6,2*len(data1[i][0])//6):                  
+                        data_train[i+'_'+str(window)+'_0.33'] = [tempF[:,repeat:repeat+window],
+                                                           temp1[0][repeat:repeat+window],
+                                                           temp1[1][repeat:repeat+window],
+                                                           temp_resi_map[repeat:repeat+window,repeat:repeat+window,:],
+                                                           d[repeat:repeat+window,repeat:repeat+window,:],
+                                                           temp2[1][repeat:repeat+window],
+                                                           temp2[0][repeat:repeat+window,repeat:repeat+window]]
+                if 1*len(data1[i][0])//2 <= 800:
+                    window = len(data1[i][0])//2
+                    for repeat in (0,1*len(data1[i][0])//4,2*len(data1[i][0])//4):                  
+                        data_train[i+'_'+str(window)+'_0.5'] = [tempF[:,repeat:repeat+window],
+                                                           temp1[0][repeat:repeat+window],
+                                                           temp1[1][repeat:repeat+window],
+                                                           temp_resi_map[repeat:repeat+window,repeat:repeat+window,:],
+                                                           d[repeat:repeat+window,repeat:repeat+window,:],
+                                                           temp2[1][repeat:repeat+window],
+                                                           temp2[0][repeat:repeat+window,repeat:repeat+window]]
+                if 2*len(data1[i][0])//3 <= 800:
+                    window = 3*len(data1[i][0])//4
+                    for repeat in (0,1*len(data1[i][0])//8,2*len(data1[i][0])//8):                  
+                        data_train[i+'_'+str(window)+'_0.75'] = [tempF[:,repeat:repeat+window],
+                                                           temp1[0][repeat:repeat+window],
+                                                           temp1[1][repeat:repeat+window],
+                                                           temp_resi_map[repeat:repeat+window,repeat:repeat+window,:],
+                                                           d[repeat:repeat+window,repeat:repeat+window,:],
+                                                           temp2[1][repeat:repeat+window],
+                                                           temp2[0][repeat:repeat+window,repeat:repeat+window]]
+                        
             except ValueError:
                 print ('%s had ValueError, probably some of inputs are of wrong dimention. Data thrown away ' %i)
+
 
 train_n = len(data_train)
 for i in data1_keys_val:
@@ -288,18 +317,18 @@ data3_y = {}
 data3_y_nan = {}
 data3_y_ss = {}
 data3_name = {}
-for i,j in [(35,1),(50,1),(75,1),(100,1),(150,1),(200,1),(300,1),(400,1),(800,1)]:
-    data3_x[i] = []
-    data3_y[i] = []
-    data3_y_nan[i] = []
-    data3_y_ss[i] = []
-    data3_name[i] = []
-    for k in [l for l in range(len(data2_name)) if int(data2_name[l].split('_')[2] ) ==i]:
-            data3_x[i] += [data2_x[k],]
-            data3_y[i] += [data2_y[k],]
-            data3_y_nan[i] += [data2_y_nan[k],]
-            data3_y_ss[i] += [data2_y_ss[k],]
-            data3_name[i] += [data2_name[k],]
+##for i,j in [(35,1),(50,1),(75,1),(100,1),(150,1),(200,1),(300,1),(400,1),(800,1)]:
+##    data3_x[i] = []
+##    data3_y[i] = []
+##    data3_y_nan[i] = []
+##    data3_y_ss[i] = []
+##    data3_name[i] = []
+##    for k in [l for l in range(len(data2_name)) if int(data2_name[l].split('_')[2] ) ==i]:
+##            data3_x[i] += [data2_x[k],]
+##            data3_y[i] += [data2_y[k],]
+##            data3_y_nan[i] += [data2_y_nan[k],]
+##            data3_y_ss[i] += [data2_y_ss[k],]
+##            data3_name[i] += [data2_name[k],]
 # initialzie val data here
 data2_x_val = []
 data2_y_val = []
@@ -372,8 +401,8 @@ keep_prob = tf.placeholder(tf.float32) #dropout (keep probability)
 window = 15
 num1 = 64/4
 num2 = 64/4
-num3 = 128/8
-num4 = 128/8
+num3 = 128/4
+num4 = 256/4
 num5 = 0/4
 num6 = 0/4
 num7 = 0/4
@@ -632,8 +661,9 @@ learning_rate = tf.Variable(0,dtype= np.float32)
 #cost = tf.div(sum_logLoss,tf.reduce_sum(above_zero))
 update_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
 with tf.control_dependencies(update_ops):
-    extra_optimizer = tf.train.AdamOptimizer(epsilon = 0.0001,learning_rate=learning_rate).minimize(cost)
-normal= tf.train.AdamOptimizer(epsilon = 0.0001,learning_rate=learning_rate).minimize(cost)
+    extra_optimizer = tf.train.MomentumOptimizer(learning_rate=learning_rate,momentum=0.5).minimize(cost)
+    #extra_optimizer = tf.train.AdamOptimizer(epsilon = 0.0001,learning_rate=learning_rate).minimize(cost)
+normal= tf.train.MomentumOptimizer(learning_rate=learning_rate,momentum=0.5).minimize(cost)
 def accuracy(mat_model,answer):
     score = [[],[],[]]
     for i in range(0,answer.shape[1]):
@@ -666,37 +696,36 @@ for epoch in range(training_epochs):
     test_acc = []
     total_batch = train_n#int(mnist.train.num_examples/batch_size)
     # Loop over all batches
-    for size in sorted(data3_x.keys())[0:]:
-        shuffle = range(len(data3_x[size]))
-        random.shuffle(shuffle)
-        if size >=400:
-            num = 1
-        else:
-            num = 1
-        for batch in range(0,len(shuffle),num):
-            batch_list = shuffle[batch:batch+num] 
-            counter += 1
-            #print (i)
-            batch_x = np.array([[data3_x[size][i]] for i in batch_list])
-            batch_y = np.array([data3_y[size][i]for i in batch_list])
-            batch_y_nan = np.array([data3_y_nan[size][i]  for i in batch_list])
-            batch_y_ss = np.array([data3_y_ss[size][i]  for i in batch_list ])
-            batch_x = np.swapaxes(np.swapaxes(batch_x,1,3),1,2)
-            # Run optimization op (backprop) and cost op (to get loss value)
-            _, c = sess.run([extra_optimizer, cost], feed_dict={x: batch_x,
-                                                          resi_map0: batch_y,
-                                                          above_zero : batch_y_nan,
-                                                          ss_2d : batch_y_ss,
-                                                          phase : True,learning_rate : 0.001})
-            pred = sess.run( out_softmax, feed_dict={x: batch_x,
-                                                     resi_map0: batch_y,
-                                                     above_zero : batch_y_nan,
-                                                     ss_2d : batch_y_ss,
-                                                     phase : False,learning_rate : 0.001})
-            for k in range(len(batch_y)):
-                train_acc += [accuracy(np.argmax(pred[k],2),np.argmax(batch_y[k],2)),]
-            # Compute average loss
-            avg_cost += [c,]
+    shuffle = range(len(data2_x))
+    random.shuffle(shuffle)
+    num = 1
+    for batch in range(0,len(shuffle),num):
+        batch_list = shuffle[batch:batch+num] 
+        counter += 1
+        if epoch %2 == 0:
+            lr = 1+np.cos(1.0*batch*3.142/len(shuffle))
+        elif epoch %2 == 1:
+            lr = 1+np.cos(-1.0*batch*3.142/len(shuffle))
+        batch_x = np.array([[data2_x[i]] for i in batch_list])
+        batch_y = np.array([data2_y[i]for i in batch_list])
+        batch_y_nan = np.array([data2_y_nan[i]  for i in batch_list])
+        batch_y_ss = np.array([data2_y_ss[i]  for i in batch_list ])
+        batch_x = np.swapaxes(np.swapaxes(batch_x,1,3),1,2)
+        # Run optimization op (backprop) and cost op (to get loss value)
+        _, c = sess.run([extra_optimizer, cost], feed_dict={x: batch_x,
+                                                      resi_map0: batch_y,
+                                                      above_zero : batch_y_nan,
+                                                      ss_2d : batch_y_ss,
+                                                      phase : True,learning_rate : lr})
+        pred = sess.run( out_softmax, feed_dict={x: batch_x,
+                                                 resi_map0: batch_y,
+                                                 above_zero : batch_y_nan,
+                                                 ss_2d : batch_y_ss,
+                                                 phase : False,learning_rate : lr})
+        for k in range(len(batch_y)):
+            train_acc += [accuracy(np.argmax(pred[k],2),np.argmax(batch_y[k],2)),]
+        # Compute average loss
+        avg_cost += [c,]
     if True:
         val_acc = []
         for i in range(len(data2_x_val)):
@@ -705,11 +734,11 @@ for epoch in range(training_epochs):
                 batch_x = np.swapaxes(np.swapaxes(batch_x,1,3),1,2)
                 cost_i  = sess.run( cost, feed_dict={x: batch_x,resi_map0: batch_y,
                                                      above_zero : batch_y_nan, ss_2d : batch_y_ss,
-                                                     phase : False, learning_rate : 0.001})
+                                                     phase : False, learning_rate : lr})
                 val_cost += [cost_i,]
                 pred =sess.run( out_softmax, feed_dict={x: batch_x,resi_map0: batch_y,
                                                      above_zero : batch_y_nan, ss_2d : batch_y_ss,
-                                                        phase : False, learning_rate : 0.01})
+                                                        phase : False, learning_rate : lr})
                 val_acc += [accuracy(np.argmax(pred+np.transpose(pred,(0,2,1,3)),3)[0],np.argmax(batch_y,3)[0]),]
         test_acc = []
         for i in range(len(data2_x_test)):
@@ -718,11 +747,11 @@ for epoch in range(training_epochs):
                 batch_x = np.swapaxes(np.swapaxes(batch_x,1,3),1,2)
                 cost_i  = sess.run( cost, feed_dict={x: batch_x,resi_map0: batch_y,
                                                      above_zero : batch_y_nan, ss_2d : batch_y_ss,
-                                                     phase : False, learning_rate : 0.01})
+                                                     phase : False, learning_rate : lr})
                 test_cost += [cost_i,]
                 pred =sess.run( out_softmax, feed_dict={x: batch_x,resi_map0: batch_y,
                                                      above_zero : batch_y_nan, ss_2d : batch_y_ss,
-                                                        phase : False, learning_rate : 0.01})
+                                                        phase : False, learning_rate : lr})
                 test_acc += [accuracy(np.argmax(pred+np.transpose(pred,(0,2,1,3)),3)[0],np.argmax(batch_y,3)[0]),]
         print (np.mean(test_acc))
     # Display logs per epoch step
