@@ -1,5 +1,6 @@
 import sys,os
 sys.path.append('/home/leexa/pymol/RNA/ENTIRE_RNA_ONLY/')
+sys.path.append('../')
 import numpy as np
 import alignment
 import matplotlib.pyplot as plt
@@ -23,6 +24,7 @@ def get_mat(i):
     f1= open(i,'r')
     seq = ''
     temp_sol = {}
+    counter =1
     for line in f1:
         if line[17:20].strip() in ['A','U','G','C','GUA','CYT','ADE','URI','RU3','URA','RG3','RC5']:
             if line[12:16].strip() == 'P':
@@ -30,8 +32,10 @@ def get_mat(i):
                 cord1 = np.float(line[30:38].strip())
                 cord2 = np.float(line[38:46].strip())
                 cord3 = np.float(line[46:54].strip())
-                temp_sol [(int(line[22:26].strip()),line[17:20].strip())]=\
+                temp_sol [(counter,line[17:20].strip())]=\
                      np.array([cord1,cord2,cord3])
+            if line[12:16].strip() == "C5'":
+                counter += 1
     length = sorted(temp_sol)[-1][0] 
     first_resi =  1
     mat = np.zeros((length,length))
