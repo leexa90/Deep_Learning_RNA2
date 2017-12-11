@@ -69,7 +69,7 @@ for ii in sorted(models):
                     score[answer[i,j]] += [1,]
                 else:
                     score[answer[i,j]] += [0,]
-    print ii,np.mean([np.mean(score[0]),np.mean(score[1])])
+    print mat_model.shape,answer.shape,np.mean([np.mean(score[0]),np.mean(score[1])])
     f, ax = plt.subplots(1,2,figsize=(10,5))
     acc = np.mean([np.mean(score[0]),np.mean(score[1])])
     ax[0].imshow(answer)
