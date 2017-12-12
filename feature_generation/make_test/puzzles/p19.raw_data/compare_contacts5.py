@@ -63,19 +63,23 @@ for ii in sorted(models):
     mat_model = np.argmax(get_mat(ii),2)
     score = [[],[],[]]
     for i in range(0,answer.shape[0]):
-        if np.sum(answer[i,:]) != 0 or np.sum(answer[i,:]) != 1:
-            for j in range(i+1,answer.shape[0]):
+        for j in range(i+1,answer.shape[0]):
+            if (np.sum(answer[i,:]) != 0 and np.sum(answer[j,:]) != 0)\
+            and (np.sum(mat_model[i,:]) !=0 and np.sum(mat_model[j,:])!=0):
                 if answer[i,j] == mat_model[i,j]:
                     score[answer[i,j]] += [1,]
                 else:
                     score[answer[i,j]] += [0,]
-    print mat_model.shape,answer.shape,np.mean([np.mean(score[0]),np.mean(score[1])])
     f, ax = plt.subplots(1,2,figsize=(10,5))
     acc = np.mean([np.mean(score[0]),np.mean(score[1])])
+    acc2 = np.mean(score[0]+score[1])
+    print ii,answer.shape,mat_model.shape,acc,acc2
     ax[0].imshow(answer)
     ax[1].imshow(mat_model)
     ax[0].set_xlabel(acc)
+    ax[1].set_xlabel(acc2)
     plt.savefig(ii[:-4]+'.png');plt.close()
     result += [acc,]
 print np.mean(result)
 print np.std(result)
+

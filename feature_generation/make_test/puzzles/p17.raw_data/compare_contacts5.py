@@ -65,8 +65,9 @@ for ii in sorted(models):
     mat_model = np.argmax(get_mat(ii),2)
     score = [[],[],[]]
     for i in range(0,answer.shape[0]):
-        if np.sum(answer[i,:]) != 0 or np.sum(answer[i,:]) != 1:
-            for j in range(i+1,answer.shape[0]):
+        for j in range(i+1,answer.shape[0]):
+            if (np.sum(answer[i,:]) != 0 and np.sum(answer[j,:]) != 0)\
+            and (np.sum(mat_model[i,:]) !=0 and np.sum(mat_model[j,:])!=0):
                 if answer[i,j] == mat_model[i,j]:
                     score[answer[i,j]] += [1,]
                 else:
