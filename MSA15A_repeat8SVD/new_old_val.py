@@ -35,7 +35,7 @@ data_val = {}
 v16 - make 2 classes, <thres_distance , >=thres_distance
 
 '''
-thres_distance  = 16
+thres_distance  = 8
 def make_array(str):
     temp = [0,]*len(str)
     for i in range(len(str)):
@@ -605,11 +605,17 @@ conv2 = tf.layers.dropout(conv2,rate=dropout,training=False)
 # linear combination of 2DSS
 ss_2d_2 = conv2d(ss_2d,weights['2_SS'],biases['2_SS'],padding='VALID',relu=True)
 final = []
-for i in range(0,num2*4):
+for i in range(0,0):
     mat_x = conv2[:,:,:,i]
     final += [tf.matmul(mat_x,mat_x,transpose_a=True),]
     #final += tf.reshape(final[i],(-1,100,100,1))
 #final +=  [ss_2d,]
+for i in range(0,num2*4): #reconstruction of image from SVD
+    diag  = tf.diag(conv2[:,0,:,i])[:,:,0,:] #batch size must be 1 because of here
+    ud = tf.matmul(diag[:,:,:],conv2[:,0,:,:])
+    svd = tf.matmul(ud, tf.transpose(conv2[:,0,:,:],(0,2,1))) 
+    final += [svd,]
+
 y = tf.stack(final,axis=3)
 y1 = tf.concat([y,ss_2d,ss_2d_2],axis = 3)
 y2 = batch_normalization(y1,phase)
@@ -674,10 +680,12 @@ def accuracy(mat_model,answer,bal=True):
                         score[answer[i,j]] += [1,]
                     else:
                         score[answer[i,j]] += [0,]
-    if bal:
+    if bal==True:
         return np.mean([np.mean(score[0]),np.mean(score[1])])
     else:
         return map(lambda x : str(x)[:5],(np.mean([np.mean(score[0]),np.mean(score[1])]),np.mean(score[0]+score[1])))
+
+        
 
 import os
 saver = tf.train.Saver()
@@ -749,13 +757,13 @@ for epoch in range(next_epoch,training_epochs):
                 pred = sess.run( out_softmax, feed_dict={x: batch_x,resi_map0: batch_y,
                                                              above_zero : batch_y_nan, ss_2d : batch_y_ss,
                                                                 phase : False, learning_rate : lr, dropout : 0})
-                c  = sess.run( cost, feed_dict={x: batch_x,resi_map0: batch_y,
+                cost_i  = sess.run( cost, feed_dict={x: batch_x,resi_map0: batch_y,
                                                              above_zero : batch_y_nan, ss_2d : batch_y_ss,
                                                                 phase : False, learning_rate : lr, dropout : 0})
-                for k in range(len(batch_y)):
-                    train_acc += [accuracy((pred[k]+np.transpose(pred[k],(1,0,2)))//1,batch_y[k]),]
+                acc = accuracy((pred[k]+np.transpose(pred[k],(1,0,2)))//1,batch_y[k])
+                train_acc += [acc,]
                 # Compute average loss
-                avg_cost += [c,]
+                avg_cost += [cost_i,]
                 if True:
                     f, ax = plt.subplots(1,7,figsize=(23,5));k=0
                     temp_pred = pred[k]+np.transpose(pred[k],(1,0,2))
@@ -771,7 +779,7 @@ for epoch in range(next_epoch,training_epochs):
                     ax[0].set_xlabel('pred bal_acc=\n%s (thres-50)'%accuracy(temp_pred[:,:,0]>=1,batch_y[k,:,:,0]>=1,False))
                     ax[1].set_xlabel('pred bal_acc=\n%s (thres-20)'%accuracy(temp_pred[:,:,0]>=1.2,batch_y[k,:,:,0]>=1,False))
                     ax[2].set_xlabel('pred bal_acc=\n%s (thres-25)'%accuracy(temp_pred[:,:,0]>=1.5,batch_y[k,:,:,0]>=1,False))
-                    ax[-2].set_xlabel('probabilities logloss=%s' %c)
+                    ax[-2].set_xlabel('probabilities logloss=%s' %map(lambda x :str(x)[:5],(cost_i,acc)))
                     ax[-1].set_xlabel('actual')
                     plt.savefig(   'TRAIN/'+ data2_name[i]+'.png');plt.close()
         for i in range(len(data2_x_val)):
@@ -785,7 +793,8 @@ for epoch in range(next_epoch,training_epochs):
                 pred =sess.run( out_softmax, feed_dict={x: batch_x,resi_map0: batch_y,
                                                      above_zero : batch_y_nan, ss_2d : batch_y_ss,
                                                         phase : False, learning_rate : lr, dropout : 0})
-                val_acc += [accuracy((pred[k]+np.transpose(pred[k],(1,0,2)))//1,batch_y[k]),]
+                acc = accuracy((pred[k]+np.transpose(pred[k],(1,0,2)))//1,batch_y[k])
+                val_acc += [acc,]
                 if True:
                     f, ax = plt.subplots(1,7,figsize=(23,5));k=0
                     temp_pred = pred[k]+np.transpose(pred[k],(1,0,2))
@@ -801,7 +810,7 @@ for epoch in range(next_epoch,training_epochs):
                     ax[0].set_xlabel('pred bal_acc=\n%s (thres-50)'%accuracy(temp_pred[:,:,0]>=1,batch_y[k,:,:,0]>=1,False))
                     ax[1].set_xlabel('pred bal_acc=\n%s (thres-20)'%accuracy(temp_pred[:,:,0]>=1.2,batch_y[k,:,:,0]>=1,False))
                     ax[2].set_xlabel('pred bal_acc=\n%s (thres-25)'%accuracy(temp_pred[:,:,0]>=1.5,batch_y[k,:,:,0]>=1,False))
-                    ax[-2].set_xlabel('probabilities logloss=%s' %cost_i)
+                    ax[-2].set_xlabel('probabilities logloss=%s' %map(lambda x :str(x)[:5],(cost_i,acc)))
                     ax[-1].set_xlabel('actual')
                     plt.savefig(   'VAL/'+ data2_name_val[i]+'.png');plt.close()
         test_acc = []
@@ -816,7 +825,8 @@ for epoch in range(next_epoch,training_epochs):
                 pred =sess.run( out_softmax, feed_dict={x: batch_x,resi_map0: batch_y,
                                                      above_zero : batch_y_nan, ss_2d : batch_y_ss,
                                                         phase : False, learning_rate : lr, dropout : 0})
-                test_acc += [accuracy((pred[k]+np.transpose(pred[k],(1,0,2)))//1,batch_y[k]),]
+                acc = accuracy((pred[k]+np.transpose(pred[k],(1,0,2)))//1,batch_y[k])
+                test_acc += [acc,]
                 if True:
                     f, ax = plt.subplots(1,7,figsize=(23,5));k=0
                     temp_pred = pred[k]+np.transpose(pred[k],(1,0,2))
@@ -832,7 +842,7 @@ for epoch in range(next_epoch,training_epochs):
                     ax[0].set_xlabel('pred bal_acc=\n%s (thres-50)'%accuracy(temp_pred[:,:,0]>=1,batch_y[k,:,:,0]>=1,False))
                     ax[1].set_xlabel('pred bal_acc=\n%s (thres-20)'%accuracy(temp_pred[:,:,0]>=1.2,batch_y[k,:,:,0]>=1,False))
                     ax[2].set_xlabel('pred bal_acc=\n%s (thres-25)'%accuracy(temp_pred[:,:,0]>=1.5,batch_y[k,:,:,0]>=1,False))
-                    ax[-2].set_xlabel('probabilities logloss=%s' %cost_i)
+                    ax[-2].set_xlabel('probabilities logloss=%s' %map(lambda x :str(x)[:5],(cost_i,acc)))
                     ax[-1].set_xlabel('actual')
                     plt.savefig( data2_name_test[i]+'.png');plt.close()  # Display logs per epoch step
     f1 = open('updates.log','w')

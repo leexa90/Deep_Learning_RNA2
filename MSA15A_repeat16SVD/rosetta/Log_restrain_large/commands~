@@ -1,0 +1,2 @@
+for i in `seq -f "%.0f" 1016874 1016919` ; do qdel $i ;done
+for i in `ls -d *_0.*/ `; do cd $i ; qsub -q rna rosetta.sh -N ${i:0:10} ; cd ../ ;done
