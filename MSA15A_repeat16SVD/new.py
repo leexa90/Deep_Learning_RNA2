@@ -26,7 +26,7 @@ puzzle = ['3OX0', '3OWZ', '3OXJ', '3OXE', '3OWZ', '3OWW', '3OXM', '3OWW', '3OWI'
           '4TZV', '4TZW', '4TZZ', '4LCK', '4TZZ', '4TZP', '4LCK', '4TZP', '5EAQ', '5DQK',
           '5EAO', '5DH6', '5DI2', '5DH8', '5DH7', '5DI4', '4R4V', '5V3I', '4R4P', '3V7E',
           '3V7E', '4L81', '4OQU', '4P9R', '4P95', '4QLM', '4QLN', '4XWF', '4XW7', '4GXY',
-          '5DDO', '5DDO', '5TPY','5T5A']
+          '5DDO', '5DDO', '5TPY','5T5A','5K7C']
 
 data_test = {}
 data_train = {}
@@ -128,10 +128,10 @@ for i in data1_keys_train:
                 temp1 = data1[i]
                 a = (data1[i][2] > thres_distance)*1
                 temp_resi_map = np.stack((a,),axis=2)
-                d0 = -1*(np.isnan(data1[i][2])-1) #non-nan values ==1 , nan =0
+                d0= -1*(np.isnan(data1[i][2])-1) #non-nan values ==1 , nan =0
                 d = remove_diagonals(d0)
+                d = np.stack((d,) ,axis=2)
                 d0= np.stack((d0,),axis=2)
-                d = np.stack((d,),axis=2)
                 pair_wise_res = {('A','A') : 0, ('U','U') : 1, ('G','G') : 2, ('C','C') : 3,
                                  ('A','U') : 4, ('A','G') : 5, ('A','C') : 6,
                                  ('G','U') : 7, ('C','U') : 8,
@@ -324,7 +324,9 @@ for i in data_train:
         data2_y_nan += [data_train[i][-3],]
         data2_y_ss += [data_train[i][-1],]
         data2_name += [i,]
-##        classweight1 += np.sum(data2_y[0][:,:,0] ==1)
+        classweight1 += np.sum(data2_y[0][:,:,0] ==0)
+        classweight2 += np.sum(data2_y[0][:,:,0] !=3)
+print (classweight1/classweight2)
 ##        classweight2 += np.sum(data2_y[0][:,:,1] ==1)
 ##        classweight3 += np.sum(data2_y[0][:,:,2] ==1)
 ##weight1 = (classweight1 / (classweight1+classweight2+classweight3))**-1

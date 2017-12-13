@@ -726,7 +726,8 @@ for epoch in range(next_epoch,training_epochs):
             elif epoch < 3*training_epochs//4:
                 lr = lr/100
             else:
-                lr = lr/1000          
+                lr = lr/1000   
+            lr = lr *20       
             batch_x = np.array([[data2_x[i]] for i in batch_list])
             batch_y = np.array([data2_y[i]for i in batch_list])
             batch_y_nan = np.array([data2_y_nan[i]  for i in batch_list])
