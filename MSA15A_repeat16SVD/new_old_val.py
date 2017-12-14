@@ -7,6 +7,8 @@ sys.path.append('../')
 import tensorflow as tf
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib as mpl
+mpl.rcParams['image.cmap'] = "viridis"
 import random
 random.seed(1)
 # something is wrong with code. Could be double refering and overwriting data1,data2etc files
@@ -19,14 +21,23 @@ data1_t = np.load('../data_lim5000_nan.npy.zip')['data_lim5000_nan.npy'].item()
 data2_t = np.load('../data_lim5000_ss.npy.zip')['data_lim5000_ss'].item()
 data3_t = np.load('../data_lim5000_extra.npy').item()
 data4_t = np.load('../data_lim5000_MSA.npy').item()
-
+'''
+>>> np.mean(test_acc[::2])
+0.69065781364781198
+>>> np.mean(test_acc[1::2])
+0.76395461507096452
+>>> np.mean(val_acc[22::2])
+0.70220936143967783
+>>> np.mean(val_acc[23::2])
+0.80412826852380981
+'''
 puzzle = ['3OX0', '3OWZ', '3OXJ', '3OXE', '3OWZ', '3OWW', '3OXM', '3OWW', '3OWI', '3OXE',
           '3OXM', '3OX0', '3OXJ', '3OWI', '3OXB', '3OXD', '3OXD', '3OXB', '4LCK', '4TZV',
           '4TZZ', '4TZZ', '4TZZ', '4LCK', '4TZZ', '4TZP', '4TZW', '4TZP', '4TZZ', '4TZZ',
           '4TZV', '4TZW', '4TZZ', '4LCK', '4TZZ', '4TZP', '4LCK', '4TZP', '5EAQ', '5DQK',
           '5EAO', '5DH6', '5DI2', '5DH8', '5DH7', '5DI4', '4R4V', '5V3I', '4R4P', '3V7E',
           '3V7E', '4L81', '4OQU', '4P9R', '4P95', '4QLM', '4QLN', '4XWF', '4XW7', '4GXY',
-          '5DDO', '5DDO', '5TPY','5T5A']
+          '5DDO', '5DDO', '5TPY','5T5A','5K7C','5DI4']
 
 data_test = {}
 data_train = {}
@@ -35,7 +46,7 @@ data_val = {}
 v16 - make 2 classes, <thres_distance , >=thres_distance
 
 '''
-thres_distance  = 20
+thres_distance  = 16
 def make_array(str):
     temp = [0,]*len(str)
     for i in range(len(str)):
@@ -128,9 +139,10 @@ for i in data1_keys_train:
                 temp1 = data1[i]
                 a = (data1[i][2] > thres_distance)*1
                 temp_resi_map = np.stack((a,),axis=2)
-                d = -1*(np.isnan(data1[i][2])-1) #non-nan values ==1 , nan =0
-                d = remove_diagonals(d) 
-                d = np.stack((d,),axis=2)
+                d0= -1*(np.isnan(data1[i][2])-1) #non-nan values ==1 , nan =0
+                d = remove_diagonals(d0)
+                d = np.stack((d,) ,axis=2)
+                d0= np.stack((d0,),axis=2)
                 pair_wise_res = {('A','A') : 0, ('U','U') : 1, ('G','G') : 2, ('C','C') : 3,
                                  ('A','U') : 4, ('A','G') : 5, ('A','C') : 6,
                                  ('G','U') : 7, ('C','U') : 8,
@@ -164,7 +176,7 @@ for i in data1_keys_train:
                 for window_tup in [(35,11),(50,13),(75,25),(100,33),(125,41),(150,50),(200,66),(300,100),(400,133),(500,167)]:
                     window, jump = window_tup[0], window_tup[1]
                     for repeat in range(0,len(data1[i][0]) - window+1,jump):
-                        if np.mean(d[repeat:repeat+window,repeat:repeat+window,:]) > 0.9: 
+                        if np.mean(d0[repeat:repeat+window,repeat:repeat+window,:]) > 0.9: 
                             data_train[i+'_'+str(window)+'_'+str(repeat)] = [tempF[:,repeat:repeat+window],
                                                    temp1[0][repeat:repeat+window],
                                                    temp1[1][repeat:repeat+window],
@@ -323,7 +335,9 @@ for i in data_train:
         data2_y_nan += [data_train[i][-3],]
         data2_y_ss += [data_train[i][-1],]
         data2_name += [i,]
-##        classweight1 += np.sum(data2_y[0][:,:,0] ==1)
+        classweight1 += np.sum(data2_y[0][:,:,0] ==0)
+        classweight2 += np.sum(data2_y[0][:,:,0] !=3)
+print (classweight1/classweight2)
 ##        classweight2 += np.sum(data2_y[0][:,:,1] ==1)
 ##        classweight3 += np.sum(data2_y[0][:,:,2] ==1)
 ##weight1 = (classweight1 / (classweight1+classweight2+classweight3))**-1
@@ -685,8 +699,7 @@ def accuracy(mat_model,answer,bal=True):
     else:
         return map(lambda x : str(x)[:5],(np.mean([np.mean(score[0]),np.mean(score[1])]),np.mean(score[0]+score[1])))
 
-        
-
+   
 import os
 saver = tf.train.Saver()
 # Initializing the variables
@@ -795,6 +808,10 @@ for epoch in range(next_epoch,training_epochs):
                                                         phase : False, learning_rate : lr, dropout : 0})
                 acc = accuracy((pred[k]+np.transpose(pred[k],(1,0,2)))//1,batch_y[k])
                 val_acc += [acc,]
+                temp_pred = pred[k]+np.transpose(pred[k],(1,0,2))
+                temp_pred[:,:,0] = (temp_pred[:,:,0])*batch_y_nan[0,:,:,0]
+                acc = accuracy(temp_pred[:,:,0]>=1.0,batch_y[k,:,:,0]>=1)
+                val_acc += [acc,]
                 if True and (batch_y_nan.shape[1] >=50 and batch_y_nan.shape[1] <=300) :
                     f, ax = plt.subplots(1,7,figsize=(23,5));k=0
                     temp_pred = pred[k]+np.transpose(pred[k],(1,0,2))
@@ -803,17 +820,17 @@ for epoch in range(next_epoch,training_epochs):
                     temp_pred[:,:,0] = (temp_pred[:,:,0])*batch_y_nan[0,:,:,0]
                     ax[0].imshow(temp_pred2[:,:]>=.6)
                     ax[1].imshow(temp_pred2[:,:]>=1.0)
-                    ax[2].imshow(temp_pred2[:,:]>=1.2)
+                    ax[2].imshow(temp_pred2[:,:]>=1.4)
                     ax[3].imshow(1-batch_y_ss[0,:,:,0])
                     ax[-2].imshow(temp_pred[:,:,0] *200//20)
                     ax[-1].imshow(batch_y[k,:,:,0]>=1)
                     ax[0].set_xlabel('pred bal_acc=\n%s (thres-50)'%accuracy(temp_pred[:,:,0]>=.6,batch_y[k,:,:,0]>=1,False))
                     ax[1].set_xlabel('pred bal_acc=\n%s (thres-40)'%accuracy(temp_pred[:,:,0]>=1.0,batch_y[k,:,:,0]>=1,False))
-                    ax[2].set_xlabel('pred bal_acc=\n%s (thres-25)'%accuracy(temp_pred[:,:,0]>=1.2,batch_y[k,:,:,0]>=1,False))
+                    ax[2].set_xlabel('pred bal_acc=\n%s (thres-30)'%accuracy(temp_pred[:,:,0]>=1.4,batch_y[k,:,:,0]>=1,False))
                     ax[-2].set_xlabel('probabilities logloss=%s' %map(lambda x :str(x)[:5],(cost_i,acc)))
                     ax[-1].set_xlabel('actual')
-                    plt.savefig(   'VAL/'+ data2_name_val[i]+'.png');
-                    plt.savefig(   'rosetta/Log_restrain_large/'+ data2_name_val[i]+'.png');
+                    plt.savefig(   'VAL/'+ data2_name_val[i]+'.png',bbox_inches='tight');
+                    plt.savefig(   'rosetta/Log_restrain_large/'+ data2_name_val[i]+'.png',bbox_inches='tight');
                     plt.close()
                     dictt_RNA = { (1,0,0,0) : 'A' , (0,1,0,0) : 'U', (0,0,1,0) : 'G' , (0,0,0,1) : 'C' }
                     dictt_SS = {  1.0 : '(', -1.0 : ')', 0. : '.'  }
@@ -851,6 +868,10 @@ for epoch in range(next_epoch,training_epochs):
                                                         phase : False, learning_rate : lr, dropout : 0})
                 acc = accuracy((pred[k]+np.transpose(pred[k],(1,0,2)))//1,batch_y[k])
                 test_acc += [acc,]
+                temp_pred = pred[k]+np.transpose(pred[k],(1,0,2))
+                temp_pred[:,:,0] = (temp_pred[:,:,0])*batch_y_nan[0,:,:,0]
+                acc = accuracy(temp_pred[:,:,0]>=1.0,batch_y[k,:,:,0]>=1)
+                test_acc += [acc,]
                 if True:
                     f, ax = plt.subplots(1,8,figsize=(26,5));k=0
                     temp_pred = pred[k]+np.transpose(pred[k],(1,0,2))
@@ -862,6 +883,7 @@ for epoch in range(next_epoch,training_epochs):
                     ax[2].imshow(temp_pred2[:,:]>=1.4)
                     ax[3].imshow(temp_pred2[:,:]>=1.6)
                     ax[4].imshow(1-batch_y_ss[0,:,:,0])
+                    ax[4].set_xlabel('Secondary Structure\nA pairwise Feature')
                     ax[-2].imshow(temp_pred[:,:,0] *200//20)
                     ax[-1].imshow(batch_y[k,:,:,0]>=1)
                     ax[0].set_xlabel('pred bal_acc=\n%s (thres-70)'%accuracy(temp_pred[:,:,0]>=.6,batch_y[k,:,:,0]>=1,False))
