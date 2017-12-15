@@ -57,28 +57,36 @@ def get_mat(i):
 
 result = []
 for ii in sorted(models):
-    answer = np.argmax(get_mat(solution[0]),2)[0:,0:] 
-    if 'major' in ii or 'das' in ii or 'chen' in ii or 'flores' in ii: # first residue does not contain P atom
-        None#answer = answer[:-1,:-1]
-    mat_model = np.argmax(get_mat(ii),2)
-    score = [[],[],[]]
-    for i in range(0,answer.shape[0]):
-        for j in range(i+1,answer.shape[0]):
-            if (np.sum(answer[i,:]) != 0 and np.sum(answer[j,:]) != 0)\
-            and (np.sum(mat_model[i,:]) !=0 and np.sum(mat_model[j,:])!=0):
-                if answer[i,j] == mat_model[i,j]:
-                    score[answer[i,j]] += [1,]
-                else:
-                    score[answer[i,j]] += [0,]
-    f, ax = plt.subplots(1,2,figsize=(10,5))
-    acc = np.mean([np.mean(score[0]),np.mean(score[1])])
-    acc2 = np.mean(score[0]+score[1])
-    print ii,answer.shape,mat_model.shape,acc,acc2
-    ax[0].imshow(answer)
-    ax[1].imshow(mat_model)
-    ax[0].set_xlabel(acc)
-    ax[1].set_xlabel(acc2)
-    plt.savefig(ii[:-4]+'.png');plt.close()
-    result += [acc,]
+    try:
+        answer = np.argmax(get_mat(solution[0]),2)[0:185,0:185]
+        mat_model = np.argmax(get_mat(ii),2)[0:185,0:185] 
+        if 'major' in ii :#or 'das' in ii or 'chen' in ii or 'flores' in ii: # first residue does not contain P atom
+            continue#answer = answer[:-1,:-1]
+        if mat_model.shape[1] == 184 or 'Das' in ii:# in ii :#or 'das' in ii or 'chen' in ii or 'flores' in ii: # first residue does not contain P atom
+            answer = answer[1:,1:]
+        
+        score = [[],[],[]]
+        for i in range(0,answer.shape[0]):
+            for j in range(i+1,answer.shape[0]):
+                if (np.sum(answer[i,:]) != 0 and np.sum(answer[j,:]) != 0)\
+                and (np.sum(mat_model[i,:]) !=0 and np.sum(mat_model[j,:])!=0):
+                    if answer[i,j] == mat_model[i,j]:
+                        score[answer[i,j]] += [1,]
+                    else:
+                        score[answer[i,j]] += [0,]
+        f, ax = plt.subplots(1,2,figsize=(10,5))
+        acc = np.mean([np.mean(score[0]),np.mean(score[1])])
+        acc2 = np.mean(score[0]+score[1])
+        print ii,answer.shape,mat_model.shape,acc,acc2
+        ax[0].imshow(answer)
+        ax[1].imshow(mat_model)
+        ax[0].set_xlabel(acc)
+        ax[1].set_xlabel(acc2)
+        plt.savefig(ii[:-4]+'.png');plt.close()
+        result += [acc,]
+    except :
+        None
 print np.mean(result)
 print np.std(result)
+result += [[0.725,.773,.823,0.856],]
+plt.hist([result[:-1],result[-1]],normed=True);plt.savefig('result.png')

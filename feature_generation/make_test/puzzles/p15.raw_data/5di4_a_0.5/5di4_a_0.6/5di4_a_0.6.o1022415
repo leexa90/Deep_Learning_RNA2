@@ -1,0 +1,1304 @@
+Traceback (most recent call last):
+  File "/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/tools/rna_tools//sym_link.py", line 21, in <module>
+    os.remove(f)
+OSError: [Errno 2] No such file or directory: './bin/rosetta_exe.py'
+rosetta_spring_commands: line 1: rna_helix.py: command not found
+rosetta_spring_commands: line 2: rna_helix.py: command not found
+rosetta_spring_commands: line 3: rna_helix.py: command not found
+rosetta_spring_commands: line 4: rna_helix.py: command not found
+rosetta_spring_commands: line 7: rna_denovo_setup.py: command not found
+/var/spool/torque/mom_priv/jobs/1022415.santa.SC: line 54: README_FARFAR: No such file or directory
+/var/spool/torque/mom_priv/jobs/1022415.santa.SC: line 56: extract_lowscore_decoys.py: command not found
+1
+
+Basic usage:  /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -s <pdb file> 
+              /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -in:file:silent <silent file> 
+
+ Type -help for full slate of options.
+
+core.init: Rosetta version exported  from http://www.rosettacommons.org
+core.init: command: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease -s TPP_FL_sln.out.1.pdb -minimize_rounds 2 -skip_coord_constraints -out:file:silent TPP2.out
+core.init: 'RNG device' seed mode, using '/dev/urandom', seed=25154656 seed_offset=0 real_seed=25154656
+core.init.random: RandomGenerator:init: Normal mode, seed=25154656 RG_type=mt19937
+core.init: Resolved executable path: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/rna_minimize.default.linuxgccrelease
+core.init: Looking for database based on location of executable: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/database/
+core.chemical.ResidueTypeSet: Finished initializing fa_standard residue type set.  Created 42632 residue types
+core.chemical.ResidueTypeSet: Total time to initialize 2.07 seconds.
+core.scoring.etable: Starting energy table calculation
+core.scoring.etable: smooth_etable: changing atr/rep split to bottom of energy well
+core.scoring.etable: smooth_etable: spline smoothing lj etables (maxdis = 6)
+core.scoring.etable: smooth_etable: spline smoothing solvation etables (max_dis = 6)
+core.scoring.etable: Finished calculating energy tables.
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBPoly1D.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBFadeIntervals.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBEval.csv
+basic.io.database: Database file opened: scoring/score_functions/carbon_hbond/ch_o_bond_potential.dat
+core.import_pose.import_pose: PDB File:TPP_FL_sln.out.1.pdb not found!
+
+ERROR: Cannot open PDB file "TPP_FL_sln.out.1.pdb"
+ERROR:: Exit from: src/core/import_pose/import_pose.cc line: 214
+[35m/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(print_backtrace()+0x23) [0x7f88b6c0a6b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(utility::exit(std::string const&, int, std::string const&, int)+0x107) [0x7f88b6c09fe7]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, core::import_pose::ImportPoseOptions const&, bool)+0x441) [0x7f88bab0b601]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, bool)+0x49) [0x7f88bab0c7d9]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_stream::PDBPoseInputStream::fill_pose(core::pose::Pose&, core::chemical::ResidueTypeSet const&)+0xa1) [0x7f88baac6a41]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x4111b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x413214]
+/lib64/libc.so.6(__libc_start_main+0xfd) [0x34bc01ed5d]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x40f889]
+[0mcaught exception 
+
+[ERROR] EXCN_utility_exit has been thrown from: src/core/import_pose/import_pose.cc line: 214
+ERROR: Cannot open PDB file "TPP_FL_sln.out.1.pdb"
+
+
+2
+
+Basic usage:  /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -s <pdb file> 
+              /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -in:file:silent <silent file> 
+
+ Type -help for full slate of options.
+
+core.init: Rosetta version exported  from http://www.rosettacommons.org
+core.init: command: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease -s TPP_FL_sln.out.2.pdb -minimize_rounds 2 -skip_coord_constraints -out:file:silent TPP2.out
+core.init: 'RNG device' seed mode, using '/dev/urandom', seed=-515813604 seed_offset=0 real_seed=-515813604
+core.init.random: RandomGenerator:init: Normal mode, seed=-515813604 RG_type=mt19937
+core.init: Resolved executable path: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/rna_minimize.default.linuxgccrelease
+core.init: Looking for database based on location of executable: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/database/
+core.chemical.ResidueTypeSet: Finished initializing fa_standard residue type set.  Created 42632 residue types
+core.chemical.ResidueTypeSet: Total time to initialize 2.04 seconds.
+core.scoring.etable: Starting energy table calculation
+core.scoring.etable: smooth_etable: changing atr/rep split to bottom of energy well
+core.scoring.etable: smooth_etable: spline smoothing lj etables (maxdis = 6)
+core.scoring.etable: smooth_etable: spline smoothing solvation etables (max_dis = 6)
+core.scoring.etable: Finished calculating energy tables.
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBPoly1D.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBFadeIntervals.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBEval.csv
+basic.io.database: Database file opened: scoring/score_functions/carbon_hbond/ch_o_bond_potential.dat
+core.import_pose.import_pose: PDB File:TPP_FL_sln.out.2.pdb not found!
+
+ERROR: Cannot open PDB file "TPP_FL_sln.out.2.pdb"
+ERROR:: Exit from: src/core/import_pose/import_pose.cc line: 214
+[35m/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(print_backtrace()+0x23) [0x7efc9854d6b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(utility::exit(std::string const&, int, std::string const&, int)+0x107) [0x7efc9854cfe7]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, core::import_pose::ImportPoseOptions const&, bool)+0x441) [0x7efc9c44e601]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, bool)+0x49) [0x7efc9c44f7d9]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_stream::PDBPoseInputStream::fill_pose(core::pose::Pose&, core::chemical::ResidueTypeSet const&)+0xa1) [0x7efc9c409a41]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x4111b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x413214]
+/lib64/libc.so.6(__libc_start_main+0xfd) [0x34bc01ed5d]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x40f889]
+[0mcaught exception 
+
+[ERROR] EXCN_utility_exit has been thrown from: src/core/import_pose/import_pose.cc line: 214
+ERROR: Cannot open PDB file "TPP_FL_sln.out.2.pdb"
+
+
+3
+
+Basic usage:  /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -s <pdb file> 
+              /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -in:file:silent <silent file> 
+
+ Type -help for full slate of options.
+
+core.init: Rosetta version exported  from http://www.rosettacommons.org
+core.init: command: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease -s TPP_FL_sln.out.3.pdb -minimize_rounds 2 -skip_coord_constraints -out:file:silent TPP2.out
+core.init: 'RNG device' seed mode, using '/dev/urandom', seed=-1457429615 seed_offset=0 real_seed=-1457429615
+core.init.random: RandomGenerator:init: Normal mode, seed=-1457429615 RG_type=mt19937
+core.init: Resolved executable path: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/rna_minimize.default.linuxgccrelease
+core.init: Looking for database based on location of executable: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/database/
+core.chemical.ResidueTypeSet: Finished initializing fa_standard residue type set.  Created 42632 residue types
+core.chemical.ResidueTypeSet: Total time to initialize 2.06 seconds.
+core.scoring.etable: Starting energy table calculation
+core.scoring.etable: smooth_etable: changing atr/rep split to bottom of energy well
+core.scoring.etable: smooth_etable: spline smoothing lj etables (maxdis = 6)
+core.scoring.etable: smooth_etable: spline smoothing solvation etables (max_dis = 6)
+core.scoring.etable: Finished calculating energy tables.
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBPoly1D.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBFadeIntervals.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBEval.csv
+basic.io.database: Database file opened: scoring/score_functions/carbon_hbond/ch_o_bond_potential.dat
+core.import_pose.import_pose: PDB File:TPP_FL_sln.out.3.pdb not found!
+
+ERROR: Cannot open PDB file "TPP_FL_sln.out.3.pdb"
+ERROR:: Exit from: src/core/import_pose/import_pose.cc line: 214
+[35m/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(print_backtrace()+0x23) [0x7f0dcfe336b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(utility::exit(std::string const&, int, std::string const&, int)+0x107) [0x7f0dcfe32fe7]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, core::import_pose::ImportPoseOptions const&, bool)+0x441) [0x7f0dd3d34601]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, bool)+0x49) [0x7f0dd3d357d9]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_stream::PDBPoseInputStream::fill_pose(core::pose::Pose&, core::chemical::ResidueTypeSet const&)+0xa1) [0x7f0dd3cefa41]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x4111b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x413214]
+/lib64/libc.so.6(__libc_start_main+0xfd) [0x34bc01ed5d]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x40f889]
+[0mcaught exception 
+
+[ERROR] EXCN_utility_exit has been thrown from: src/core/import_pose/import_pose.cc line: 214
+ERROR: Cannot open PDB file "TPP_FL_sln.out.3.pdb"
+
+
+4
+
+Basic usage:  /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -s <pdb file> 
+              /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -in:file:silent <silent file> 
+
+ Type -help for full slate of options.
+
+core.init: Rosetta version exported  from http://www.rosettacommons.org
+core.init: command: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease -s TPP_FL_sln.out.4.pdb -minimize_rounds 2 -skip_coord_constraints -out:file:silent TPP2.out
+core.init: 'RNG device' seed mode, using '/dev/urandom', seed=-750400164 seed_offset=0 real_seed=-750400164
+core.init.random: RandomGenerator:init: Normal mode, seed=-750400164 RG_type=mt19937
+core.init: Resolved executable path: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/rna_minimize.default.linuxgccrelease
+core.init: Looking for database based on location of executable: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/database/
+core.chemical.ResidueTypeSet: Finished initializing fa_standard residue type set.  Created 42632 residue types
+core.chemical.ResidueTypeSet: Total time to initialize 2.07 seconds.
+core.scoring.etable: Starting energy table calculation
+core.scoring.etable: smooth_etable: changing atr/rep split to bottom of energy well
+core.scoring.etable: smooth_etable: spline smoothing lj etables (maxdis = 6)
+core.scoring.etable: smooth_etable: spline smoothing solvation etables (max_dis = 6)
+core.scoring.etable: Finished calculating energy tables.
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBPoly1D.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBFadeIntervals.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBEval.csv
+basic.io.database: Database file opened: scoring/score_functions/carbon_hbond/ch_o_bond_potential.dat
+core.import_pose.import_pose: PDB File:TPP_FL_sln.out.4.pdb not found!
+
+ERROR: Cannot open PDB file "TPP_FL_sln.out.4.pdb"
+ERROR:: Exit from: src/core/import_pose/import_pose.cc line: 214
+[35m/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(print_backtrace()+0x23) [0x7f80362636b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(utility::exit(std::string const&, int, std::string const&, int)+0x107) [0x7f8036262fe7]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, core::import_pose::ImportPoseOptions const&, bool)+0x441) [0x7f803a164601]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, bool)+0x49) [0x7f803a1657d9]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_stream::PDBPoseInputStream::fill_pose(core::pose::Pose&, core::chemical::ResidueTypeSet const&)+0xa1) [0x7f803a11fa41]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x4111b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x413214]
+/lib64/libc.so.6(__libc_start_main+0xfd) [0x34bc01ed5d]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x40f889]
+[0mcaught exception 
+
+[ERROR] EXCN_utility_exit has been thrown from: src/core/import_pose/import_pose.cc line: 214
+ERROR: Cannot open PDB file "TPP_FL_sln.out.4.pdb"
+
+
+5
+
+Basic usage:  /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -s <pdb file> 
+              /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -in:file:silent <silent file> 
+
+ Type -help for full slate of options.
+
+core.init: Rosetta version exported  from http://www.rosettacommons.org
+core.init: command: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease -s TPP_FL_sln.out.5.pdb -minimize_rounds 2 -skip_coord_constraints -out:file:silent TPP2.out
+core.init: 'RNG device' seed mode, using '/dev/urandom', seed=1281121690 seed_offset=0 real_seed=1281121690
+core.init.random: RandomGenerator:init: Normal mode, seed=1281121690 RG_type=mt19937
+core.init: Resolved executable path: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/rna_minimize.default.linuxgccrelease
+core.init: Looking for database based on location of executable: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/database/
+core.chemical.ResidueTypeSet: Finished initializing fa_standard residue type set.  Created 42632 residue types
+core.chemical.ResidueTypeSet: Total time to initialize 2.08 seconds.
+core.scoring.etable: Starting energy table calculation
+core.scoring.etable: smooth_etable: changing atr/rep split to bottom of energy well
+core.scoring.etable: smooth_etable: spline smoothing lj etables (maxdis = 6)
+core.scoring.etable: smooth_etable: spline smoothing solvation etables (max_dis = 6)
+core.scoring.etable: Finished calculating energy tables.
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBPoly1D.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBFadeIntervals.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBEval.csv
+basic.io.database: Database file opened: scoring/score_functions/carbon_hbond/ch_o_bond_potential.dat
+core.import_pose.import_pose: PDB File:TPP_FL_sln.out.5.pdb not found!
+
+ERROR: Cannot open PDB file "TPP_FL_sln.out.5.pdb"
+ERROR:: Exit from: src/core/import_pose/import_pose.cc line: 214
+[35m/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(print_backtrace()+0x23) [0x7fede17a46b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(utility::exit(std::string const&, int, std::string const&, int)+0x107) [0x7fede17a3fe7]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, core::import_pose::ImportPoseOptions const&, bool)+0x441) [0x7fede56a5601]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, bool)+0x49) [0x7fede56a67d9]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_stream::PDBPoseInputStream::fill_pose(core::pose::Pose&, core::chemical::ResidueTypeSet const&)+0xa1) [0x7fede5660a41]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x4111b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x413214]
+/lib64/libc.so.6(__libc_start_main+0xfd) [0x34bc01ed5d]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x40f889]
+[0mcaught exception 
+
+[ERROR] EXCN_utility_exit has been thrown from: src/core/import_pose/import_pose.cc line: 214
+ERROR: Cannot open PDB file "TPP_FL_sln.out.5.pdb"
+
+
+6
+
+Basic usage:  /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -s <pdb file> 
+              /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -in:file:silent <silent file> 
+
+ Type -help for full slate of options.
+
+core.init: Rosetta version exported  from http://www.rosettacommons.org
+core.init: command: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease -s TPP_FL_sln.out.6.pdb -minimize_rounds 2 -skip_coord_constraints -out:file:silent TPP2.out
+core.init: 'RNG device' seed mode, using '/dev/urandom', seed=-479331079 seed_offset=0 real_seed=-479331079
+core.init.random: RandomGenerator:init: Normal mode, seed=-479331079 RG_type=mt19937
+core.init: Resolved executable path: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/rna_minimize.default.linuxgccrelease
+core.init: Looking for database based on location of executable: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/database/
+core.chemical.ResidueTypeSet: Finished initializing fa_standard residue type set.  Created 42632 residue types
+core.chemical.ResidueTypeSet: Total time to initialize 2.07 seconds.
+core.scoring.etable: Starting energy table calculation
+core.scoring.etable: smooth_etable: changing atr/rep split to bottom of energy well
+core.scoring.etable: smooth_etable: spline smoothing lj etables (maxdis = 6)
+core.scoring.etable: smooth_etable: spline smoothing solvation etables (max_dis = 6)
+core.scoring.etable: Finished calculating energy tables.
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBPoly1D.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBFadeIntervals.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBEval.csv
+basic.io.database: Database file opened: scoring/score_functions/carbon_hbond/ch_o_bond_potential.dat
+core.import_pose.import_pose: PDB File:TPP_FL_sln.out.6.pdb not found!
+
+ERROR: Cannot open PDB file "TPP_FL_sln.out.6.pdb"
+ERROR:: Exit from: src/core/import_pose/import_pose.cc line: 214
+[35m/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(print_backtrace()+0x23) [0x7f983dc2f6b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(utility::exit(std::string const&, int, std::string const&, int)+0x107) [0x7f983dc2efe7]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, core::import_pose::ImportPoseOptions const&, bool)+0x441) [0x7f9841b30601]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, bool)+0x49) [0x7f9841b317d9]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_stream::PDBPoseInputStream::fill_pose(core::pose::Pose&, core::chemical::ResidueTypeSet const&)+0xa1) [0x7f9841aeba41]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x4111b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x413214]
+/lib64/libc.so.6(__libc_start_main+0xfd) [0x34bc01ed5d]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x40f889]
+[0mcaught exception 
+
+[ERROR] EXCN_utility_exit has been thrown from: src/core/import_pose/import_pose.cc line: 214
+ERROR: Cannot open PDB file "TPP_FL_sln.out.6.pdb"
+
+
+7
+
+Basic usage:  /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -s <pdb file> 
+              /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -in:file:silent <silent file> 
+
+ Type -help for full slate of options.
+
+core.init: Rosetta version exported  from http://www.rosettacommons.org
+core.init: command: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease -s TPP_FL_sln.out.7.pdb -minimize_rounds 2 -skip_coord_constraints -out:file:silent TPP2.out
+core.init: 'RNG device' seed mode, using '/dev/urandom', seed=931663452 seed_offset=0 real_seed=931663452
+core.init.random: RandomGenerator:init: Normal mode, seed=931663452 RG_type=mt19937
+core.init: Resolved executable path: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/rna_minimize.default.linuxgccrelease
+core.init: Looking for database based on location of executable: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/database/
+core.chemical.ResidueTypeSet: Finished initializing fa_standard residue type set.  Created 42632 residue types
+core.chemical.ResidueTypeSet: Total time to initialize 2.07 seconds.
+core.scoring.etable: Starting energy table calculation
+core.scoring.etable: smooth_etable: changing atr/rep split to bottom of energy well
+core.scoring.etable: smooth_etable: spline smoothing lj etables (maxdis = 6)
+core.scoring.etable: smooth_etable: spline smoothing solvation etables (max_dis = 6)
+core.scoring.etable: Finished calculating energy tables.
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBPoly1D.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBFadeIntervals.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBEval.csv
+basic.io.database: Database file opened: scoring/score_functions/carbon_hbond/ch_o_bond_potential.dat
+core.import_pose.import_pose: PDB File:TPP_FL_sln.out.7.pdb not found!
+
+ERROR: Cannot open PDB file "TPP_FL_sln.out.7.pdb"
+ERROR:: Exit from: src/core/import_pose/import_pose.cc line: 214
+[35m/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(print_backtrace()+0x23) [0x7f87946926b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(utility::exit(std::string const&, int, std::string const&, int)+0x107) [0x7f8794691fe7]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, core::import_pose::ImportPoseOptions const&, bool)+0x441) [0x7f8798593601]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, bool)+0x49) [0x7f87985947d9]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_stream::PDBPoseInputStream::fill_pose(core::pose::Pose&, core::chemical::ResidueTypeSet const&)+0xa1) [0x7f879854ea41]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x4111b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x413214]
+/lib64/libc.so.6(__libc_start_main+0xfd) [0x34bc01ed5d]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x40f889]
+[0mcaught exception 
+
+[ERROR] EXCN_utility_exit has been thrown from: src/core/import_pose/import_pose.cc line: 214
+ERROR: Cannot open PDB file "TPP_FL_sln.out.7.pdb"
+
+
+8
+
+Basic usage:  /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -s <pdb file> 
+              /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -in:file:silent <silent file> 
+
+ Type -help for full slate of options.
+
+core.init: Rosetta version exported  from http://www.rosettacommons.org
+core.init: command: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease -s TPP_FL_sln.out.8.pdb -minimize_rounds 2 -skip_coord_constraints -out:file:silent TPP2.out
+core.init: 'RNG device' seed mode, using '/dev/urandom', seed=-537879846 seed_offset=0 real_seed=-537879846
+core.init.random: RandomGenerator:init: Normal mode, seed=-537879846 RG_type=mt19937
+core.init: Resolved executable path: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/rna_minimize.default.linuxgccrelease
+core.init: Looking for database based on location of executable: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/database/
+core.chemical.ResidueTypeSet: Finished initializing fa_standard residue type set.  Created 42632 residue types
+core.chemical.ResidueTypeSet: Total time to initialize 2.07 seconds.
+core.scoring.etable: Starting energy table calculation
+core.scoring.etable: smooth_etable: changing atr/rep split to bottom of energy well
+core.scoring.etable: smooth_etable: spline smoothing lj etables (maxdis = 6)
+core.scoring.etable: smooth_etable: spline smoothing solvation etables (max_dis = 6)
+core.scoring.etable: Finished calculating energy tables.
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBPoly1D.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBFadeIntervals.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBEval.csv
+basic.io.database: Database file opened: scoring/score_functions/carbon_hbond/ch_o_bond_potential.dat
+core.import_pose.import_pose: PDB File:TPP_FL_sln.out.8.pdb not found!
+
+ERROR: Cannot open PDB file "TPP_FL_sln.out.8.pdb"
+ERROR:: Exit from: src/core/import_pose/import_pose.cc line: 214
+[35m/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(print_backtrace()+0x23) [0x7f093c6a36b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(utility::exit(std::string const&, int, std::string const&, int)+0x107) [0x7f093c6a2fe7]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, core::import_pose::ImportPoseOptions const&, bool)+0x441) [0x7f09405a4601]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, bool)+0x49) [0x7f09405a57d9]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_stream::PDBPoseInputStream::fill_pose(core::pose::Pose&, core::chemical::ResidueTypeSet const&)+0xa1) [0x7f094055fa41]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x4111b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x413214]
+/lib64/libc.so.6(__libc_start_main+0xfd) [0x34bc01ed5d]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x40f889]
+[0mcaught exception 
+
+[ERROR] EXCN_utility_exit has been thrown from: src/core/import_pose/import_pose.cc line: 214
+ERROR: Cannot open PDB file "TPP_FL_sln.out.8.pdb"
+
+
+9
+
+Basic usage:  /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -s <pdb file> 
+              /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -in:file:silent <silent file> 
+
+ Type -help for full slate of options.
+
+core.init: Rosetta version exported  from http://www.rosettacommons.org
+core.init: command: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease -s TPP_FL_sln.out.9.pdb -minimize_rounds 2 -skip_coord_constraints -out:file:silent TPP2.out
+core.init: 'RNG device' seed mode, using '/dev/urandom', seed=1438015895 seed_offset=0 real_seed=1438015895
+core.init.random: RandomGenerator:init: Normal mode, seed=1438015895 RG_type=mt19937
+core.init: Resolved executable path: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/rna_minimize.default.linuxgccrelease
+core.init: Looking for database based on location of executable: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/database/
+core.chemical.ResidueTypeSet: Finished initializing fa_standard residue type set.  Created 42632 residue types
+core.chemical.ResidueTypeSet: Total time to initialize 2.05 seconds.
+core.scoring.etable: Starting energy table calculation
+core.scoring.etable: smooth_etable: changing atr/rep split to bottom of energy well
+core.scoring.etable: smooth_etable: spline smoothing lj etables (maxdis = 6)
+core.scoring.etable: smooth_etable: spline smoothing solvation etables (max_dis = 6)
+core.scoring.etable: Finished calculating energy tables.
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBPoly1D.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBFadeIntervals.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBEval.csv
+basic.io.database: Database file opened: scoring/score_functions/carbon_hbond/ch_o_bond_potential.dat
+core.import_pose.import_pose: PDB File:TPP_FL_sln.out.9.pdb not found!
+
+ERROR: Cannot open PDB file "TPP_FL_sln.out.9.pdb"
+ERROR:: Exit from: src/core/import_pose/import_pose.cc line: 214
+[35m/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(print_backtrace()+0x23) [0x7fc1332626b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(utility::exit(std::string const&, int, std::string const&, int)+0x107) [0x7fc133261fe7]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, core::import_pose::ImportPoseOptions const&, bool)+0x441) [0x7fc137163601]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, bool)+0x49) [0x7fc1371647d9]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_stream::PDBPoseInputStream::fill_pose(core::pose::Pose&, core::chemical::ResidueTypeSet const&)+0xa1) [0x7fc13711ea41]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x4111b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x413214]
+/lib64/libc.so.6(__libc_start_main+0xfd) [0x34bc01ed5d]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x40f889]
+[0mcaught exception 
+
+[ERROR] EXCN_utility_exit has been thrown from: src/core/import_pose/import_pose.cc line: 214
+ERROR: Cannot open PDB file "TPP_FL_sln.out.9.pdb"
+
+
+10
+
+Basic usage:  /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -s <pdb file> 
+              /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -in:file:silent <silent file> 
+
+ Type -help for full slate of options.
+
+core.init: Rosetta version exported  from http://www.rosettacommons.org
+core.init: command: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease -s TPP_FL_sln.out.10.pdb -minimize_rounds 2 -skip_coord_constraints -out:file:silent TPP2.out
+core.init: 'RNG device' seed mode, using '/dev/urandom', seed=872529062 seed_offset=0 real_seed=872529062
+core.init.random: RandomGenerator:init: Normal mode, seed=872529062 RG_type=mt19937
+core.init: Resolved executable path: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/rna_minimize.default.linuxgccrelease
+core.init: Looking for database based on location of executable: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/database/
+core.chemical.ResidueTypeSet: Finished initializing fa_standard residue type set.  Created 42632 residue types
+core.chemical.ResidueTypeSet: Total time to initialize 2.08 seconds.
+core.scoring.etable: Starting energy table calculation
+core.scoring.etable: smooth_etable: changing atr/rep split to bottom of energy well
+core.scoring.etable: smooth_etable: spline smoothing lj etables (maxdis = 6)
+core.scoring.etable: smooth_etable: spline smoothing solvation etables (max_dis = 6)
+core.scoring.etable: Finished calculating energy tables.
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBPoly1D.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBFadeIntervals.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBEval.csv
+basic.io.database: Database file opened: scoring/score_functions/carbon_hbond/ch_o_bond_potential.dat
+core.import_pose.import_pose: PDB File:TPP_FL_sln.out.10.pdb not found!
+
+ERROR: Cannot open PDB file "TPP_FL_sln.out.10.pdb"
+ERROR:: Exit from: src/core/import_pose/import_pose.cc line: 214
+[35m/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(print_backtrace()+0x23) [0x7f6c5349b6b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(utility::exit(std::string const&, int, std::string const&, int)+0x107) [0x7f6c5349afe7]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, core::import_pose::ImportPoseOptions const&, bool)+0x441) [0x7f6c5739c601]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, bool)+0x49) [0x7f6c5739d7d9]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_stream::PDBPoseInputStream::fill_pose(core::pose::Pose&, core::chemical::ResidueTypeSet const&)+0xa1) [0x7f6c57357a41]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x4111b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x413214]
+/lib64/libc.so.6(__libc_start_main+0xfd) [0x34bc01ed5d]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x40f889]
+[0mcaught exception 
+
+[ERROR] EXCN_utility_exit has been thrown from: src/core/import_pose/import_pose.cc line: 214
+ERROR: Cannot open PDB file "TPP_FL_sln.out.10.pdb"
+
+
+11
+
+Basic usage:  /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -s <pdb file> 
+              /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -in:file:silent <silent file> 
+
+ Type -help for full slate of options.
+
+core.init: Rosetta version exported  from http://www.rosettacommons.org
+core.init: command: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease -s TPP_FL_sln.out.11.pdb -minimize_rounds 2 -skip_coord_constraints -out:file:silent TPP2.out
+core.init: 'RNG device' seed mode, using '/dev/urandom', seed=-1361357695 seed_offset=0 real_seed=-1361357695
+core.init.random: RandomGenerator:init: Normal mode, seed=-1361357695 RG_type=mt19937
+core.init: Resolved executable path: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/rna_minimize.default.linuxgccrelease
+core.init: Looking for database based on location of executable: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/database/
+core.chemical.ResidueTypeSet: Finished initializing fa_standard residue type set.  Created 42632 residue types
+core.chemical.ResidueTypeSet: Total time to initialize 2.11 seconds.
+core.scoring.etable: Starting energy table calculation
+core.scoring.etable: smooth_etable: changing atr/rep split to bottom of energy well
+core.scoring.etable: smooth_etable: spline smoothing lj etables (maxdis = 6)
+core.scoring.etable: smooth_etable: spline smoothing solvation etables (max_dis = 6)
+core.scoring.etable: Finished calculating energy tables.
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBPoly1D.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBFadeIntervals.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBEval.csv
+basic.io.database: Database file opened: scoring/score_functions/carbon_hbond/ch_o_bond_potential.dat
+core.import_pose.import_pose: PDB File:TPP_FL_sln.out.11.pdb not found!
+
+ERROR: Cannot open PDB file "TPP_FL_sln.out.11.pdb"
+ERROR:: Exit from: src/core/import_pose/import_pose.cc line: 214
+[35m/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(print_backtrace()+0x23) [0x7f14297aa6b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(utility::exit(std::string const&, int, std::string const&, int)+0x107) [0x7f14297a9fe7]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, core::import_pose::ImportPoseOptions const&, bool)+0x441) [0x7f142d6ab601]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, bool)+0x49) [0x7f142d6ac7d9]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_stream::PDBPoseInputStream::fill_pose(core::pose::Pose&, core::chemical::ResidueTypeSet const&)+0xa1) [0x7f142d666a41]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x4111b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x413214]
+/lib64/libc.so.6(__libc_start_main+0xfd) [0x34bc01ed5d]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x40f889]
+[0mcaught exception 
+
+[ERROR] EXCN_utility_exit has been thrown from: src/core/import_pose/import_pose.cc line: 214
+ERROR: Cannot open PDB file "TPP_FL_sln.out.11.pdb"
+
+
+12
+
+Basic usage:  /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -s <pdb file> 
+              /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -in:file:silent <silent file> 
+
+ Type -help for full slate of options.
+
+core.init: Rosetta version exported  from http://www.rosettacommons.org
+core.init: command: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease -s TPP_FL_sln.out.12.pdb -minimize_rounds 2 -skip_coord_constraints -out:file:silent TPP2.out
+core.init: 'RNG device' seed mode, using '/dev/urandom', seed=1189722742 seed_offset=0 real_seed=1189722742
+core.init.random: RandomGenerator:init: Normal mode, seed=1189722742 RG_type=mt19937
+core.init: Resolved executable path: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/rna_minimize.default.linuxgccrelease
+core.init: Looking for database based on location of executable: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/database/
+core.chemical.ResidueTypeSet: Finished initializing fa_standard residue type set.  Created 42632 residue types
+core.chemical.ResidueTypeSet: Total time to initialize 2.1 seconds.
+core.scoring.etable: Starting energy table calculation
+core.scoring.etable: smooth_etable: changing atr/rep split to bottom of energy well
+core.scoring.etable: smooth_etable: spline smoothing lj etables (maxdis = 6)
+core.scoring.etable: smooth_etable: spline smoothing solvation etables (max_dis = 6)
+core.scoring.etable: Finished calculating energy tables.
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBPoly1D.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBFadeIntervals.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBEval.csv
+basic.io.database: Database file opened: scoring/score_functions/carbon_hbond/ch_o_bond_potential.dat
+core.import_pose.import_pose: PDB File:TPP_FL_sln.out.12.pdb not found!
+
+ERROR: Cannot open PDB file "TPP_FL_sln.out.12.pdb"
+ERROR:: Exit from: src/core/import_pose/import_pose.cc line: 214
+[35m/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(print_backtrace()+0x23) [0x7fbfedae66b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(utility::exit(std::string const&, int, std::string const&, int)+0x107) [0x7fbfedae5fe7]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, core::import_pose::ImportPoseOptions const&, bool)+0x441) [0x7fbff19e7601]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, bool)+0x49) [0x7fbff19e87d9]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_stream::PDBPoseInputStream::fill_pose(core::pose::Pose&, core::chemical::ResidueTypeSet const&)+0xa1) [0x7fbff19a2a41]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x4111b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x413214]
+/lib64/libc.so.6(__libc_start_main+0xfd) [0x34bc01ed5d]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x40f889]
+[0mcaught exception 
+
+[ERROR] EXCN_utility_exit has been thrown from: src/core/import_pose/import_pose.cc line: 214
+ERROR: Cannot open PDB file "TPP_FL_sln.out.12.pdb"
+
+
+13
+
+Basic usage:  /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -s <pdb file> 
+              /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -in:file:silent <silent file> 
+
+ Type -help for full slate of options.
+
+core.init: Rosetta version exported  from http://www.rosettacommons.org
+core.init: command: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease -s TPP_FL_sln.out.13.pdb -minimize_rounds 2 -skip_coord_constraints -out:file:silent TPP2.out
+core.init: 'RNG device' seed mode, using '/dev/urandom', seed=-202299125 seed_offset=0 real_seed=-202299125
+core.init.random: RandomGenerator:init: Normal mode, seed=-202299125 RG_type=mt19937
+core.init: Resolved executable path: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/rna_minimize.default.linuxgccrelease
+core.init: Looking for database based on location of executable: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/database/
+core.chemical.ResidueTypeSet: Finished initializing fa_standard residue type set.  Created 42632 residue types
+core.chemical.ResidueTypeSet: Total time to initialize 2.05 seconds.
+core.scoring.etable: Starting energy table calculation
+core.scoring.etable: smooth_etable: changing atr/rep split to bottom of energy well
+core.scoring.etable: smooth_etable: spline smoothing lj etables (maxdis = 6)
+core.scoring.etable: smooth_etable: spline smoothing solvation etables (max_dis = 6)
+core.scoring.etable: Finished calculating energy tables.
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBPoly1D.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBFadeIntervals.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBEval.csv
+basic.io.database: Database file opened: scoring/score_functions/carbon_hbond/ch_o_bond_potential.dat
+core.import_pose.import_pose: PDB File:TPP_FL_sln.out.13.pdb not found!
+
+ERROR: Cannot open PDB file "TPP_FL_sln.out.13.pdb"
+ERROR:: Exit from: src/core/import_pose/import_pose.cc line: 214
+[35m/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(print_backtrace()+0x23) [0x7fe63e1546b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(utility::exit(std::string const&, int, std::string const&, int)+0x107) [0x7fe63e153fe7]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, core::import_pose::ImportPoseOptions const&, bool)+0x441) [0x7fe642055601]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, bool)+0x49) [0x7fe6420567d9]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_stream::PDBPoseInputStream::fill_pose(core::pose::Pose&, core::chemical::ResidueTypeSet const&)+0xa1) [0x7fe642010a41]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x4111b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x413214]
+/lib64/libc.so.6(__libc_start_main+0xfd) [0x34bc01ed5d]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x40f889]
+[0mcaught exception 
+
+[ERROR] EXCN_utility_exit has been thrown from: src/core/import_pose/import_pose.cc line: 214
+ERROR: Cannot open PDB file "TPP_FL_sln.out.13.pdb"
+
+
+14
+
+Basic usage:  /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -s <pdb file> 
+              /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -in:file:silent <silent file> 
+
+ Type -help for full slate of options.
+
+core.init: Rosetta version exported  from http://www.rosettacommons.org
+core.init: command: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease -s TPP_FL_sln.out.14.pdb -minimize_rounds 2 -skip_coord_constraints -out:file:silent TPP2.out
+core.init: 'RNG device' seed mode, using '/dev/urandom', seed=2097450663 seed_offset=0 real_seed=2097450663
+core.init.random: RandomGenerator:init: Normal mode, seed=2097450663 RG_type=mt19937
+core.init: Resolved executable path: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/rna_minimize.default.linuxgccrelease
+core.init: Looking for database based on location of executable: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/database/
+core.chemical.ResidueTypeSet: Finished initializing fa_standard residue type set.  Created 42632 residue types
+core.chemical.ResidueTypeSet: Total time to initialize 2.07 seconds.
+core.scoring.etable: Starting energy table calculation
+core.scoring.etable: smooth_etable: changing atr/rep split to bottom of energy well
+core.scoring.etable: smooth_etable: spline smoothing lj etables (maxdis = 6)
+core.scoring.etable: smooth_etable: spline smoothing solvation etables (max_dis = 6)
+core.scoring.etable: Finished calculating energy tables.
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBPoly1D.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBFadeIntervals.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBEval.csv
+basic.io.database: Database file opened: scoring/score_functions/carbon_hbond/ch_o_bond_potential.dat
+core.import_pose.import_pose: PDB File:TPP_FL_sln.out.14.pdb not found!
+
+ERROR: Cannot open PDB file "TPP_FL_sln.out.14.pdb"
+ERROR:: Exit from: src/core/import_pose/import_pose.cc line: 214
+[35m/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(print_backtrace()+0x23) [0x7f32238f76b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(utility::exit(std::string const&, int, std::string const&, int)+0x107) [0x7f32238f6fe7]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, core::import_pose::ImportPoseOptions const&, bool)+0x441) [0x7f32277f8601]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, bool)+0x49) [0x7f32277f97d9]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_stream::PDBPoseInputStream::fill_pose(core::pose::Pose&, core::chemical::ResidueTypeSet const&)+0xa1) [0x7f32277b3a41]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x4111b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x413214]
+/lib64/libc.so.6(__libc_start_main+0xfd) [0x34bc01ed5d]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x40f889]
+[0mcaught exception 
+
+[ERROR] EXCN_utility_exit has been thrown from: src/core/import_pose/import_pose.cc line: 214
+ERROR: Cannot open PDB file "TPP_FL_sln.out.14.pdb"
+
+
+15
+
+Basic usage:  /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -s <pdb file> 
+              /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -in:file:silent <silent file> 
+
+ Type -help for full slate of options.
+
+core.init: Rosetta version exported  from http://www.rosettacommons.org
+core.init: command: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease -s TPP_FL_sln.out.15.pdb -minimize_rounds 2 -skip_coord_constraints -out:file:silent TPP2.out
+core.init: 'RNG device' seed mode, using '/dev/urandom', seed=1182826075 seed_offset=0 real_seed=1182826075
+core.init.random: RandomGenerator:init: Normal mode, seed=1182826075 RG_type=mt19937
+core.init: Resolved executable path: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/rna_minimize.default.linuxgccrelease
+core.init: Looking for database based on location of executable: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/database/
+core.chemical.ResidueTypeSet: Finished initializing fa_standard residue type set.  Created 42632 residue types
+core.chemical.ResidueTypeSet: Total time to initialize 2.06 seconds.
+core.scoring.etable: Starting energy table calculation
+core.scoring.etable: smooth_etable: changing atr/rep split to bottom of energy well
+core.scoring.etable: smooth_etable: spline smoothing lj etables (maxdis = 6)
+core.scoring.etable: smooth_etable: spline smoothing solvation etables (max_dis = 6)
+core.scoring.etable: Finished calculating energy tables.
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBPoly1D.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBFadeIntervals.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBEval.csv
+basic.io.database: Database file opened: scoring/score_functions/carbon_hbond/ch_o_bond_potential.dat
+core.import_pose.import_pose: PDB File:TPP_FL_sln.out.15.pdb not found!
+
+ERROR: Cannot open PDB file "TPP_FL_sln.out.15.pdb"
+ERROR:: Exit from: src/core/import_pose/import_pose.cc line: 214
+[35m/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(print_backtrace()+0x23) [0x7fbf05c286b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(utility::exit(std::string const&, int, std::string const&, int)+0x107) [0x7fbf05c27fe7]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, core::import_pose::ImportPoseOptions const&, bool)+0x441) [0x7fbf09b29601]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, bool)+0x49) [0x7fbf09b2a7d9]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_stream::PDBPoseInputStream::fill_pose(core::pose::Pose&, core::chemical::ResidueTypeSet const&)+0xa1) [0x7fbf09ae4a41]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x4111b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x413214]
+/lib64/libc.so.6(__libc_start_main+0xfd) [0x34bc01ed5d]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x40f889]
+[0mcaught exception 
+
+[ERROR] EXCN_utility_exit has been thrown from: src/core/import_pose/import_pose.cc line: 214
+ERROR: Cannot open PDB file "TPP_FL_sln.out.15.pdb"
+
+
+16
+
+Basic usage:  /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -s <pdb file> 
+              /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -in:file:silent <silent file> 
+
+ Type -help for full slate of options.
+
+core.init: Rosetta version exported  from http://www.rosettacommons.org
+core.init: command: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease -s TPP_FL_sln.out.16.pdb -minimize_rounds 2 -skip_coord_constraints -out:file:silent TPP2.out
+core.init: 'RNG device' seed mode, using '/dev/urandom', seed=1686803024 seed_offset=0 real_seed=1686803024
+core.init.random: RandomGenerator:init: Normal mode, seed=1686803024 RG_type=mt19937
+core.init: Resolved executable path: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/rna_minimize.default.linuxgccrelease
+core.init: Looking for database based on location of executable: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/database/
+core.chemical.ResidueTypeSet: Finished initializing fa_standard residue type set.  Created 42632 residue types
+core.chemical.ResidueTypeSet: Total time to initialize 2.08 seconds.
+core.scoring.etable: Starting energy table calculation
+core.scoring.etable: smooth_etable: changing atr/rep split to bottom of energy well
+core.scoring.etable: smooth_etable: spline smoothing lj etables (maxdis = 6)
+core.scoring.etable: smooth_etable: spline smoothing solvation etables (max_dis = 6)
+core.scoring.etable: Finished calculating energy tables.
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBPoly1D.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBFadeIntervals.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBEval.csv
+basic.io.database: Database file opened: scoring/score_functions/carbon_hbond/ch_o_bond_potential.dat
+core.import_pose.import_pose: PDB File:TPP_FL_sln.out.16.pdb not found!
+
+ERROR: Cannot open PDB file "TPP_FL_sln.out.16.pdb"
+ERROR:: Exit from: src/core/import_pose/import_pose.cc line: 214
+[35m/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(print_backtrace()+0x23) [0x7f01be1356b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(utility::exit(std::string const&, int, std::string const&, int)+0x107) [0x7f01be134fe7]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, core::import_pose::ImportPoseOptions const&, bool)+0x441) [0x7f01c2036601]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, bool)+0x49) [0x7f01c20377d9]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_stream::PDBPoseInputStream::fill_pose(core::pose::Pose&, core::chemical::ResidueTypeSet const&)+0xa1) [0x7f01c1ff1a41]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x4111b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x413214]
+/lib64/libc.so.6(__libc_start_main+0xfd) [0x34bc01ed5d]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x40f889]
+[0mcaught exception 
+
+[ERROR] EXCN_utility_exit has been thrown from: src/core/import_pose/import_pose.cc line: 214
+ERROR: Cannot open PDB file "TPP_FL_sln.out.16.pdb"
+
+
+17
+
+Basic usage:  /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -s <pdb file> 
+              /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -in:file:silent <silent file> 
+
+ Type -help for full slate of options.
+
+core.init: Rosetta version exported  from http://www.rosettacommons.org
+core.init: command: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease -s TPP_FL_sln.out.17.pdb -minimize_rounds 2 -skip_coord_constraints -out:file:silent TPP2.out
+core.init: 'RNG device' seed mode, using '/dev/urandom', seed=504258014 seed_offset=0 real_seed=504258014
+core.init.random: RandomGenerator:init: Normal mode, seed=504258014 RG_type=mt19937
+core.init: Resolved executable path: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/rna_minimize.default.linuxgccrelease
+core.init: Looking for database based on location of executable: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/database/
+core.chemical.ResidueTypeSet: Finished initializing fa_standard residue type set.  Created 42632 residue types
+core.chemical.ResidueTypeSet: Total time to initialize 2.12 seconds.
+core.scoring.etable: Starting energy table calculation
+core.scoring.etable: smooth_etable: changing atr/rep split to bottom of energy well
+core.scoring.etable: smooth_etable: spline smoothing lj etables (maxdis = 6)
+core.scoring.etable: smooth_etable: spline smoothing solvation etables (max_dis = 6)
+core.scoring.etable: Finished calculating energy tables.
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBPoly1D.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBFadeIntervals.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBEval.csv
+basic.io.database: Database file opened: scoring/score_functions/carbon_hbond/ch_o_bond_potential.dat
+core.import_pose.import_pose: PDB File:TPP_FL_sln.out.17.pdb not found!
+
+ERROR: Cannot open PDB file "TPP_FL_sln.out.17.pdb"
+ERROR:: Exit from: src/core/import_pose/import_pose.cc line: 214
+[35m/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(print_backtrace()+0x23) [0x7fb878dd36b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(utility::exit(std::string const&, int, std::string const&, int)+0x107) [0x7fb878dd2fe7]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, core::import_pose::ImportPoseOptions const&, bool)+0x441) [0x7fb87ccd4601]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, bool)+0x49) [0x7fb87ccd57d9]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_stream::PDBPoseInputStream::fill_pose(core::pose::Pose&, core::chemical::ResidueTypeSet const&)+0xa1) [0x7fb87cc8fa41]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x4111b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x413214]
+/lib64/libc.so.6(__libc_start_main+0xfd) [0x34bc01ed5d]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x40f889]
+[0mcaught exception 
+
+[ERROR] EXCN_utility_exit has been thrown from: src/core/import_pose/import_pose.cc line: 214
+ERROR: Cannot open PDB file "TPP_FL_sln.out.17.pdb"
+
+
+18
+
+Basic usage:  /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -s <pdb file> 
+              /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -in:file:silent <silent file> 
+
+ Type -help for full slate of options.
+
+core.init: Rosetta version exported  from http://www.rosettacommons.org
+core.init: command: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease -s TPP_FL_sln.out.18.pdb -minimize_rounds 2 -skip_coord_constraints -out:file:silent TPP2.out
+core.init: 'RNG device' seed mode, using '/dev/urandom', seed=-173784839 seed_offset=0 real_seed=-173784839
+core.init.random: RandomGenerator:init: Normal mode, seed=-173784839 RG_type=mt19937
+core.init: Resolved executable path: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/rna_minimize.default.linuxgccrelease
+core.init: Looking for database based on location of executable: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/database/
+core.chemical.ResidueTypeSet: Finished initializing fa_standard residue type set.  Created 42632 residue types
+core.chemical.ResidueTypeSet: Total time to initialize 2.09 seconds.
+core.scoring.etable: Starting energy table calculation
+core.scoring.etable: smooth_etable: changing atr/rep split to bottom of energy well
+core.scoring.etable: smooth_etable: spline smoothing lj etables (maxdis = 6)
+core.scoring.etable: smooth_etable: spline smoothing solvation etables (max_dis = 6)
+core.scoring.etable: Finished calculating energy tables.
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBPoly1D.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBFadeIntervals.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBEval.csv
+basic.io.database: Database file opened: scoring/score_functions/carbon_hbond/ch_o_bond_potential.dat
+core.import_pose.import_pose: PDB File:TPP_FL_sln.out.18.pdb not found!
+
+ERROR: Cannot open PDB file "TPP_FL_sln.out.18.pdb"
+ERROR:: Exit from: src/core/import_pose/import_pose.cc line: 214
+[35m/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(print_backtrace()+0x23) [0x7fbdfe0846b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(utility::exit(std::string const&, int, std::string const&, int)+0x107) [0x7fbdfe083fe7]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, core::import_pose::ImportPoseOptions const&, bool)+0x441) [0x7fbe01f85601]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, bool)+0x49) [0x7fbe01f867d9]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_stream::PDBPoseInputStream::fill_pose(core::pose::Pose&, core::chemical::ResidueTypeSet const&)+0xa1) [0x7fbe01f40a41]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x4111b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x413214]
+/lib64/libc.so.6(__libc_start_main+0xfd) [0x34bc01ed5d]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x40f889]
+[0mcaught exception 
+
+[ERROR] EXCN_utility_exit has been thrown from: src/core/import_pose/import_pose.cc line: 214
+ERROR: Cannot open PDB file "TPP_FL_sln.out.18.pdb"
+
+
+19
+
+Basic usage:  /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -s <pdb file> 
+              /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -in:file:silent <silent file> 
+
+ Type -help for full slate of options.
+
+core.init: Rosetta version exported  from http://www.rosettacommons.org
+core.init: command: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease -s TPP_FL_sln.out.19.pdb -minimize_rounds 2 -skip_coord_constraints -out:file:silent TPP2.out
+core.init: 'RNG device' seed mode, using '/dev/urandom', seed=-963455751 seed_offset=0 real_seed=-963455751
+core.init.random: RandomGenerator:init: Normal mode, seed=-963455751 RG_type=mt19937
+core.init: Resolved executable path: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/rna_minimize.default.linuxgccrelease
+core.init: Looking for database based on location of executable: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/database/
+core.chemical.ResidueTypeSet: Finished initializing fa_standard residue type set.  Created 42632 residue types
+core.chemical.ResidueTypeSet: Total time to initialize 2.08 seconds.
+core.scoring.etable: Starting energy table calculation
+core.scoring.etable: smooth_etable: changing atr/rep split to bottom of energy well
+core.scoring.etable: smooth_etable: spline smoothing lj etables (maxdis = 6)
+core.scoring.etable: smooth_etable: spline smoothing solvation etables (max_dis = 6)
+core.scoring.etable: Finished calculating energy tables.
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBPoly1D.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBFadeIntervals.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBEval.csv
+basic.io.database: Database file opened: scoring/score_functions/carbon_hbond/ch_o_bond_potential.dat
+core.import_pose.import_pose: PDB File:TPP_FL_sln.out.19.pdb not found!
+
+ERROR: Cannot open PDB file "TPP_FL_sln.out.19.pdb"
+ERROR:: Exit from: src/core/import_pose/import_pose.cc line: 214
+[35m/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(print_backtrace()+0x23) [0x7fde000206b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(utility::exit(std::string const&, int, std::string const&, int)+0x107) [0x7fde0001ffe7]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, core::import_pose::ImportPoseOptions const&, bool)+0x441) [0x7fde03f21601]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, bool)+0x49) [0x7fde03f227d9]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_stream::PDBPoseInputStream::fill_pose(core::pose::Pose&, core::chemical::ResidueTypeSet const&)+0xa1) [0x7fde03edca41]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x4111b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x413214]
+/lib64/libc.so.6(__libc_start_main+0xfd) [0x34bc01ed5d]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x40f889]
+[0mcaught exception 
+
+[ERROR] EXCN_utility_exit has been thrown from: src/core/import_pose/import_pose.cc line: 214
+ERROR: Cannot open PDB file "TPP_FL_sln.out.19.pdb"
+
+
+20
+
+Basic usage:  /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -s <pdb file> 
+              /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -in:file:silent <silent file> 
+
+ Type -help for full slate of options.
+
+core.init: Rosetta version exported  from http://www.rosettacommons.org
+core.init: command: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease -s TPP_FL_sln.out.20.pdb -minimize_rounds 2 -skip_coord_constraints -out:file:silent TPP2.out
+core.init: 'RNG device' seed mode, using '/dev/urandom', seed=2088458113 seed_offset=0 real_seed=2088458113
+core.init.random: RandomGenerator:init: Normal mode, seed=2088458113 RG_type=mt19937
+core.init: Resolved executable path: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/rna_minimize.default.linuxgccrelease
+core.init: Looking for database based on location of executable: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/database/
+core.chemical.ResidueTypeSet: Finished initializing fa_standard residue type set.  Created 42632 residue types
+core.chemical.ResidueTypeSet: Total time to initialize 2.11 seconds.
+core.scoring.etable: Starting energy table calculation
+core.scoring.etable: smooth_etable: changing atr/rep split to bottom of energy well
+core.scoring.etable: smooth_etable: spline smoothing lj etables (maxdis = 6)
+core.scoring.etable: smooth_etable: spline smoothing solvation etables (max_dis = 6)
+core.scoring.etable: Finished calculating energy tables.
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBPoly1D.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBFadeIntervals.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBEval.csv
+basic.io.database: Database file opened: scoring/score_functions/carbon_hbond/ch_o_bond_potential.dat
+core.import_pose.import_pose: PDB File:TPP_FL_sln.out.20.pdb not found!
+
+ERROR: Cannot open PDB file "TPP_FL_sln.out.20.pdb"
+ERROR:: Exit from: src/core/import_pose/import_pose.cc line: 214
+[35m/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(print_backtrace()+0x23) [0x7f1ac60c06b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(utility::exit(std::string const&, int, std::string const&, int)+0x107) [0x7f1ac60bffe7]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, core::import_pose::ImportPoseOptions const&, bool)+0x441) [0x7f1ac9fc1601]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, bool)+0x49) [0x7f1ac9fc27d9]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_stream::PDBPoseInputStream::fill_pose(core::pose::Pose&, core::chemical::ResidueTypeSet const&)+0xa1) [0x7f1ac9f7ca41]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x4111b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x413214]
+/lib64/libc.so.6(__libc_start_main+0xfd) [0x34bc01ed5d]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x40f889]
+[0mcaught exception 
+
+[ERROR] EXCN_utility_exit has been thrown from: src/core/import_pose/import_pose.cc line: 214
+ERROR: Cannot open PDB file "TPP_FL_sln.out.20.pdb"
+
+
+21
+
+Basic usage:  /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -s <pdb file> 
+              /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -in:file:silent <silent file> 
+
+ Type -help for full slate of options.
+
+core.init: Rosetta version exported  from http://www.rosettacommons.org
+core.init: command: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease -s TPP_FL_sln.out.21.pdb -minimize_rounds 2 -skip_coord_constraints -out:file:silent TPP2.out
+core.init: 'RNG device' seed mode, using '/dev/urandom', seed=1756027417 seed_offset=0 real_seed=1756027417
+core.init.random: RandomGenerator:init: Normal mode, seed=1756027417 RG_type=mt19937
+core.init: Resolved executable path: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/rna_minimize.default.linuxgccrelease
+core.init: Looking for database based on location of executable: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/database/
+core.chemical.ResidueTypeSet: Finished initializing fa_standard residue type set.  Created 42632 residue types
+core.chemical.ResidueTypeSet: Total time to initialize 2.07 seconds.
+core.scoring.etable: Starting energy table calculation
+core.scoring.etable: smooth_etable: changing atr/rep split to bottom of energy well
+core.scoring.etable: smooth_etable: spline smoothing lj etables (maxdis = 6)
+core.scoring.etable: smooth_etable: spline smoothing solvation etables (max_dis = 6)
+core.scoring.etable: Finished calculating energy tables.
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBPoly1D.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBFadeIntervals.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBEval.csv
+basic.io.database: Database file opened: scoring/score_functions/carbon_hbond/ch_o_bond_potential.dat
+core.import_pose.import_pose: PDB File:TPP_FL_sln.out.21.pdb not found!
+
+ERROR: Cannot open PDB file "TPP_FL_sln.out.21.pdb"
+ERROR:: Exit from: src/core/import_pose/import_pose.cc line: 214
+[35m/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(print_backtrace()+0x23) [0x7f7da5c466b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(utility::exit(std::string const&, int, std::string const&, int)+0x107) [0x7f7da5c45fe7]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, core::import_pose::ImportPoseOptions const&, bool)+0x441) [0x7f7da9b47601]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, bool)+0x49) [0x7f7da9b487d9]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_stream::PDBPoseInputStream::fill_pose(core::pose::Pose&, core::chemical::ResidueTypeSet const&)+0xa1) [0x7f7da9b02a41]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x4111b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x413214]
+/lib64/libc.so.6(__libc_start_main+0xfd) [0x34bc01ed5d]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x40f889]
+[0mcaught exception 
+
+[ERROR] EXCN_utility_exit has been thrown from: src/core/import_pose/import_pose.cc line: 214
+ERROR: Cannot open PDB file "TPP_FL_sln.out.21.pdb"
+
+
+22
+
+Basic usage:  /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -s <pdb file> 
+              /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -in:file:silent <silent file> 
+
+ Type -help for full slate of options.
+
+core.init: Rosetta version exported  from http://www.rosettacommons.org
+core.init: command: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease -s TPP_FL_sln.out.22.pdb -minimize_rounds 2 -skip_coord_constraints -out:file:silent TPP2.out
+core.init: 'RNG device' seed mode, using '/dev/urandom', seed=-1998811852 seed_offset=0 real_seed=-1998811852
+core.init.random: RandomGenerator:init: Normal mode, seed=-1998811852 RG_type=mt19937
+core.init: Resolved executable path: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/rna_minimize.default.linuxgccrelease
+core.init: Looking for database based on location of executable: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/database/
+core.chemical.ResidueTypeSet: Finished initializing fa_standard residue type set.  Created 42632 residue types
+core.chemical.ResidueTypeSet: Total time to initialize 2.06 seconds.
+core.scoring.etable: Starting energy table calculation
+core.scoring.etable: smooth_etable: changing atr/rep split to bottom of energy well
+core.scoring.etable: smooth_etable: spline smoothing lj etables (maxdis = 6)
+core.scoring.etable: smooth_etable: spline smoothing solvation etables (max_dis = 6)
+core.scoring.etable: Finished calculating energy tables.
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBPoly1D.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBFadeIntervals.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBEval.csv
+basic.io.database: Database file opened: scoring/score_functions/carbon_hbond/ch_o_bond_potential.dat
+core.import_pose.import_pose: PDB File:TPP_FL_sln.out.22.pdb not found!
+
+ERROR: Cannot open PDB file "TPP_FL_sln.out.22.pdb"
+ERROR:: Exit from: src/core/import_pose/import_pose.cc line: 214
+[35m/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(print_backtrace()+0x23) [0x7faa161876b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(utility::exit(std::string const&, int, std::string const&, int)+0x107) [0x7faa16186fe7]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, core::import_pose::ImportPoseOptions const&, bool)+0x441) [0x7faa1a088601]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, bool)+0x49) [0x7faa1a0897d9]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_stream::PDBPoseInputStream::fill_pose(core::pose::Pose&, core::chemical::ResidueTypeSet const&)+0xa1) [0x7faa1a043a41]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x4111b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x413214]
+/lib64/libc.so.6(__libc_start_main+0xfd) [0x34bc01ed5d]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x40f889]
+[0mcaught exception 
+
+[ERROR] EXCN_utility_exit has been thrown from: src/core/import_pose/import_pose.cc line: 214
+ERROR: Cannot open PDB file "TPP_FL_sln.out.22.pdb"
+
+
+23
+
+Basic usage:  /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -s <pdb file> 
+              /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -in:file:silent <silent file> 
+
+ Type -help for full slate of options.
+
+core.init: Rosetta version exported  from http://www.rosettacommons.org
+core.init: command: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease -s TPP_FL_sln.out.23.pdb -minimize_rounds 2 -skip_coord_constraints -out:file:silent TPP2.out
+core.init: 'RNG device' seed mode, using '/dev/urandom', seed=-1376189098 seed_offset=0 real_seed=-1376189098
+core.init.random: RandomGenerator:init: Normal mode, seed=-1376189098 RG_type=mt19937
+core.init: Resolved executable path: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/rna_minimize.default.linuxgccrelease
+core.init: Looking for database based on location of executable: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/database/
+core.chemical.ResidueTypeSet: Finished initializing fa_standard residue type set.  Created 42632 residue types
+core.chemical.ResidueTypeSet: Total time to initialize 2.08 seconds.
+core.scoring.etable: Starting energy table calculation
+core.scoring.etable: smooth_etable: changing atr/rep split to bottom of energy well
+core.scoring.etable: smooth_etable: spline smoothing lj etables (maxdis = 6)
+core.scoring.etable: smooth_etable: spline smoothing solvation etables (max_dis = 6)
+core.scoring.etable: Finished calculating energy tables.
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBPoly1D.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBFadeIntervals.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBEval.csv
+basic.io.database: Database file opened: scoring/score_functions/carbon_hbond/ch_o_bond_potential.dat
+core.import_pose.import_pose: PDB File:TPP_FL_sln.out.23.pdb not found!
+
+ERROR: Cannot open PDB file "TPP_FL_sln.out.23.pdb"
+ERROR:: Exit from: src/core/import_pose/import_pose.cc line: 214
+[35m/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(print_backtrace()+0x23) [0x7f2d1c8b06b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(utility::exit(std::string const&, int, std::string const&, int)+0x107) [0x7f2d1c8affe7]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, core::import_pose::ImportPoseOptions const&, bool)+0x441) [0x7f2d207b1601]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, bool)+0x49) [0x7f2d207b27d9]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_stream::PDBPoseInputStream::fill_pose(core::pose::Pose&, core::chemical::ResidueTypeSet const&)+0xa1) [0x7f2d2076ca41]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x4111b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x413214]
+/lib64/libc.so.6(__libc_start_main+0xfd) [0x34bc01ed5d]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x40f889]
+[0mcaught exception 
+
+[ERROR] EXCN_utility_exit has been thrown from: src/core/import_pose/import_pose.cc line: 214
+ERROR: Cannot open PDB file "TPP_FL_sln.out.23.pdb"
+
+
+24
+
+Basic usage:  /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -s <pdb file> 
+              /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -in:file:silent <silent file> 
+
+ Type -help for full slate of options.
+
+core.init: Rosetta version exported  from http://www.rosettacommons.org
+core.init: command: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease -s TPP_FL_sln.out.24.pdb -minimize_rounds 2 -skip_coord_constraints -out:file:silent TPP2.out
+core.init: 'RNG device' seed mode, using '/dev/urandom', seed=-470288888 seed_offset=0 real_seed=-470288888
+core.init.random: RandomGenerator:init: Normal mode, seed=-470288888 RG_type=mt19937
+core.init: Resolved executable path: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/rna_minimize.default.linuxgccrelease
+core.init: Looking for database based on location of executable: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/database/
+core.chemical.ResidueTypeSet: Finished initializing fa_standard residue type set.  Created 42632 residue types
+core.chemical.ResidueTypeSet: Total time to initialize 2.05 seconds.
+core.scoring.etable: Starting energy table calculation
+core.scoring.etable: smooth_etable: changing atr/rep split to bottom of energy well
+core.scoring.etable: smooth_etable: spline smoothing lj etables (maxdis = 6)
+core.scoring.etable: smooth_etable: spline smoothing solvation etables (max_dis = 6)
+core.scoring.etable: Finished calculating energy tables.
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBPoly1D.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBFadeIntervals.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBEval.csv
+basic.io.database: Database file opened: scoring/score_functions/carbon_hbond/ch_o_bond_potential.dat
+core.import_pose.import_pose: PDB File:TPP_FL_sln.out.24.pdb not found!
+
+ERROR: Cannot open PDB file "TPP_FL_sln.out.24.pdb"
+ERROR:: Exit from: src/core/import_pose/import_pose.cc line: 214
+[35m/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(print_backtrace()+0x23) [0x7f32b78876b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(utility::exit(std::string const&, int, std::string const&, int)+0x107) [0x7f32b7886fe7]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, core::import_pose::ImportPoseOptions const&, bool)+0x441) [0x7f32bb788601]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, bool)+0x49) [0x7f32bb7897d9]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_stream::PDBPoseInputStream::fill_pose(core::pose::Pose&, core::chemical::ResidueTypeSet const&)+0xa1) [0x7f32bb743a41]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x4111b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x413214]
+/lib64/libc.so.6(__libc_start_main+0xfd) [0x34bc01ed5d]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x40f889]
+[0mcaught exception 
+
+[ERROR] EXCN_utility_exit has been thrown from: src/core/import_pose/import_pose.cc line: 214
+ERROR: Cannot open PDB file "TPP_FL_sln.out.24.pdb"
+
+
+25
+
+Basic usage:  /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -s <pdb file> 
+              /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -in:file:silent <silent file> 
+
+ Type -help for full slate of options.
+
+core.init: Rosetta version exported  from http://www.rosettacommons.org
+core.init: command: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease -s TPP_FL_sln.out.25.pdb -minimize_rounds 2 -skip_coord_constraints -out:file:silent TPP2.out
+core.init: 'RNG device' seed mode, using '/dev/urandom', seed=-620583827 seed_offset=0 real_seed=-620583827
+core.init.random: RandomGenerator:init: Normal mode, seed=-620583827 RG_type=mt19937
+core.init: Resolved executable path: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/rna_minimize.default.linuxgccrelease
+core.init: Looking for database based on location of executable: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/database/
+core.chemical.ResidueTypeSet: Finished initializing fa_standard residue type set.  Created 42632 residue types
+core.chemical.ResidueTypeSet: Total time to initialize 2.08 seconds.
+core.scoring.etable: Starting energy table calculation
+core.scoring.etable: smooth_etable: changing atr/rep split to bottom of energy well
+core.scoring.etable: smooth_etable: spline smoothing lj etables (maxdis = 6)
+core.scoring.etable: smooth_etable: spline smoothing solvation etables (max_dis = 6)
+core.scoring.etable: Finished calculating energy tables.
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBPoly1D.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBFadeIntervals.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBEval.csv
+basic.io.database: Database file opened: scoring/score_functions/carbon_hbond/ch_o_bond_potential.dat
+core.import_pose.import_pose: PDB File:TPP_FL_sln.out.25.pdb not found!
+
+ERROR: Cannot open PDB file "TPP_FL_sln.out.25.pdb"
+ERROR:: Exit from: src/core/import_pose/import_pose.cc line: 214
+[35m/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(print_backtrace()+0x23) [0x7f9078d586b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(utility::exit(std::string const&, int, std::string const&, int)+0x107) [0x7f9078d57fe7]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, core::import_pose::ImportPoseOptions const&, bool)+0x441) [0x7f907cc59601]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, bool)+0x49) [0x7f907cc5a7d9]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_stream::PDBPoseInputStream::fill_pose(core::pose::Pose&, core::chemical::ResidueTypeSet const&)+0xa1) [0x7f907cc14a41]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x4111b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x413214]
+/lib64/libc.so.6(__libc_start_main+0xfd) [0x34bc01ed5d]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x40f889]
+[0mcaught exception 
+
+[ERROR] EXCN_utility_exit has been thrown from: src/core/import_pose/import_pose.cc line: 214
+ERROR: Cannot open PDB file "TPP_FL_sln.out.25.pdb"
+
+
+26
+
+Basic usage:  /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -s <pdb file> 
+              /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -in:file:silent <silent file> 
+
+ Type -help for full slate of options.
+
+core.init: Rosetta version exported  from http://www.rosettacommons.org
+core.init: command: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease -s TPP_FL_sln.out.26.pdb -minimize_rounds 2 -skip_coord_constraints -out:file:silent TPP2.out
+core.init: 'RNG device' seed mode, using '/dev/urandom', seed=-864494641 seed_offset=0 real_seed=-864494641
+core.init.random: RandomGenerator:init: Normal mode, seed=-864494641 RG_type=mt19937
+core.init: Resolved executable path: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/rna_minimize.default.linuxgccrelease
+core.init: Looking for database based on location of executable: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/database/
+core.chemical.ResidueTypeSet: Finished initializing fa_standard residue type set.  Created 42632 residue types
+core.chemical.ResidueTypeSet: Total time to initialize 2.07 seconds.
+core.scoring.etable: Starting energy table calculation
+core.scoring.etable: smooth_etable: changing atr/rep split to bottom of energy well
+core.scoring.etable: smooth_etable: spline smoothing lj etables (maxdis = 6)
+core.scoring.etable: smooth_etable: spline smoothing solvation etables (max_dis = 6)
+core.scoring.etable: Finished calculating energy tables.
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBPoly1D.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBFadeIntervals.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBEval.csv
+basic.io.database: Database file opened: scoring/score_functions/carbon_hbond/ch_o_bond_potential.dat
+core.import_pose.import_pose: PDB File:TPP_FL_sln.out.26.pdb not found!
+
+ERROR: Cannot open PDB file "TPP_FL_sln.out.26.pdb"
+ERROR:: Exit from: src/core/import_pose/import_pose.cc line: 214
+[35m/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(print_backtrace()+0x23) [0x7f294999b6b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(utility::exit(std::string const&, int, std::string const&, int)+0x107) [0x7f294999afe7]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, core::import_pose::ImportPoseOptions const&, bool)+0x441) [0x7f294d89c601]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, bool)+0x49) [0x7f294d89d7d9]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_stream::PDBPoseInputStream::fill_pose(core::pose::Pose&, core::chemical::ResidueTypeSet const&)+0xa1) [0x7f294d857a41]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x4111b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x413214]
+/lib64/libc.so.6(__libc_start_main+0xfd) [0x34bc01ed5d]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x40f889]
+[0mcaught exception 
+
+[ERROR] EXCN_utility_exit has been thrown from: src/core/import_pose/import_pose.cc line: 214
+ERROR: Cannot open PDB file "TPP_FL_sln.out.26.pdb"
+
+
+27
+
+Basic usage:  /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -s <pdb file> 
+              /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -in:file:silent <silent file> 
+
+ Type -help for full slate of options.
+
+core.init: Rosetta version exported  from http://www.rosettacommons.org
+core.init: command: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease -s TPP_FL_sln.out.27.pdb -minimize_rounds 2 -skip_coord_constraints -out:file:silent TPP2.out
+core.init: 'RNG device' seed mode, using '/dev/urandom', seed=1944281131 seed_offset=0 real_seed=1944281131
+core.init.random: RandomGenerator:init: Normal mode, seed=1944281131 RG_type=mt19937
+core.init: Resolved executable path: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/rna_minimize.default.linuxgccrelease
+core.init: Looking for database based on location of executable: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/database/
+core.chemical.ResidueTypeSet: Finished initializing fa_standard residue type set.  Created 42632 residue types
+core.chemical.ResidueTypeSet: Total time to initialize 2.08 seconds.
+core.scoring.etable: Starting energy table calculation
+core.scoring.etable: smooth_etable: changing atr/rep split to bottom of energy well
+core.scoring.etable: smooth_etable: spline smoothing lj etables (maxdis = 6)
+core.scoring.etable: smooth_etable: spline smoothing solvation etables (max_dis = 6)
+core.scoring.etable: Finished calculating energy tables.
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBPoly1D.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBFadeIntervals.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBEval.csv
+basic.io.database: Database file opened: scoring/score_functions/carbon_hbond/ch_o_bond_potential.dat
+core.import_pose.import_pose: PDB File:TPP_FL_sln.out.27.pdb not found!
+
+ERROR: Cannot open PDB file "TPP_FL_sln.out.27.pdb"
+ERROR:: Exit from: src/core/import_pose/import_pose.cc line: 214
+[35m/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(print_backtrace()+0x23) [0x7f4dbc4a46b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(utility::exit(std::string const&, int, std::string const&, int)+0x107) [0x7f4dbc4a3fe7]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, core::import_pose::ImportPoseOptions const&, bool)+0x441) [0x7f4dc03a5601]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, bool)+0x49) [0x7f4dc03a67d9]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_stream::PDBPoseInputStream::fill_pose(core::pose::Pose&, core::chemical::ResidueTypeSet const&)+0xa1) [0x7f4dc0360a41]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x4111b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x413214]
+/lib64/libc.so.6(__libc_start_main+0xfd) [0x34bc01ed5d]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x40f889]
+[0mcaught exception 
+
+[ERROR] EXCN_utility_exit has been thrown from: src/core/import_pose/import_pose.cc line: 214
+ERROR: Cannot open PDB file "TPP_FL_sln.out.27.pdb"
+
+
+28
+
+Basic usage:  /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -s <pdb file> 
+              /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -in:file:silent <silent file> 
+
+ Type -help for full slate of options.
+
+core.init: Rosetta version exported  from http://www.rosettacommons.org
+core.init: command: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease -s TPP_FL_sln.out.28.pdb -minimize_rounds 2 -skip_coord_constraints -out:file:silent TPP2.out
+core.init: 'RNG device' seed mode, using '/dev/urandom', seed=835107919 seed_offset=0 real_seed=835107919
+core.init.random: RandomGenerator:init: Normal mode, seed=835107919 RG_type=mt19937
+core.init: Resolved executable path: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/rna_minimize.default.linuxgccrelease
+core.init: Looking for database based on location of executable: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/database/
+core.chemical.ResidueTypeSet: Finished initializing fa_standard residue type set.  Created 42632 residue types
+core.chemical.ResidueTypeSet: Total time to initialize 2.04 seconds.
+core.scoring.etable: Starting energy table calculation
+core.scoring.etable: smooth_etable: changing atr/rep split to bottom of energy well
+core.scoring.etable: smooth_etable: spline smoothing lj etables (maxdis = 6)
+core.scoring.etable: smooth_etable: spline smoothing solvation etables (max_dis = 6)
+core.scoring.etable: Finished calculating energy tables.
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBPoly1D.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBFadeIntervals.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBEval.csv
+basic.io.database: Database file opened: scoring/score_functions/carbon_hbond/ch_o_bond_potential.dat
+core.import_pose.import_pose: PDB File:TPP_FL_sln.out.28.pdb not found!
+
+ERROR: Cannot open PDB file "TPP_FL_sln.out.28.pdb"
+ERROR:: Exit from: src/core/import_pose/import_pose.cc line: 214
+[35m/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(print_backtrace()+0x23) [0x7f1db02f26b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(utility::exit(std::string const&, int, std::string const&, int)+0x107) [0x7f1db02f1fe7]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, core::import_pose::ImportPoseOptions const&, bool)+0x441) [0x7f1db41f3601]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, bool)+0x49) [0x7f1db41f47d9]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_stream::PDBPoseInputStream::fill_pose(core::pose::Pose&, core::chemical::ResidueTypeSet const&)+0xa1) [0x7f1db41aea41]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x4111b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x413214]
+/lib64/libc.so.6(__libc_start_main+0xfd) [0x34bc01ed5d]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x40f889]
+[0mcaught exception 
+
+[ERROR] EXCN_utility_exit has been thrown from: src/core/import_pose/import_pose.cc line: 214
+ERROR: Cannot open PDB file "TPP_FL_sln.out.28.pdb"
+
+
+29
+
+Basic usage:  /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -s <pdb file> 
+              /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -in:file:silent <silent file> 
+
+ Type -help for full slate of options.
+
+core.init: Rosetta version exported  from http://www.rosettacommons.org
+core.init: command: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease -s TPP_FL_sln.out.29.pdb -minimize_rounds 2 -skip_coord_constraints -out:file:silent TPP2.out
+core.init: 'RNG device' seed mode, using '/dev/urandom', seed=-92582603 seed_offset=0 real_seed=-92582603
+core.init.random: RandomGenerator:init: Normal mode, seed=-92582603 RG_type=mt19937
+core.init: Resolved executable path: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/rna_minimize.default.linuxgccrelease
+core.init: Looking for database based on location of executable: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/database/
+core.chemical.ResidueTypeSet: Finished initializing fa_standard residue type set.  Created 42632 residue types
+core.chemical.ResidueTypeSet: Total time to initialize 2.05 seconds.
+core.scoring.etable: Starting energy table calculation
+core.scoring.etable: smooth_etable: changing atr/rep split to bottom of energy well
+core.scoring.etable: smooth_etable: spline smoothing lj etables (maxdis = 6)
+core.scoring.etable: smooth_etable: spline smoothing solvation etables (max_dis = 6)
+core.scoring.etable: Finished calculating energy tables.
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBPoly1D.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBFadeIntervals.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBEval.csv
+basic.io.database: Database file opened: scoring/score_functions/carbon_hbond/ch_o_bond_potential.dat
+core.import_pose.import_pose: PDB File:TPP_FL_sln.out.29.pdb not found!
+
+ERROR: Cannot open PDB file "TPP_FL_sln.out.29.pdb"
+ERROR:: Exit from: src/core/import_pose/import_pose.cc line: 214
+[35m/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(print_backtrace()+0x23) [0x7f33597c76b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(utility::exit(std::string const&, int, std::string const&, int)+0x107) [0x7f33597c6fe7]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, core::import_pose::ImportPoseOptions const&, bool)+0x441) [0x7f335d6c8601]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, bool)+0x49) [0x7f335d6c97d9]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_stream::PDBPoseInputStream::fill_pose(core::pose::Pose&, core::chemical::ResidueTypeSet const&)+0xa1) [0x7f335d683a41]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x4111b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x413214]
+/lib64/libc.so.6(__libc_start_main+0xfd) [0x34bc01ed5d]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x40f889]
+[0mcaught exception 
+
+[ERROR] EXCN_utility_exit has been thrown from: src/core/import_pose/import_pose.cc line: 214
+ERROR: Cannot open PDB file "TPP_FL_sln.out.29.pdb"
+
+
+30
+
+Basic usage:  /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -s <pdb file> 
+              /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease  -in:file:silent <silent file> 
+
+ Type -help for full slate of options.
+
+core.init: Rosetta version exported  from http://www.rosettacommons.org
+core.init: command: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease -s TPP_FL_sln.out.30.pdb -minimize_rounds 2 -skip_coord_constraints -out:file:silent TPP2.out
+core.init: 'RNG device' seed mode, using '/dev/urandom', seed=-317141300 seed_offset=0 real_seed=-317141300
+core.init.random: RandomGenerator:init: Normal mode, seed=-317141300 RG_type=mt19937
+core.init: Resolved executable path: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/rna_minimize.default.linuxgccrelease
+core.init: Looking for database based on location of executable: /home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/database/
+core.chemical.ResidueTypeSet: Finished initializing fa_standard residue type set.  Created 42632 residue types
+core.chemical.ResidueTypeSet: Total time to initialize 2.01 seconds.
+core.scoring.etable: Starting energy table calculation
+core.scoring.etable: smooth_etable: changing atr/rep split to bottom of energy well
+core.scoring.etable: smooth_etable: spline smoothing lj etables (maxdis = 6)
+core.scoring.etable: smooth_etable: spline smoothing solvation etables (max_dis = 6)
+core.scoring.etable: Finished calculating energy tables.
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBPoly1D.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBFadeIntervals.csv
+basic.io.database: Database file opened: scoring/score_functions/hbonds/sp2_elec_params/HBEval.csv
+basic.io.database: Database file opened: scoring/score_functions/carbon_hbond/ch_o_bond_potential.dat
+core.import_pose.import_pose: PDB File:TPP_FL_sln.out.30.pdb not found!
+
+ERROR: Cannot open PDB file "TPP_FL_sln.out.30.pdb"
+ERROR:: Exit from: src/core/import_pose/import_pose.cc line: 214
+[35m/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(print_backtrace()+0x23) [0x7f03046396b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libutility.so(utility::exit(std::string const&, int, std::string const&, int)+0x107) [0x7f0304638fe7]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, core::import_pose::ImportPoseOptions const&, bool)+0x441) [0x7f030853a601]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_from_pdb(core::pose::Pose&, core::chemical::ResidueTypeSet const&, std::string const&, bool)+0x49) [0x7f030853b7d9]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/build/src/release/linux/2.6/64/x86/gcc/4.4/default/libcore.5.so(core::import_pose::pose_stream::PDBPoseInputStream::fill_pose(core::pose::Pose&, core::chemical::ResidueTypeSet const&)+0xa1) [0x7f03084f5a41]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x4111b3]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x413214]
+/lib64/libc.so.6(__libc_start_main+0xfd) [0x34bc01ed5d]
+/home/leexa/rosetta_bin_linux_2015.39.58186_bundle/main/source/bin/rna_minimize.default.linuxgccrelease() [0x40f889]
+[0mcaught exception 
+
+[ERROR] EXCN_utility_exit has been thrown from: src/core/import_pose/import_pose.cc line: 214
+ERROR: Cannot open PDB file "TPP_FL_sln.out.30.pdb"
+
+
+rm: cannot remove `TPP_FL_sln.out*pdb': No such file or directory
+/var/spool/torque/mom_priv/jobs/1022415.santa.SC: line 62: syntax error near unexpected token `;'
+/var/spool/torque/mom_priv/jobs/1022415.santa.SC: line 62: `;#fi'

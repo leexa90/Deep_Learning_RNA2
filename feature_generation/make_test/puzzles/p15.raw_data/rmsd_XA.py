@@ -78,9 +78,17 @@ for num in sorted([x for x in os.listdir('.') if ('.pdb' in x and 'solution' not
     print num,rmsd
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
-##fig = plt.figure()
-##ax = fig.add_subplot(111, projection='3d')
-##ax.scatter3D(Q[:,0],Q[:,1],Q[:,2],c='b',linewidths=4)
-##ax.scatter3D(PU[:,0],PU[:,1],PU[:,2],c='r',alpha=0.7,linewidths=4)
-###ax.scatter3D(P[:,0],P[:,1],P[:,2],c='c')
-##plt.show()
+R = np.array( [[1,0,0],[0,0.866,0.5],[0,-0.5,0.866]])
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+ax.scatter3D(Q[:,0],Q[:,1],Q[:,2],c='b',linewidths=4)
+Q = np.matmul(Q,R)
+ax.scatter3D(Q[:,0],Q[:,1],Q[:,2],c='r',linewidths=4)
+Q = np.matmul(Q,R)
+ax.scatter3D(Q[:,0],Q[:,1],Q[:,2],c='c',linewidths=4)
+Q = np.matmul(Q,R)
+ax.scatter3D(Q[:,0],Q[:,1],Q[:,2],c='m',linewidths=4)
+plt.show()
+#ax.scatter3D(PU[:,0],PU[:,1],PU[:,2],c='r',alpha=0.7,linewidths=4)
+#ax.scatter3D(P[:,0],P[:,1],P[:,2],c='c')
+plt.show()
