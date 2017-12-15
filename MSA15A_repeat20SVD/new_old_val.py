@@ -26,7 +26,7 @@ puzzle = ['3OX0', '3OWZ', '3OXJ', '3OXE', '3OWZ', '3OWW', '3OXM', '3OWW', '3OWI'
           '4TZV', '4TZW', '4TZZ', '4LCK', '4TZZ', '4TZP', '4LCK', '4TZP', '5EAQ', '5DQK',
           '5EAO', '5DH6', '5DI2', '5DH8', '5DH7', '5DI4', '4R4V', '5V3I', '4R4P', '3V7E',
           '3V7E', '4L81', '4OQU', '4P9R', '4P95', '4QLM', '4QLN', '4XWF', '4XW7', '4GXY',
-          '5DDO', '5DDO', '5TPY','5T5A']
+          '5DDO', '5DDO', '5TPY','5T5A','5DI4']
 
 data_test = {}
 data_train = {}
@@ -813,23 +813,23 @@ for epoch in range(next_epoch,training_epochs):
                     ax[-2].set_xlabel('probabilities logloss=%s' %map(lambda x :str(x)[:5],(cost_i,acc)))
                     ax[-1].set_xlabel('actual')
                     plt.savefig(   'VAL/'+ data2_name_val[i]+'.png');
-                    plt.savefig(   'rosetta/Log_restrain_large/'+ data2_name_val[i]+'.png');
+                    plt.savefig(   'rosetta/Log_restrain_large_test/'+ data2_name_val[i]+'.png');
                     plt.close()
                     dictt_RNA = { (1,0,0,0) : 'A' , (0,1,0,0) : 'U', (0,0,1,0) : 'G' , (0,0,0,1) : 'C' }
                     dictt_SS = {  1.0 : '(', -1.0 : ')', 0. : '.'  }
                     seq = ''
                     for char in map(lambda x : dictt_RNA[tuple(x)],batch_x[0,:4,:,0].T):
                         seq += char
-                    f1 = open('rosetta/Log_restrain_large/PA_fasta_%s'%data2_name_val[i],'w')
+                    f1 = open('rosetta/Log_restrain_large_test/PA_fasta_%s'%data2_name_val[i],'w')
                     f1.write('> %s\n'%data2_name_val[i])
                     f1.write(seq.lower());f1.close()
                     seq_ss = ''
                     for char  in map(lambda x : dictt_SS[x],batch_x[0,5,:,0]):
                         seq_ss += char
-                    f1 = open('rosetta/Log_restrain_large/PA_secstructa_%s'%data2_name_val[i],'w')
+                    f1 = open('rosetta/Log_restrain_large_test/PA_secstructa_%s'%data2_name_val[i],'w')
                     f1.write('%s\n'%seq);f1.write(seq_ss);f1.close()                    
                     for prob in [.5,.6,.75]:
-                        f1= open('rosetta/Log_restrain_large/weights_%s_%s' %(data2_name_val[i],prob),'w')
+                        f1= open('rosetta/Log_restrain_large_test/weights_%s_%s' %(data2_name_val[i],prob),'w')
                         f1.write('[ atompairs ]\n')
                         for x1 in range(len(temp_pred)):
                             for x2 in range(x1+3,len(temp_pred)):
@@ -852,26 +852,54 @@ for epoch in range(next_epoch,training_epochs):
                 acc = accuracy((pred[k]+np.transpose(pred[k],(1,0,2)))//1,batch_y[k])
                 test_acc += [acc,]
                 if True:
-                    f, ax = plt.subplots(1,7,figsize=(23,5));k=0
+                    name =data2_name_test[i]
+                    f, ax = plt.subplots(1,8,figsize=(26,5));k=0
                     temp_pred = pred[k]+np.transpose(pred[k],(1,0,2))
                     ax[-3].imshow(temp_pred[:,:,0]*200//20)
                     temp_pred2 = (temp_pred[:,:,0])*remove_diagonals(1+np.zeros((batch_y_nan.shape[1],batch_y_nan.shape[2])))
                     temp_pred[:,:,0] = (temp_pred[:,:,0])*batch_y_nan[0,:,:,0]
-                    ax[0].imshow(temp_pred2[:,:]>=.6)
+                    ax[0].imshow(temp_pred2[:,:]>=0.6)
                     ax[1].imshow(temp_pred2[:,:]>=1.0)
                     ax[2].imshow(temp_pred2[:,:]>=1.4)
-                    ax[3].imshow(1-batch_y_ss[0,:,:,0])
+                    ax[3].imshow(temp_pred2[:,:]>=1.6)
+                    ax[4].imshow(1-batch_y_ss[0,:,:,0])
                     ax[-2].imshow(temp_pred[:,:,0] *200//20)
                     ax[-1].imshow(batch_y[k,:,:,0]>=1)
-                    ax[0].set_xlabel('pred bal_acc=\n%s (thres-50)'%accuracy(temp_pred[:,:,0]>=.6,batch_y[k,:,:,0]>=1,False))
-                    ax[1].set_xlabel('pred bal_acc=\n%s (thres-30)'%accuracy(temp_pred[:,:,0]>=1.0,batch_y[k,:,:,0]>=1,False))
-                    ax[2].set_xlabel('pred bal_acc=\n%s (thres-25)'%accuracy(temp_pred[:,:,0]>=1.4,batch_y[k,:,:,0]>=1,False))
+                    ax[0].set_xlabel('pred bal_acc=\n%s (thres-70)'%accuracy(temp_pred[:,:,0]>=.6,batch_y[k,:,:,0]>=1,False))
+                    ax[1].set_xlabel('pred bal_acc=\n%s (thres-50)'%accuracy(temp_pred[:,:,0]>=1.0,batch_y[k,:,:,0]>=1,False))
+                    ax[2].set_xlabel('pred bal_acc=\n%s (thres-30)'%accuracy(temp_pred[:,:,0]>=1.4,batch_y[k,:,:,0]>=1,False))
+                    ax[3].set_xlabel('pred bal_acc=\n%s (thres-20)'%accuracy(temp_pred[:,:,0]>=1.6,batch_y[k,:,:,0]>=1,False))
                     ax[-2].set_xlabel('probabilities logloss=%s' %map(lambda x :str(x)[:5],(cost_i,acc)))
                     ax[-1].set_xlabel('actual')
-                    plt.savefig( data2_name_test[i]+'.png',bbox_inches='tight');plt.close()  # Display logs per epoch step
+                    plt.savefig(name+'.png',bbox_inches='tight');#plt.close()  # Display logs per epoch step
                     features,svd_c,conv3_ =  sess.run( [conv5,y1,conv4], feed_dict={x: batch_x,resi_map0: batch_y,
                                      above_zero : batch_y_nan, ss_2d : batch_y_ss,
                                         phase : False, learning_rate : lr, dropout : 0})
+                    plt.savefig(   'rosetta/Log_restrain_large_test/'+ name+'.png');
+                    plt.close()
+                    dictt_RNA = { (1,0,0,0) : 'A' , (0,1,0,0) : 'U', (0,0,1,0) : 'G' , (0,0,0,1) : 'C' }
+                    dictt_SS = {  1.0 : '(', -1.0 : ')', 0. : '.'  }
+                    seq = ''
+                    for char in map(lambda x : dictt_RNA[tuple(x)],batch_x[0,:4,:,0].T):
+                        seq += char
+                    f1 = open('rosetta/Log_restrain_large_test/PA_fasta_%s'%name,'w')
+                    f1.write('> %s\n'%data2_name_val[i])
+                    f1.write(seq.lower());f1.close()
+                    seq_ss = ''
+                    for char  in map(lambda x : dictt_SS[x],batch_x[0,5,:,0]):
+                        seq_ss += char
+                    f1 = open('rosetta/Log_restrain_large_test/PA_secstructa_%s'%name,'w')
+                    f1.write('%s\n'%seq);f1.write(seq_ss);f1.close()                    
+                    for prob in [.3,.5,.7]:
+                        f1= open('rosetta/Log_restrain_large_test/weights_%s_%s' %(name,prob),'w')
+                        f1.write('[ atompairs ]\n')
+                        for x1 in range(len(temp_pred)):
+                            for x2 in range(x1+3,len(temp_pred)):
+                                if temp_pred[x1,x2,0] <= prob*2:
+                                    val = min(-1*np.log10(1-0.5*temp_pred[x1,x2,0])/0.1,1)
+                                    if val > 0 :
+                                        f1.write('P %s P %s FLAT_HARMONIC 8 %s 8\n' %(x1+1,x2+1, val))
+                        f1.close()
                     if False:
                         f, ax = plt.subplots(15,15,figsize=(15,15));
                         _=ax[14,14].imshow(pred[0,:,:,0])
@@ -889,7 +917,7 @@ for epoch in range(next_epoch,training_epochs):
                         _=ax[13,12].imshow(batch_y[0,:,:,0])
                         for ii in range(conv3.shape[-1]):
                             _=ax[ii//14,ii%14].imshow(conv3_[0,:,:,ii])
-                        plt.savefig( data2_name_test[i]+'_conv3_.png',bbox_inches='tight');plt.close()
+                        plt.savefig( name+'_conv3_.png',bbox_inches='tight');plt.close()
     f1 = open('updates.log','w')
     text += str(np.mean(avg_cost))+'  '+str(np.mean(train_acc))+'\n'
     text += str(np.mean(val_cost))+'  '+str(np.mean(val_acc))+'\n'

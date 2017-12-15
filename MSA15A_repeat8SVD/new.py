@@ -35,7 +35,7 @@ data_val = {}
 v16 - make 2 classes, <thres_distance , >=thres_distance
 
 '''
-thres_distance  = 8 
+thres_distance  = 8
 def make_array(str):
     temp = [0,]*len(str)
     for i in range(len(str)):
@@ -128,9 +128,10 @@ for i in data1_keys_train:
                 temp1 = data1[i]
                 a = (data1[i][2] > thres_distance)*1
                 temp_resi_map = np.stack((a,),axis=2)
-                d = -1*(np.isnan(data1[i][2])-1) #non-nan values ==1 , nan =0
-                d = remove_diagonals(d) 
-                d = np.stack((d,),axis=2)
+                d0 = -1*(np.isnan(data1[i][2])-1) #non-nan values ==1 , nan =0
+                d = remove_diagonals(d0) 
+                d = np.stack((d,) ,axis=2)
+                d0 =np.stack((d0,),axis=2)
                 pair_wise_res = {('A','A') : 0, ('U','U') : 1, ('G','G') : 2, ('C','C') : 3,
                                  ('A','U') : 4, ('A','G') : 5, ('A','C') : 6,
                                  ('G','U') : 7, ('C','U') : 8,
@@ -164,7 +165,7 @@ for i in data1_keys_train:
                 for window_tup in [(35,11),(50,13),(75,25),(100,33),(125,41),(150,50),(200,66),(300,100),(400,133),(500,167)]:
                     window, jump = window_tup[0], window_tup[1]
                     for repeat in range(0,len(data1[i][0]) - window+1,jump):
-                        if np.mean(d[repeat:repeat+window,repeat:repeat+window,:]) > 0.9: 
+                        if np.mean(d0[repeat:repeat+window,repeat:repeat+window,:]) > 0.9: 
                             data_train[i+'_'+str(window)+'_'+str(repeat)] = [tempF[:,repeat:repeat+window],
                                                    temp1[0][repeat:repeat+window],
                                                    temp1[1][repeat:repeat+window],
@@ -663,7 +664,9 @@ out_softmax = tf.nn.sigmoid(out)
 # Define loss and optimizer
 #logit_weight = tf.constant([weight_coeff1,weight_coeff2,weight_coeff3],tf.float32)
 log_loss =tf.nn.sigmoid_cross_entropy_with_logits(logits = out, labels = resi_map )
-cost =  tf.reduce_mean(tf.multiply(log_loss,above_zero)) # this is masking the nan and diagonals in the loss
+# reweight the loss function by positive *10, negative 1, nan 0
+weights = tf.where(tf.greater_equal(resi_map,1),10+above_zero,1+above_zero)
+cost =  tf.reduce_mean(tf.multiply(log_loss,weights)) # this is masking the nan and diagonals in the loss
 learning_rate = tf.Variable(0,dtype= np.float32)
 update_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
 with tf.control_dependencies(update_ops):
@@ -726,8 +729,8 @@ for epoch in range(next_epoch,training_epochs):
             elif epoch < 3*training_epochs//4:
                 lr = lr/100
             else:
-                lr = lr/1000   
-            lr = lr *20       
+                lr = lr/1000    
+            #lr = lr *20      
             batch_x = np.array([[data2_x[i]] for i in batch_list])
             batch_y = np.array([data2_y[i]for i in batch_list])
             batch_y_nan = np.array([data2_y_nan[i]  for i in batch_list])

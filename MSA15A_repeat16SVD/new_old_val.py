@@ -111,6 +111,7 @@ data1_keys_val = ['4v9e_aa', '5lyu_a', '4qjd_b', '4pr6_b', '5fq5_a', '4cxg_a',
                   '4frg_b', '1zn1_c']
 data1_keys_train = [x for x in data1_keys if (x not in data1_keys_val and x[0:4].upper() not in puzzle)] +\
                    [x for x in data1 if  len(data1[x][0]) > 500]
+data1_keys_train= data1_keys_train[::10]
 def remove_diagonals(d):
     d = d.copy()
     d[0:2,0:2] = 0
@@ -851,8 +852,8 @@ for epoch in range(next_epoch,training_epochs):
                         for x1 in range(len(temp_pred)):
                             for x2 in range(x1+3,len(temp_pred)):
                                 if temp_pred[x1,x2,0] <= prob*2:
-                                    val = -1*np.log10(1-0.5*temp_pred[x1,x2,0])/0.3
-                                    f1.write('P %s P %s FLAT_HARMONIC 8 %s 8\n' %(x1+1,x2+1, val))
+                                    #val = -1*np.log10(1-0.5*temp_pred[x1,x2,0])/0.3
+                                    f1.write('P %s P %s FLAT_HARMONIC 8 %s 8\n' %(x1+1,x2+1, 3))
                         f1.close()
         test_acc = []
         for i in range(len(data2_x_test)):
@@ -892,7 +893,31 @@ for epoch in range(next_epoch,training_epochs):
                     ax[3].set_xlabel('pred bal_acc=\n%s (thres-20)'%accuracy(temp_pred[:,:,0]>=1.6,batch_y[k,:,:,0]>=1,False))
                     ax[-2].set_xlabel('probabilities logloss=%s' %map(lambda x :str(x)[:5],(cost_i,acc)))
                     ax[-1].set_xlabel('actual')
-                    plt.savefig( data2_name_test[i]+'.png',bbox_inches='tight');plt.close()  # Display logs per epoch step
+                    plt.savefig( data2_name_test[i]+'.png',bbox_inches='tight');#plt.close()  # Display logs per epoch step
+                    plt.savefig(   'rosetta/Log_restrain_large/'+ data2_name_test[i]+'.png',bbox_inches='tight');
+                    plt.close()
+                    dictt_RNA = { (1,0,0,0) : 'A' , (0,1,0,0) : 'U', (0,0,1,0) : 'G' , (0,0,0,1) : 'C' }
+                    dictt_SS = {  1.0 : '(', -1.0 : ')', 0. : '.'  }
+                    seq = ''
+                    for char in map(lambda x : dictt_RNA[tuple(x)],batch_x[0,:4,:,0].T):
+                        seq += char
+                    f1 = open('rosetta/Log_restrain_large/PA_fasta_%s'%data2_name_test[i],'w')
+                    f1.write('> %s\n'%data2_name_val[i])
+                    f1.write(seq.lower());f1.close()
+                    seq_ss = ''
+                    for char  in map(lambda x : dictt_SS[x],batch_x[0,5,:,0]):
+                        seq_ss += char
+                    f1 = open('rosetta/Log_restrain_large/PA_secstructa_%s'%data2_name_test[i],'w')
+                    f1.write('%s\n'%seq);f1.write(seq_ss);f1.close()                    
+                    for prob in [.5,.6,.75]:
+                        f1= open('rosetta/Log_restrain_large/weights_%s_%s' %(data2_name_test[i],prob),'w')
+                        f1.write('[ atompairs ]\n')
+                        for x1 in range(len(temp_pred)):
+                            for x2 in range(x1+3,len(temp_pred)):
+                                if temp_pred[x1,x2,0] <= prob*2:
+                                    #val = -1*np.log10(1-0.5*temp_pred[x1,x2,0])/0.3
+                                    f1.write('P %s P %s FLAT_HARMONIC 8 %s 8\n' %(x1+1,x2+1, 3))
+                        f1.close()
                     features,svd_c,conv3_ =  sess.run( [conv5,y1,conv4], feed_dict={x: batch_x,resi_map0: batch_y,
                                      above_zero : batch_y_nan, ss_2d : batch_y_ss,
                                         phase : False, learning_rate : lr, dropout : 0})
