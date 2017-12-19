@@ -61,7 +61,7 @@ result = []
 f, ax = plt.subplots(len(models),2,figsize=(5,(len(models)*2.5)//1))
 counter  = 0
 for ii in sorted(models):
-    answer = np.argmax(get_mat(solution[0]),2) 
+    answer = np.argmax(get_mat(solution[0]),2)[2:-2,2:-2] 
     if 'major' in ii or 'das' in ii or 'chen' in ii or 'flores' in ii: # first residue does not contain P atom
         None#answer = answer[1:,1:]
     mat_model = np.argmax(get_mat(ii),2)

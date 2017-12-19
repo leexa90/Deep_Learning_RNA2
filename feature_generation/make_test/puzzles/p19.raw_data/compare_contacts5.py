@@ -4,7 +4,7 @@ sys.path.append('../')
 import numpy as np
 import alignment
 import matplotlib.pyplot as plt
-models = [x for x in os.listdir('.') if ('solution' not in x and 'pdb' in x)]
+models = [x for x in os.listdir('.') if ('solution' not in x and 'pdb' in x and '19' in x)]
 dictt_model = {}
 for i in models[0:1]:
     dictt_model[i] = []

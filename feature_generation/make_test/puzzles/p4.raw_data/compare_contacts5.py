@@ -16,7 +16,7 @@ for i in models[0:1]:
             if line[12:16].strip() == 'P':
                 seq  += line[17:20].strip()
 
-solution = [x for x in os.listdir('.') if ('solution' in x and 'pdb' in x)][1:]
+solution = ['4_solution_0.pdb',]#[x for x in os.listdir('.') if ('solution' in x and 'pdb' in x)][1:]
 dictt_sol = {}
 
 def get_mat(i):
