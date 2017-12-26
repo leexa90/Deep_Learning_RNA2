@@ -743,7 +743,7 @@ for epoch in range(next_epoch,training_epochs):
                                                      above_zero : batch_y_nan, ss_2d : batch_y_ss,
                                                         phase : False, learning_rate : lr, dropout : 0})
                 val_acc += [accuracy((pred[k]+np.transpose(pred[k],(1,0,2)))//1,batch_y[k]),]
-                if True:
+                if False:
                     temp_pred = pred[k]+np.transpose(pred[k],(1,0,2))
                     f, ax = plt.subplots(1,5,figsize=(19,5));k=0
                     ax[0].imshow(temp_pred[:,:,0]>=1)
@@ -770,7 +770,7 @@ for epoch in range(next_epoch,training_epochs):
                                                      above_zero : batch_y_nan, ss_2d : batch_y_ss,
                                                         phase : False, learning_rate : lr, dropout : 0})
                 test_acc += [accuracy((pred[k]+np.transpose(pred[k],(1,0,2)))//1,batch_y[k]),]
-                if True:
+                if False:
                     temp_pred = pred[k]+np.transpose(pred[k],(1,0,2))
                     f, ax = plt.subplots(1,5,figsize=(19,5));k=0
                     ax[0].imshow(temp_pred[:,:,0]>=1)

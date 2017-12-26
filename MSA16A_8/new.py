@@ -28,6 +28,7 @@ import tensorflow as tf
 import numpy as np
 import matplotlib.pyplot as plt
 import random
+random.seed(1)
 #data = np.load('../../../../data_all.npy.zip')['data_all'].item()
 data1 = np.load('../data_lim5000_nan_excludeTest.npy.zip')['data_lim5000_nan_excludeTest.npy'].item() #contains 480 train examples
 data2 = np.load('../data_lim5000_ss_excludeTest.npy.zip')['data_lim5000_ss_excludeTest.npy'].item() #might have 494

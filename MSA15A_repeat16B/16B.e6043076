@@ -1,0 +1,33 @@
+new.py:129: RuntimeWarning: invalid value encountered in greater
+  a = (data1[i][2] > thres_distance)*1
+new.py:260: RuntimeWarning: invalid value encountered in greater
+  a = (data1_t[i][2] > thres_distance)*1
+2017-12-11 00:18:46.350484: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1031] Found device 0 with properties: 
+name: Tesla K40t major: 3 minor: 5 memoryClockRate(GHz): 0.745
+pciBusID: 0000:82:00.0
+totalMemory: 11.17GiB freeMemory: 11.10GiB
+2017-12-11 00:18:46.350525: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1121] Creating TensorFlow device (/device:GPU:0) -> (device: 0, name: Tesla K40t, pci bus id: 0000:82:00.0, compute capability: 3.5)
+Traceback (most recent call last):
+  File "new.py", line 825, in <module>
+    plt.plot(range(0,training_epochs),[result[i][0] for i in result],label='Train')
+  File "/app/tensorflow/1.4/lib/python2.7/site-packages/matplotlib/pyplot.py", line 3229, in plot
+    ax = gca()
+  File "/app/tensorflow/1.4/lib/python2.7/site-packages/matplotlib/pyplot.py", line 959, in gca
+    return gcf().gca(**kwargs)
+  File "/app/tensorflow/1.4/lib/python2.7/site-packages/matplotlib/pyplot.py", line 588, in gcf
+    return figure()
+  File "/app/tensorflow/1.4/lib/python2.7/site-packages/matplotlib/pyplot.py", line 534, in figure
+    **kwargs)
+  File "/app/tensorflow/1.4/lib/python2.7/site-packages/matplotlib/backend_bases.py", line 170, in new_figure_manager
+    return cls.new_figure_manager_given_figure(num, fig)
+  File "/app/tensorflow/1.4/lib/python2.7/site-packages/matplotlib/backends/backend_tkagg.py", line 1049, in new_figure_manager_given_figure
+    window = Tk.Tk(className="matplotlib")
+  File "/app/python/intel/2.7.12/lib/python2.7/lib-tk/Tkinter.py", line 1815, in __init__
+    self.tk = _tkinter.create(screenName, baseName, className, interactive, wantobjects, useTk, sync, use)
+_tkinter.TclError: Can't find a usable init.tcl in the following directories: 
+    /usr/local/lib/tcl8.6 /app/tensorflow/1.4/lib/tcl8.6 /app/tensorflow/lib/tcl8.6 /app/tensorflow/1.4/library /app/tensorflow/library /app/tensorflow/tcl8.6.5/library /app/tcl8.6.5/library
+
+
+
+This probably means that Tcl wasn't installed properly.
+

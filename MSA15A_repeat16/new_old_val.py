@@ -98,7 +98,6 @@ data1_keys_val = ['4v9e_aa', '5lyu_a', '4qjd_b', '4pr6_b', '5fq5_a', '4cxg_a',
                   '3jb9_c', '5e54_a', '4p5j_a', '1zc8_h', '1y26_x', '1zc8_a',
                   '1hc8_c', '3iyq_a', '5it9_i', '4wj3_q', '3suh_x', '1xjr_a',
                   '4frg_b', '1zn1_c']
-#data1_keys_val = ['4v9e_aa', '5t2a_e', '5lyu_a', '4cxg_y', '5t2a_h', '4pr6_b', '4ug0_s6', '4cxg_a', '5m0h_a', '3amt_b', '4v8p_b3', '5x2h_b', '1e8s_c', '2vpl_b', '5l3p_y', '4v6t_av', '1c9s_w', '2zzm_b', '4c7o_e', '3j45_2', '3j7r_s6', '3add_c', '2nz4_p', '2der_c', '4cxg_2', '3p22_a', '3ivn_a', '3j9w_bb', '3j0p_w', '5dun_a', '4qk9_a', '1zn1_c', '5lzs_ii', '4p5j_a', '2csx_c', '2oiu_q', '4kzd_r', '4rum_a', '4uje_aw', '3jcs_3', '4arc_b', '5gap_v', '1h3e_b', '4wsm_3k', '1ffy_t', '5aka_7', '1pn7_c', '3j46_3', '2dlc_y', '4ue4_a', '1emi_b', '1i6u_c', '3jcs_8', '3jcs_6', '4w2f_ax', '5fq5_a', '1j1u_b', '3wc1_p', '3eph_e', '2qwy_a', '1jgq_d', '1un6_e', '1qzc_a', '4c4q_n', '4v6u_a1', '5xh6_b', '2czj_b', '5mmm_z', '2hw8_b', '1mj1_q', '5o60_b', '2zy6_a', '3j7y_b', '5hr6_c', '4v5z_bg', '2gtt_x', '1p6v_b', '5j8b_w', '2z9q_a', '4v5z_ad', '5e81_1k', '1qzw_b', '3j0o_h', '4o26_e', '2xxa_f', '4aob_a', '2zjr_y', '5kpy_a', '4bbl_y', '1pn8_d', '1lng_b', '1l9a_b', '1m5o_b', '4kr6_d', '3nkb_b', '1gax_c', '5jpq_3', '4kr6_c', '5ib7_3k', '2nue_c', '4v8b_ab', '5t83_a', '3p49_a', '1yfg_a', '3izd_a', '5jte_ax', '5ktj_a', '3w3s_b', '5ibb_1k', '3k0j_e', '5t5h_e', '3ski_a', '2om7_g', '1ysh_b', '4w90_c', '486d_e', '486d_a', '5lzs_2', '1f7u_b', '1y0q_a', '4jxz_b', '3iab_r', '4qjh_b', '1fir_a', '4yco_d', '4tue_qv', '1vfg_c', '4qjd_b', '4adx_8', '2go5_9', '4v8m_be', '4v8m_bd', '3jb9_c', '5e54_a', '3d2v_a', '1zc8_h', '1y26_x', '5b63_b', '1zc8_a', '3npq_a', '1nbs_a', '4v8y_cw', '2j28_8', '4kr7_x', '3iyq_a', '5it9_i', '4wj3_q', '2wwb_d', '3suh_x', '3j16_j', '1xjr_a', '4frg_b', '1hc8_c', '3jcs_4']
 
 data1_keys_train = [x for x in data1_keys if (x not in data1_keys_val and x[0:4].upper() not in puzzle)] +\
                    [x for x in data1 if  len(data1[x][0]) > 500]
@@ -749,43 +748,16 @@ for epoch in range(next_epoch,training_epochs):
                     temp_pred = pred[k]+np.transpose(pred[k],(1,0,2))
                     f, ax = plt.subplots(1,5,figsize=(19,5));k=0
                     ax[0].imshow(temp_pred[:,:,0]>=1)
-                    ax[1].imshow(temp_pred[:,:,0]>=1.2)
+                    ax[1].imshow(temp_pred[:,:,0]>=1.6)
                     ax[2].imshow(temp_pred[:,:,0]>=1.5)
                     ax[-2].imshow(temp_pred[:,:,0] *200//20)
                     ax[-1].imshow(batch_y[k,:,:,0]>=1)
                     ax[0].set_xlabel('pred bal_acc=%s (thres-50)'%np.round(accuracy(temp_pred[:,:,0]>=1,batch_y[k,:,:,0]>=1),2))
-                    ax[1].set_xlabel('pred bal_acc=%s (thres-40)'%np.round(accuracy(temp_pred[:,:,0]>=1.2,batch_y[k,:,:,0]>=1),2))
+                    ax[1].set_xlabel('pred bal_acc=%s (thres-20)'%np.round(accuracy(temp_pred[:,:,0]>=1.6,batch_y[k,:,:,0]>=1),2))
                     ax[2].set_xlabel('pred bal_acc=%s (thres-25)'%np.round(accuracy(temp_pred[:,:,0]>=1.5,batch_y[k,:,:,0]>=1),2))
                     ax[-2].set_xlabel('probabilities logloss=%s' %cost_i)
                     ax[-1].set_xlabel('actual')
-                    plt.savefig(   'rosetta/Log_restrain_large/'+ data2_name_val[i]+'.png');
-                    plt.close()
-                    dictt_RNA = { (1,0,0,0) : 'A' , (0,1,0,0) : 'U', (0,0,1,0) : 'G' , (0,0,0,1) : 'C' }
-                    dictt_SS = {  1.0 : '(', -1.0 : ')', 0. : '.'  }
-                    seq = ''
-                    for char in map(lambda x : dictt_RNA[tuple(x)],batch_x[0,:4,:,0].T):
-                        seq += char
-                    f1 = open('rosetta/Log_restrain_large/PA_fasta_%s'%data2_name_val[i],'w')
-                    f1.write('> %s\n'%data2_name_val[i])
-                    f1.write(seq.lower());f1.close()
-                    seq_ss = ''
-                    for char  in map(lambda x : dictt_SS[x],batch_x[0,5,:,0]):
-                        seq_ss += char
-                    f1 = open('rosetta/Log_restrain_large/PA_secstructa_%s'%data2_name_val[i],'w')
-                    f1.write('%s\n'%seq);f1.write(seq_ss);f1.close()                    
-                    for prob in [.5,.6,.75]:
-                        f1= open('rosetta/Log_restrain_large/weights_%s_%s' %(data2_name_val[i],prob),'w')
-                        f1.write('[ atompairs ]\n')
-                        for x1 in range(len(temp_pred)):
-                            for x2 in range(x1+3,len(temp_pred)):
-                                if temp_pred[x1,x2,0] <= prob*2:
-                                    val = -1*np.log10(1-0.5*temp_pred[x1,x2,0])/0.3
-                                    f1.write('P %s P %s FLAT_HARMONIC 8 %s 8\n' %(x1+1,x2+1, val))
-                        f1.close()
-                                    
-                        
-                        
-                        
+                    plt.savefig(   'VAL/'+ data2_name_val[i]+'.png');plt.close()
         test_acc = []
         for i in range(len(data2_x_test)):
                 batch_x, batch_y = np.array([[data2_x_test[i],],]),np.array([data2_y_test[i],])

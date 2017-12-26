@@ -673,14 +673,7 @@ def accuracy(mat_model,answer):
 saver = tf.train.Saver()
 # Initializing the variables
 init = tf.global_variables_initializer();sess = tf.Session();sess.run(init)
-saved_files = [xxx[:-5] for xxx in os.listdir('.') if (xxx.startswith('model') and xxx.endswith('.ckpt.meta'))]
-next_epoch = 0
-if len(saved_files) >= 1:
-    last_file = sorted(saved_files,key=lambda x : int(x.split('_')[-2]))[-1]
-    next_epoch = int(last_file.split('_')[-2])
-    print ('starting from :' ,last_file)
-    saver.restore(sess,'./'+last_file)
-
+#saver.restore(sess,'./model300_reweigh_loss_3_46.ckpt')
 # Training cycle
 result = {}
 random.seed(0)
@@ -688,7 +681,7 @@ shuffle = range(len(data2_x))
 random.shuffle(shuffle)
 text = ''
 tf.summary.FileWriter('logs', graph=tf.get_default_graph())
-for epoch in range(next_epoch,training_epochs):
+for epoch in range(training_epochs):
     counter = 0
     avg_cost = []
     val_cost = []

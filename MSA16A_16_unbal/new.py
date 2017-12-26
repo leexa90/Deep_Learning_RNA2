@@ -649,14 +649,14 @@ for epoch in range(next_epoch,max(next_epoch +1,training_epochs)):
     shuffle = range(len(data2_x))
     random.shuffle(shuffle)
     num = 1
-    if False: # training phase
+    if True: # training phase
         for batch in range(0,len(shuffle[::10]),num):
             batch_list = shuffle[batch:batch+num] 
             counter += 1
             lr = 1.9*np.cos(0.5*batch*3.142/len(shuffle[::10]))
             if epoch >= 100:
-                lr = lr/10
-            if epoch >= 200:
+            	lr = lr/10
+	    if epoch >= 200:
                 lr = lr /10
             batch_x = np.array([[data2_x[i]] for i in batch_list])
             batch_y = np.array([data2_y[i]for i in batch_list])
@@ -717,21 +717,14 @@ for epoch in range(next_epoch,max(next_epoch +1,training_epochs)):
                                                         phase : False, learning_rate : lr, dropout : 0})
                 temp_pred = pred[k]+np.transpose(pred[k],(1,0,2))
                 test_acc += [accuracy(np.argmax(temp_pred,2),np.argmax(batch_y[k],2)),]
-                if True:
-                    f, ax = plt.subplots(1,5,figsize=(19,5));k=0
-                    ax[0].imshow(np.argmax(temp_pred,2))
-                    ax[1].imshow(temp_pred[:,:,1]>=1.2)
-                    ax[2].imshow(temp_pred[:,:,1]>=1.5)
-                    ax[-2].imshow(temp_pred[:,:,1] *200//20)
-                    ax[-1].imshow(np.argmax(batch_y[k],2))
-                    ax[0].set_xlabel('pred bal_acc=%s (thres-50)'%np.round(accuracy(np.argmax(temp_pred,2),np.argmax(batch_y[k],2)),2))
-                    ax[1].set_xlabel('pred bal_acc=%s (thres-40)'%np.round(accuracy(temp_pred[:,:,1]>=1.2,np.argmax(batch_y[k],2)),2))
-                    ax[2].set_xlabel('pred bal_acc=%s (thres-25)'%np.round(accuracy(temp_pred[:,:,1]>=1.5,np.argmax(batch_y[k],2)),2))
-                    ax[-2].set_xlabel('probabilities logloss=%s' %cost_i)
-                    ax[-1].set_xlabel('actual')
-                    plt.savefig(    data2_name_test[i]+'.png');plt.close()
-                    #plt.show();
-                    #plt.clf()
+                #f, ax = plt.subplots(1,2,figsize=(10,5))
+                #ax[0].imshow(np.argmax(temp_pred,2))
+                #ax[1].imshow(np.argmax(batch_y[k],2))
+                #ac[0].set_xlabel('prediction')
+                #ac[1].set_xlabel('prediction')
+                
+                #plt.show();
+                #plt.clf()
                 
         print (np.mean(test_acc))
     # Display logs per epoch step

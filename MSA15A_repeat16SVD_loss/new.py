@@ -100,7 +100,7 @@ data1_keys_val = ['4v9e_aa', '5lyu_a', '4qjd_b', '4pr6_b', '5fq5_a', '4cxg_a',
                   '4frg_b', '1zn1_c']
 data1_keys_train = [x for x in data1_keys if (x not in data1_keys_val and x[0:4].upper() not in puzzle)] +\
                    [x for x in data1 if  len(data1[x][0]) > 500]
-data1_keys_train = data1_keys_train[::3]
+#data1_keys_train = data1_keys_train[::3]
 def remove_diagonals(d):
     d = d.copy()
     d[0:2,0:2] = 0
@@ -676,10 +676,10 @@ def msym(X):
 def mdiag(X):
     return tf.matrix_diag(tf.matrix_diag_part(X))
 
-@tf.RegisterGradient('Svd')
+@tf.RegisterGradient('Svd1')
 def gradient_svd(op, dL_ds, dL_dU, dL_dV):
     s, U, V = op.outputs
-    # CODE COPIED by LEEXA90 from psycharo , only needed for tf1.3 <=
+    # CODE COPIED by LEEXA90 from psycharo 
     # https://gist.github.com/psycharo/60f58d5435281bdea8b9d4ee4f6e895bv 
     # NOTE: based on https://arxiv.org/pdf/1509.07838.pdf
     # this version works for square matrices only
@@ -699,14 +699,17 @@ def gradient_svd(op, dL_ds, dL_dU, dL_dV):
 2 * mmul(U, S, msym(K * mmul(V_T, dL_dV - mmul(V, D_T, U, S))), V_T))
 predict_removeNan = tf.gather(tf.gather(out_softmax,tf_keep,axis=1),tf_keep,axis=2)[:,:,:,0] # this is masking the nan in the loss
 output_removeNan =  tf.gather(tf.gather(resi_map,tf_keep,axis=1),tf_keep,axis=2)[:,:,:,0]# this is masking the nan  in the loss
-p1,p2,p3 = tf.svd(predict_removeNan)
-o1,o2,o3 = tf.svd(output_removeNan)
-log_loss= tf.squared_difference(p2,o2)
-cost =  tf.reduce_mean(log_loss) 
-learning_rate = tf.Variable(0,dtype= np.float32)
-update_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
-with tf.control_dependencies(update_ops):
-    extra_optimizer = tf.train.MomentumOptimizer(learning_rate=learning_rate,momentum=0.5).minimize(cost)
+g = tf.get_default_graph()
+#https://stackoverflow.com/questions/43839431/tensorflow-how-to-replace-or-modify-gradient
+with g.gradient_override_map({"Svd": "Svd1","Svd": "Svd1"}):
+    p1,p2,p3 = tf.svd(predict_removeNan,name='svd1') 
+    o1,o2,o3 = tf.svd(output_removeNan,name='svd2')
+    log_loss= tf.squared_difference(tf.abs(p2),tf.abs(o2))
+    cost =  tf.reduce_mean(log_loss) 
+    learning_rate = tf.Variable(0,dtype= np.float32)
+    update_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
+    with tf.control_dependencies(update_ops):
+        extra_optimizer = tf.train.MomentumOptimizer(learning_rate=learning_rate,momentum=0.5).minimize(cost)
 def accuracy(mat_model,answer):
     mat_model = np.reshape(mat_model,(mat_model.shape[1],mat_model.shape[1]))
     answer = np.reshape(answer,(answer.shape[1],answer.shape[1]))
@@ -779,7 +782,7 @@ for epoch in range(next_epoch,training_epochs):
                                                           ss_2d : batch_y_ss,
                                                           phase : True, learning_rate : lr, dropout : 0.0,
                                                           tf_keep : keep_row_col})
-
+            #print (c)
     if True:
         k,lr = 0,0
         val_acc = []
