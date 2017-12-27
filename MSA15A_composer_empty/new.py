@@ -155,7 +155,7 @@ for i in data1_keys_train:
                 for window_tup in [(35,11),(50,13),(75,25),(100,33),(125,41),(150,50),(200,66),(300,100),(400,133),(500,167)]:
                     window, jump = window_tup[0], window_tup[1]
                     for repeat in range(0,len(data1[i][0]) - window+1,jump):
-                        if np.mean(d0[repeat:repeat+window,repeat:repeat+window,:]) > 0.9: 
+                        #if np.mean(d0[repeat:repeat+window,repeat:repeat+window,:]) > 0.9: 
                             data_train[i+'_'+str(window)+'_'+str(repeat)] = [tempF[:,repeat:repeat+window],
                                                    temp1[0][repeat:repeat+window],
                                                    temp1[1][repeat:repeat+window],
@@ -711,25 +711,7 @@ if len(saved_files) >= 1:
     next_epoch = int(last_file.split('_')[-2])
     print ('starting from :' ,last_file)
     saver.restore(sess,'./'+last_file)# Training cycle
-
-def accuracy(mat_model,answer,bal=True):
-    mat_model = np.reshape(mat_model,(mat_model.shape[1],mat_model.shape[1]))
-    answer = np.reshape(answer,(answer.shape[1],answer.shape[1]))
-    score = [[0],[0],[0]]
-    for i in range(0,answer.shape[1]):
-        if np.sum(answer[i,:]) != 0:
-            for j in range(i+1,answer.shape[1]):
-                if np.sum(answer[j,:]) != 0:
-                    if answer[i,j] == mat_model[i,j]:
-                        score[answer[i,j]] += [1,]
-                    else:
-                        score[answer[i,j]] += [0,]
-    if bal==True:
-        return np.mean([np.mean(score[0]),np.mean(score[1])])
-    else:
-        return map(lambda x : str(x)[:5],(np.mean([np.mean(score[0]),np.mean(score[1])]),np.mean(score[0]+score[1])))
-
-
+    
 result = {}
 random.seed(0)
 shuffle = range(len(data2_x))
@@ -749,7 +731,7 @@ for epoch in range(next_epoch,training_epochs):
     shuffle = range(len(data2_x))
     random.shuffle(shuffle)
     num = 1
-    if False:
+    if True:
         for batch in range(0,len(shuffle),num):
             batch_list = shuffle[batch:batch+num] 
             counter += 1
@@ -781,36 +763,19 @@ for epoch in range(next_epoch,training_epochs):
         train_acc = []
         avg_cost  = []
         for i in range(0,len(data2_x)):
-            if 'ori' in data2_name[i]:
-                batch_x, batch_y = np.array([[data2_x[i],],]),np.array([data2_y[i],])
-                batch_y_nan,batch_y_ss = np.array([data2_y_nan[i]]),np.array([data2_y_ss[i]])
-                batch_x = np.swapaxes(np.swapaxes(batch_x,1,3),1,2)
-                pred = sess.run( out_softmax, feed_dict={x: batch_x,resi_map0: batch_y,
-                                                             above_zero : batch_y_nan, ss_2d : batch_y_ss,
-                                                                phase : False, learning_rate : lr, dropout : 0})
-                c  = sess.run( cost, feed_dict={x: batch_x,resi_map0: batch_y,
-                                                             above_zero : batch_y_nan, ss_2d : batch_y_ss,
-                                                                phase : False, learning_rate : lr, dropout : 0})
-                for k in range(len(batch_y)):
-                    train_acc += [accuracy((pred[k]+np.transpose(pred[k],(1,0,2)))//1,batch_y[k]),]
-                # Compute average loss
-                avg_cost += [c,]
-                if True:
-                    f, ax = plt.subplots(1,6,figsize=(20,5));k=0
-                    temp_pred = pred[k]+np.transpose(pred[k],(1,0,2))
-                    ax[-3].imshow(temp_pred[:,:,0]*200//20)
-                    temp_pred[:,:,0] = (temp_pred[:,:,0])*remove_diagonals(temp_pred[:,:,0]>0)           
-                    ax[0].imshow(temp_pred[:,:,0]>=1)
-                    ax[1].imshow(temp_pred[:,:,0]>=1.2)
-                    ax[2].imshow(temp_pred[:,:,0]>=1.5)
-                    ax[-2].imshow(temp_pred[:,:,0] *200//20)
-                    ax[-1].imshow(batch_y[k,:,:,0]>=1)
-                    ax[0].set_xlabel('pred bal_acc=%s (thres-50)'%np.round(accuracy(temp_pred[:,:,0]>=1,batch_y[k,:,:,0]>=1),2))
-                    ax[1].set_xlabel('pred bal_acc=%s (thres-20)'%np.round(accuracy(temp_pred[:,:,0]>=1.2,batch_y[k,:,:,0]>=1),2))
-                    ax[2].set_xlabel('pred bal_acc=%s (thres-25)'%np.round(accuracy(temp_pred[:,:,0]>=1.5,batch_y[k,:,:,0]>=1),2))
-                    ax[-2].set_xlabel('probabilities logloss=%s' %c)
-                    ax[-1].set_xlabel('actual')
-                    plt.savefig(   'TRAIN/'+ data2_name[i]+'.png');plt.close()
+            batch_x, batch_y = np.array([[data2_x[i],],]),np.array([data2_y[i],])
+            batch_y_nan,batch_y_ss = np.array([data2_y_nan[i]]),np.array([data2_y_ss[i]])
+            batch_x = np.swapaxes(np.swapaxes(batch_x,1,3),1,2)
+            pred = sess.run( out_softmax, feed_dict={x: batch_x,resi_map0: batch_y,
+                                                         above_zero : batch_y_nan, ss_2d : batch_y_ss,
+                                                            phase : False, learning_rate : lr, dropout : 0})
+            c  = sess.run( cost, feed_dict={x: batch_x,resi_map0: batch_y,
+                                                         above_zero : batch_y_nan, ss_2d : batch_y_ss,
+                                                            phase : False, learning_rate : lr, dropout : 0})
+            for k in range(len(batch_y)):
+                train_acc += [accuracy((pred[k]+np.transpose(pred[k],(1,0,2)))//1,batch_y[k]),]
+            # Compute average loss
+            avg_cost += [c,]
         for i in range(len(data2_x_val)):
                 batch_x, batch_y = np.array([[data2_x_val[i],],]),np.array([data2_y_val[i],])
                 batch_y_nan,batch_y_ss = np.array([data2_y_nan_val[i]]),np.array([data2_y_ss_val[i]])
@@ -823,18 +788,16 @@ for epoch in range(next_epoch,training_epochs):
                                                      above_zero : batch_y_nan, ss_2d : batch_y_ss,
                                                         phase : False, learning_rate : lr, dropout : 0})
                 val_acc += [accuracy((pred[k]+np.transpose(pred[k],(1,0,2)))//1,batch_y[k]),]
-                if True:
-                    f, ax = plt.subplots(1,6,figsize=(20,5));k=0
+                if False:
                     temp_pred = pred[k]+np.transpose(pred[k],(1,0,2))
-                    ax[-3].imshow(temp_pred[:,:,0]*200//20)
-                    temp_pred[:,:,0] = (temp_pred[:,:,0])*batch_y_nan[0,:,:,0]           
+                    f, ax = plt.subplots(1,5,figsize=(19,5));k=0
                     ax[0].imshow(temp_pred[:,:,0]>=1)
-                    ax[1].imshow(temp_pred[:,:,0]>=1.2)
+                    ax[1].imshow(temp_pred[:,:,0]>=1.6)
                     ax[2].imshow(temp_pred[:,:,0]>=1.5)
                     ax[-2].imshow(temp_pred[:,:,0] *200//20)
                     ax[-1].imshow(batch_y[k,:,:,0]>=1)
                     ax[0].set_xlabel('pred bal_acc=%s (thres-50)'%np.round(accuracy(temp_pred[:,:,0]>=1,batch_y[k,:,:,0]>=1),2))
-                    ax[1].set_xlabel('pred bal_acc=%s (thres-20)'%np.round(accuracy(temp_pred[:,:,0]>=1.2,batch_y[k,:,:,0]>=1),2))
+                    ax[1].set_xlabel('pred bal_acc=%s (thres-20)'%np.round(accuracy(temp_pred[:,:,0]>=1.6,batch_y[k,:,:,0]>=1),2))
                     ax[2].set_xlabel('pred bal_acc=%s (thres-25)'%np.round(accuracy(temp_pred[:,:,0]>=1.5,batch_y[k,:,:,0]>=1),2))
                     ax[-2].set_xlabel('probabilities logloss=%s' %cost_i)
                     ax[-1].set_xlabel('actual')
@@ -851,78 +814,21 @@ for epoch in range(next_epoch,training_epochs):
                 pred =sess.run( out_softmax, feed_dict={x: batch_x,resi_map0: batch_y,
                                                      above_zero : batch_y_nan, ss_2d : batch_y_ss,
                                                         phase : False, learning_rate : lr, dropout : 0})
-                acc = accuracy((pred[k]+np.transpose(pred[k],(1,0,2)))//1,batch_y[k])
-                test_acc += [acc,]
-                temp_pred = pred[k]+np.transpose(pred[k],(1,0,2))
-                temp_pred[:,:,0] = (temp_pred[:,:,0])*batch_y_nan[0,:,:,0]
-                acc = accuracy(temp_pred[:,:,0]>=1.4,batch_y[k,:,:,0]>=1)
-                test_acc += [acc,]
-                if True:
-                    f, ax = plt.subplots(1,8,figsize=(26,5));k=0
+                test_acc += [accuracy((pred[k]+np.transpose(pred[k],(1,0,2)))//1,batch_y[k]),]
+                if False:
                     temp_pred = pred[k]+np.transpose(pred[k],(1,0,2))
-                    ax[-3].imshow(temp_pred[:,:,0]*200//20)
-                    temp_pred2 = (temp_pred[:,:,0])*remove_diagonals(1+np.zeros((batch_y_nan.shape[1],batch_y_nan.shape[2])))
-                    temp_pred[:,:,0] = (temp_pred[:,:,0])*batch_y_nan[0,:,:,0]
-                    ax[0].imshow(temp_pred2[:,:]>=0.6)
-                    ax[1].imshow(temp_pred2[:,:]>=1.0)
-                    ax[2].imshow(temp_pred2[:,:]>=1.4)
-                    ax[3].imshow(temp_pred2[:,:]>=1.6)
-                    ax[4].imshow(1-batch_y_ss[0,:,:,0])
-                    ax[4].set_xlabel('Secondary Structure\nA pairwise Feature')
+                    f, ax = plt.subplots(1,5,figsize=(19,5));k=0
+                    ax[0].imshow(temp_pred[:,:,0]>=1)
+                    ax[1].imshow(temp_pred[:,:,0]>=1.6)
+                    ax[2].imshow(temp_pred[:,:,0]>=1.5)
                     ax[-2].imshow(temp_pred[:,:,0] *200//20)
                     ax[-1].imshow(batch_y[k,:,:,0]>=1)
-                    ax[0].set_xlabel('pred bal_acc=\n%s (thres-70)'%accuracy(temp_pred[:,:,0]>=.6,batch_y[k,:,:,0]>=1,False))
-                    ax[1].set_xlabel('pred bal_acc=\n%s (thres-50)'%accuracy(temp_pred[:,:,0]>=1.0,batch_y[k,:,:,0]>=1,False))
-                    ax[2].set_xlabel('pred bal_acc=\n%s (thres-30)'%accuracy(temp_pred[:,:,0]>=1.4,batch_y[k,:,:,0]>=1,False))
-                    ax[3].set_xlabel('pred bal_acc=\n%s (thres-20)'%accuracy(temp_pred[:,:,0]>=1.6,batch_y[k,:,:,0]>=1,False))
-                    ax[-2].set_xlabel('probabilities logloss=%s' %map(lambda x :str(x)[:5],(cost_i,acc)))
+                    ax[0].set_xlabel('pred bal_acc=%s (thres-50)'%np.round(accuracy(temp_pred[:,:,0]>=1,batch_y[k,:,:,0]>=1),2))
+                    ax[1].set_xlabel('pred bal_acc=%s (thres-40)'%np.round(accuracy(temp_pred[:,:,0]>=1.2,batch_y[k,:,:,0]>=1),2))
+                    ax[2].set_xlabel('pred bal_acc=%s (thres-25)'%np.round(accuracy(temp_pred[:,:,0]>=1.5,batch_y[k,:,:,0]>=1),2))
+                    ax[-2].set_xlabel('probabilities logloss=%s' %cost_i)
                     ax[-1].set_xlabel('actual')
-                    plt.savefig( data2_name_test[i]+'.png',bbox_inches='tight');plt.close()  # Display logs per epoch step
-                    plt.savefig(   'rosetta/Log_restrain_large/'+ data2_name_test[i]+'.png',bbox_inches='tight');
-                    plt.close()
-                    dictt_RNA = { (1,0,0,0) : 'A' , (0,1,0,0) : 'U', (0,0,1,0) : 'G' , (0,0,0,1) : 'C' }
-                    dictt_SS = {  1.0 : '(', -1.0 : ')', 0. : '.'  }
-                    seq = ''
-                    for char in map(lambda x : dictt_RNA[tuple(x)],batch_x[0,:4,:,0].T):
-                        seq += char
-                    f1 = open('rosetta/Log_restrain_large/PA_fasta_%s'%data2_name_test[i],'w')
-                    f1.write('> %s\n'%data2_name_val[i])
-                    f1.write(seq.lower());f1.close()
-                    seq_ss = ''
-                    for char  in map(lambda x : dictt_SS[x],batch_x[0,5,:,0]):
-                        seq_ss += char
-                    f1 = open('rosetta/Log_restrain_large/PA_secstructa_%s'%data2_name_test[i],'w')
-                    f1.write('%s\n'%seq);f1.write(seq_ss);f1.close()                    
-                    for prob in [.5,.6,.75]:
-                        f1= open('rosetta/Log_restrain_large/weights_%s_%s' %(data2_name_test[i],prob),'w')
-                        f1.write('[ atompairs ]\n')
-                        for x1 in range(len(temp_pred)):
-                            for x2 in range(x1+3,len(temp_pred)):
-                                if temp_pred[x1,x2,0] <= prob*2:
-                                    #val = -1*np.log10(1-0.5*temp_pred[x1,x2,0])/0.3
-                                    f1.write('P %s P %s FLAT_HARMONIC 8 %s 8\n' %(x1+1,x2+1, 3))
-                        f1.close()
-                    features,svd_c,conv3_ =  sess.run( [conv5,y1,conv4], feed_dict={x: batch_x,resi_map0: batch_y,
-                                     above_zero : batch_y_nan, ss_2d : batch_y_ss,
-                                        phase : False, learning_rate : lr, dropout : 0})
-                    if False:
-                        f, ax = plt.subplots(15,15,figsize=(15,15));
-                        _=ax[14,14].imshow(pred[0,:,:,0])
-                        for ii in range(features.shape[-1]):
-                            _=ax[ii//15,ii%15].imshow(features[0,:,:,ii])
-                        plt.savefig( data2_name_test[i]+'_features_.png',bbox_inches='tight');plt.close()
-                        f, ax = plt.subplots(13,13,figsize=(15,15));
-                        _=ax[12,12].imshow(pred[0,:,:,0])
-                        _=ax[12,11].imshow(batch_y[0,:,:,0])
-                        for ii in range(svd_c.shape[-1]):
-                            _=ax[ii//13,ii%13].imshow(svd_c[0,:,:,ii])
-                        plt.savefig( data2_name_test[i]+'_svd_.png',bbox_inches='tight');plt.close()
-                        f, ax = plt.subplots(14,14,figsize=(15,15));
-                        _=ax[13,13].imshow(pred[0,:,:,0])
-                        _=ax[13,12].imshow(batch_y[0,:,:,0])
-                        for ii in range(conv3.shape[-1]):
-                            _=ax[ii//14,ii%14].imshow(conv3_[0,:,:,ii])
-                        plt.savefig( data2_name_test[i]+'_conv3_.png',bbox_inches='tight');plt.close()
+                    plt.savefig( data2_name_test[i]+'_%s.png'%thres_distance);plt.close()    # Display logs per epoch step
     f1 = open('updates.log','w')
     text += str(np.mean(avg_cost))+'  '+str(np.mean(train_acc))+'\n'
     text += str(np.mean(val_cost))+'  '+str(np.mean(val_acc))+'\n'
