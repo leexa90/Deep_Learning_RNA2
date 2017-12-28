@@ -26,13 +26,7 @@ puzzle = ['3OX0', '3OWZ', '3OXJ', '3OXE', '3OWZ', '3OWW', '3OXM', '3OWW', '3OWI'
           '4TZV', '4TZW', '4TZZ', '4LCK', '4TZZ', '4TZP', '4LCK', '4TZP', '5EAQ', '5DQK',
           '5EAO', '5DH6', '5DI2', '5DH8', '5DH7', '5DI4', '4R4V', '5V3I', '4R4P', '3V7E',
           '3V7E', '4L81', '4OQU', '4P9R', '4P95', '4QLM', '4QLN', '4XWF', '4XW7', '4GXY',
-          '5DDO', '5DDO', '5TPY','5T5A','5DI4']
-
-import ss_analyze as ss
-# 5tpy #
-seq = '....(((((((((....)))).(((((((.[[[[..)))))))..)))))...]]]](((((....)))))'
-data2_t['5tpy_a'] = ss.make_ss(seq)
-
+          '5DDO', '5DDO', '5TPY','5T5A','5K7C','5DI4']
 
 data_test = {}
 data_train = {}
@@ -106,7 +100,7 @@ data1_keys_val = ['4v9e_aa', '5lyu_a', '4qjd_b', '4pr6_b', '5fq5_a', '4cxg_a',
                   '4frg_b', '1zn1_c']
 data1_keys_train = [x for x in data1_keys if (x not in data1_keys_val and x[0:4].upper() not in puzzle)] +\
                    [x for x in data1 if  len(data1[x][0]) > 500]
-data1_keys_train = data1_keys_train[::10]
+data1_keys_train = data1_keys_train[::20]
 def remove_diagonals(d):
     d = d.copy()
     d[0:2,0:2] = 0
@@ -135,10 +129,9 @@ for i in data1_keys_train:
                 temp1 = data1[i]
                 a = (data1[i][2] > thres_distance)*1
                 temp_resi_map = np.stack((a,),axis=2)
-                d0= -1*(np.isnan(data1[i][2])-1) #non-nan values ==1 , nan =0
-                d = remove_diagonals(d0)
-                d = np.stack((d,) ,axis=2)
-                d0= np.stack((d0,),axis=2)
+                d = -1*(np.isnan(data1[i][2])-1) #non-nan values ==1 , nan =0
+                d = remove_diagonals(d) 
+                d = np.stack((d,),axis=2)
                 pair_wise_res = {('A','A') : 0, ('U','U') : 1, ('G','G') : 2, ('C','C') : 3,
                                  ('A','U') : 4, ('A','G') : 5, ('A','C') : 6,
                                  ('G','U') : 7, ('C','U') : 8,
@@ -172,7 +165,7 @@ for i in data1_keys_train:
                 for window_tup in [(35,11),(50,13),(75,25),(100,33),(125,41),(150,50),(200,66),(300,100),(400,133),(500,167)]:
                     window, jump = window_tup[0], window_tup[1]
                     for repeat in range(0,len(data1[i][0]) - window+1,jump):
-                        if np.mean(d0[repeat:repeat+window,repeat:repeat+window,:]) > 0.9: 
+                        if np.mean(d[repeat:repeat+window,repeat:repeat+window,:]) > 0.9: 
                             data_train[i+'_'+str(window)+'_'+str(repeat)] = [tempF[:,repeat:repeat+window],
                                                    temp1[0][repeat:repeat+window],
                                                    temp1[1][repeat:repeat+window],
@@ -433,12 +426,15 @@ ss_2d = tf.placeholder(tf.float32,[1,None,None,21],name='ss_2d')
 rate = tf.placeholder(tf.float32,name='rate') #dropout (keep probability)
 window = 5
 num1 = 64/4
+num1b = 64/4
 num2 = 96/4
 num3 = 128/4
 num4 = 128/4
-num5 = 128/4
-num6 = 128/4
-num7 = 128/4
+num5 = 96/4
+num6 = 96/4
+num7 = 96/4
+num8 = 96/4
+num9 = 96/4
 # Store layers weight & bias
 weights = {
     # 1D inception layer
@@ -449,14 +445,24 @@ weights = {
     '1_wc1bb': tf.Variable(tf.random_normal([1, window, num1, num1])),
     '1_wc1c': tf.Variable(tf.random_normal([15, 1, 1, num1])),
     '1_wc1d': tf.Variable(tf.random_normal([15, 1, 1, num1])),
+
     # 1D inception layer
-    '2_wc1aa': tf.Variable(tf.random_normal([1, 1, num1*4, num2])),
+    '1b_wc1aa': tf.Variable(tf.random_normal([16, 1, num1*4, num1b])),
+    '1b_wc1ab': tf.Variable(tf.random_normal([1, window, num1b, num1b])),
+    '1b_wc1ac': tf.Variable(tf.random_normal([1, window, num1b, num1b])),
+    '1b_wc1ba': tf.Variable(tf.random_normal([16, 1, num1*4, num1b])),
+    '1b_wc1bb': tf.Variable(tf.random_normal([1, window, num1b, num1b])),
+    '1b_wc1c': tf.Variable(tf.random_normal([16, 1, num1*4, num1b])),
+    '1b_wc1d': tf.Variable(tf.random_normal([16, 1, num1*4, num1b])),
+    
+    # 1D inception layer
+    '2_wc1aa': tf.Variable(tf.random_normal([1, 1, num1b*4, num2])),
     '2_wc1ab': tf.Variable(tf.random_normal([1, window, num2, num2])),
     '2_wc1ac': tf.Variable(tf.random_normal([1, window, num2, num2])),
-    '2_wc1ba': tf.Variable(tf.random_normal([1, 1, num1*4, num2])),
+    '2_wc1ba': tf.Variable(tf.random_normal([1, 1, num1b*4, num2])),
     '2_wc1bb': tf.Variable(tf.random_normal([1, window, num2, num2])),
-    '2_wc1c': tf.Variable(tf.random_normal([1, 1, num1*4,num2])),
-    '2_wc1d': tf.Variable(tf.random_normal([1, 1, num1*4, num2])),
+    '2_wc1c': tf.Variable(tf.random_normal([1, 1, num1b*4,num2])),
+    '2_wc1d': tf.Variable(tf.random_normal([1, 1, num1b*4, num2])),
     '2_SS' : tf.Variable(tf.random_normal([1,1,21,43])),
     
     # 2D inception layer output 96 layer
@@ -501,7 +507,23 @@ weights = {
     '7_wc1c': tf.Variable(tf.random_normal([1, 1, num6*4, num7])),
     '7_wc1d': tf.Variable(tf.random_normal([1, 1, num6*4, num7])),
 
-    '9_out2': tf.Variable(tf.random_normal([5,5,num7*4, 1]))   
+    '8_wc1aa': tf.Variable(tf.random_normal([1, 1, num7*4, num8])),
+    '8_wc1ab': tf.Variable(tf.random_normal([window, 1, num8, num8])),
+    '8_wc1ac': tf.Variable(tf.random_normal([1, window, num8, num8])),
+    '8_wc1ba': tf.Variable(tf.random_normal([1, 1, num7*4, num8])),
+    '8_wc1bb': tf.Variable(tf.random_normal([window/2, window/2, num8, num8])),
+    '8_wc1c': tf.Variable(tf.random_normal([1, 1, num7*4, num8])),
+    '8_wc1d': tf.Variable(tf.random_normal([1, 1, num7*4, num8])),
+
+    '9_wc1aa': tf.Variable(tf.random_normal([1, 1, num8*4, num9])),
+    '9_wc1ab': tf.Variable(tf.random_normal([window, 1, num9, num9])),
+    '9_wc1ac': tf.Variable(tf.random_normal([1, window, num9, num9])),
+    '9_wc1ba': tf.Variable(tf.random_normal([1, 1, num8*4, num9])),
+    '9_wc1bb': tf.Variable(tf.random_normal([window/2, window/2, num9, num9])),
+    '9_wc1c': tf.Variable(tf.random_normal([1, 1, num8*4, num9])),
+    '9_wc1d': tf.Variable(tf.random_normal([1, 1, num8*4, num9])),
+
+    '9_out2': tf.Variable(tf.random_normal([5,5,num9*4, 1]))   
 }
 
 biases = {
@@ -512,6 +534,14 @@ biases = {
     '1_bc1bb': tf.Variable(tf.random_normal([num1])),
     '1_bc1c': tf.Variable(tf.random_normal([num1])),
     '1_bc1d': tf.Variable(tf.random_normal([num1])),
+
+    '1b_bc1aa': tf.Variable(tf.random_normal([num1b])),
+    '1b_bc1ab': tf.Variable(tf.random_normal([num1b])),
+    '1b_bc1ac': tf.Variable(tf.random_normal([num1b])),
+    '1b_bc1ba': tf.Variable(tf.random_normal([num1b])),
+    '1b_bc1bb': tf.Variable(tf.random_normal([num1b])),
+    '1b_bc1c': tf.Variable(tf.random_normal([num1b])),
+    '1b_bc1d': tf.Variable(tf.random_normal([num1b])),
 
     '2_bc1aa': tf.Variable(tf.random_normal([num2])),
     '2_bc1ab': tf.Variable(tf.random_normal([num2])),
@@ -561,6 +591,22 @@ biases = {
     '7_bc1bb': tf.Variable(tf.random_normal([num7])),
     '7_bc1c': tf.Variable(tf.random_normal([num7])),
     '7_bc1d': tf.Variable(tf.random_normal([num7])),
+
+    '8_bc1aa': tf.Variable(tf.random_normal([num7])),
+    '8_bc1ab': tf.Variable(tf.random_normal([num7])),
+    '8_bc1ac': tf.Variable(tf.random_normal([num7])),
+    '8_bc1ba': tf.Variable(tf.random_normal([num7])),
+    '8_bc1bb': tf.Variable(tf.random_normal([num7])),
+    '8_bc1c': tf.Variable(tf.random_normal([num7])),
+    '8_bc1d': tf.Variable(tf.random_normal([num7])),
+
+    '9_bc1aa': tf.Variable(tf.random_normal([num7])),
+    '9_bc1ab': tf.Variable(tf.random_normal([num7])),
+    '9_bc1ac': tf.Variable(tf.random_normal([num7])),
+    '9_bc1ba': tf.Variable(tf.random_normal([num7])),
+    '9_bc1bb': tf.Variable(tf.random_normal([num7])),
+    '9_bc1c': tf.Variable(tf.random_normal([num7])),
+    '9_bc1d': tf.Variable(tf.random_normal([num7])),
     
     '9_out2': tf.Variable(tf.random_normal([1]))
 }
@@ -595,18 +641,31 @@ conv1bb = conv2d(conv1ba,weights['1_wc1bb'],biases['1_bc1bb'],name='conv1bb')
 conv1ca = conv2d(norm_x,weights['1_wc1c'],biases['1_bc1c'],padding='VALID')
 conv1cb = average_pooling2d(conv1ca,(1,2),1,padding='same')
 conv1da = conv2d(norm_x,weights['1_wc1d'],biases['1_bc1d'],padding='VALID')
-conv1 = tf.concat([conv1ac,conv1bb,conv1cb,conv1da],3)
-conv1 = tf.layers.dropout(conv1,rate=dropout,name='drop1',training=False)
+conv1_0 = tf.concat([conv1ac,conv1bb,conv1cb,conv1da],3)
+conv1_0 = tf.layers.dropout(conv1_0,rate=dropout,name='drop1',training=False)
+conv1 = tf.concat((conv1_0,tf.concat([norm_x]*64,-1)),1)
 
 # 1d second inception layer
-conv2aa = conv2d(conv1,weights['2_wc1aa'],biases['2_bc1aa'],relu=False) #gives linear combination between channels
+conv1baa = conv2d(conv1,weights['1b_wc1aa'],biases['1b_bc1aa'],padding='VALID')
+conv1bab = conv2d(conv1baa,weights['1b_wc1ab'],biases['1b_bc1ab'],name='conv1ab')
+conv1bac = conv2d(conv1bab,weights['1b_wc1ac'],biases['1b_bc1ac'],name='conv1ac')
+conv1bba = conv2d(conv1,weights['1b_wc1ba'],biases['1b_bc1ba'],padding='VALID')
+conv1bbb = conv2d(conv1bba,weights['1b_wc1bb'],biases['1b_bc1bb'],name='conv1bb')
+conv1bca = conv2d(conv1,weights['1b_wc1c'],biases['1b_bc1c'],padding='VALID')
+conv1bcb = average_pooling2d(conv1bca,(1,2),1,padding='same')
+conv1bda = conv2d(conv1,weights['1b_wc1d'],biases['1b_bc1d'],padding='VALID')
+conv1b = tf.concat([conv1bac,conv1bbb,conv1bcb,conv1bda],3)
+conv1b = tf.layers.dropout(conv1b,rate=dropout,name='drop1',training=False)
+
+# 1d third inception layer
+conv2aa = conv2d(conv1b,weights['2_wc1aa'],biases['2_bc1aa'],relu=False) #gives linear combination between channels
 conv2ab = conv2d(conv2aa,weights['2_wc1ab'],biases['2_bc1ab'])
 conv2ac = conv2d(conv2ab,weights['2_wc1ac'],biases['2_bc1ac'])
-conv2ba = conv2d(conv1,weights['2_wc1ba'],biases['2_bc1ba'],relu=False) #gives linear combination between channels
+conv2ba = conv2d(conv1b,weights['2_wc1ba'],biases['2_bc1ba'],relu=False) #gives linear combination between channels
 conv2bb = conv2d(conv2ba,weights['2_wc1bb'],biases['2_bc1bb'])
 conv2ca = average_pooling2d(conv1,(1,2),1,padding='same')
-conv2cb = conv2d(conv1,weights['2_wc1c'],biases['2_bc1c'])
-conv2da = conv2d(conv1,weights['2_wc1d'],biases['2_bc1d']) #not to over helper function with name, changed variable from conv2d to conv2da
+conv2cb = conv2d(conv1b,weights['2_wc1c'],biases['2_bc1c'])
+conv2da = conv2d(conv1b,weights['2_wc1d'],biases['2_bc1d']) #not to over helper function with name, changed variable from conv2d to conv2da
 conv2 = tf.concat([conv2ac,conv2bb,conv2cb,conv2da],3)
 conv2 = tf.layers.dropout(conv2,rate=dropout,training=False)
 
@@ -665,7 +724,7 @@ conv5d = conv2d(conv4,weights['5_wc1d'],biases['5_bc1d'])
 conv5 = tf.concat([conv5ac,conv5bb,conv5cb,conv5d],3)
 conv5 = tf.layers.dropout(conv5,rate=dropout,training=True)
 
-### 3d third inception layer
+### 2d fourth inception layer
 conv6aa = conv2d(conv5,weights['6_wc1aa'],biases['6_bc1aa'])
 conv6ab = conv2d(conv6aa,weights['6_wc1ab'],biases['6_bc1ab'])
 conv6ac = conv2d(conv6ab,weights['6_wc1ac'],biases['6_bc1ac'])
@@ -677,7 +736,7 @@ conv6d = conv2d(conv5,weights['6_wc1d'],biases['6_bc1d'])
 conv6 = tf.concat([conv6ac,conv6bb,conv6cb,conv6d],3)
 conv6 = tf.layers.dropout(conv6,rate=dropout,training=True)
 
-### 7d third inception layer
+### 2d fifth inception layer
 conv7aa = conv2d(conv6,weights['7_wc1aa'],biases['7_bc1aa'])
 conv7ab = conv2d(conv7aa,weights['7_wc1ab'],biases['7_bc1ab'])
 conv7ac = conv2d(conv7ab,weights['7_wc1ac'],biases['7_bc1ac'])
@@ -689,8 +748,32 @@ conv7d = conv2d(conv6,weights['7_wc1d'],biases['7_bc1d'])
 conv7 = tf.concat([conv7ac,conv7bb,conv7cb,conv7d],3)
 conv7 = tf.layers.dropout(conv7,rate=dropout,training=True)
 
+### 2d sixth inception layer
+conv8aa = conv2d(conv7,weights['8_wc1aa'],biases['8_bc1aa'])
+conv8ab = conv2d(conv8aa,weights['8_wc1ab'],biases['8_bc1ab'])
+conv8ac = conv2d(conv8ab,weights['8_wc1ac'],biases['8_bc1ac'])
+conv8ba = conv2d(conv7,weights['8_wc1ba'],biases['8_bc1ba'])
+conv8bb = conv2d(conv8ba,weights['8_wc1bb'],biases['8_bc1bb'])
+conv8ca = average_pooling2d(conv7,(2,2),1,padding='same')
+conv8cb = conv2d(conv7,weights['8_wc1c'],biases['8_bc1c'])
+conv8d = conv2d(conv7,weights['8_wc1d'],biases['8_bc1d'])
+conv8 = tf.concat([conv8ac,conv8bb,conv8cb,conv8d],3)
+conv8 = tf.layers.dropout(conv8,rate=dropout,training=True)
 
-out = conv2d(conv7,weights['9_out2'],biases['9_out2'],relu=False)
+### 2d seventh inception layer
+conv9aa = conv2d(conv8,weights['9_wc1aa'],biases['9_bc1aa'])
+conv9ab = conv2d(conv9aa,weights['9_wc1ab'],biases['9_bc1ab'])
+conv9ac = conv2d(conv9ab,weights['9_wc1ac'],biases['9_bc1ac'])
+conv9ba = conv2d(conv8,weights['9_wc1ba'],biases['9_bc1ba'])
+conv9bb = conv2d(conv9ba,weights['9_wc1bb'],biases['9_bc1bb'])
+conv9ca = average_pooling2d(conv8,(2,2),1,padding='same')
+conv9cb = conv2d(conv8,weights['9_wc1c'],biases['9_bc1c'])
+conv9d = conv2d(conv8,weights['9_wc1d'],biases['9_bc1d'])
+conv9 = tf.concat([conv9ac,conv9bb,conv9cb,conv9d],3)
+conv9 = tf.layers.dropout(conv9,rate=dropout,training=True)
+
+
+out = conv2d(conv9,weights['9_out2'],biases['9_out2'],relu=False)
 out_softmax = tf.nn.sigmoid(out)
 
 # Define loss and optimizer
@@ -701,6 +784,20 @@ learning_rate = tf.Variable(0,dtype= np.float32)
 update_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
 with tf.control_dependencies(update_ops):
     extra_optimizer = tf.train.MomentumOptimizer(learning_rate=learning_rate,momentum=0.5).minimize(cost)
+
+
+import os
+saver = tf.train.Saver()
+# Initializing the variables
+init = tf.global_variables_initializer();sess = tf.Session();sess.run(init)
+saved_files = [xxx[:-5] for xxx in os.listdir('.') if (xxx.startswith('model') and xxx.endswith('.ckpt.meta'))]
+next_epoch = 0
+if len(saved_files) >= 1:
+    last_file = sorted(saved_files,key=lambda x : int(x.split('_')[-2]))[-1]
+    next_epoch = int(last_file.split('_')[-2])
+    print ('starting from :' ,last_file)
+    saver.restore(sess,'./'+last_file)# Training cycle
+    
 def accuracy(mat_model,answer,bal=True):
     mat_model = np.reshape(mat_model,(mat_model.shape[1],mat_model.shape[1]))
     answer = np.reshape(answer,(answer.shape[1],answer.shape[1]))
@@ -718,19 +815,9 @@ def accuracy(mat_model,answer,bal=True):
     else:
         return map(lambda x : str(x)[:5],(np.mean([np.mean(score[0]),np.mean(score[1])]),np.mean(score[0]+score[1])))
 
+   
 
-import os
-saver = tf.train.Saver()
-# Initializing the variables
-init = tf.global_variables_initializer();sess = tf.Session();sess.run(init)
-saved_files = [xxx[:-5] for xxx in os.listdir('.') if (xxx.startswith('model') and xxx.endswith('.ckpt.meta'))]
-next_epoch = 0
-if len(saved_files) >= 1:
-    last_file = sorted(saved_files,key=lambda x : int(x.split('_')[-2]))[-1]
-    next_epoch = int(last_file.split('_')[-2])
-    print ('starting from :' ,last_file)
-    saver.restore(sess,'./'+last_file)# Training cycle
-        
+
 result = {}
 random.seed(0)
 shuffle = range(len(data2_x))
@@ -789,29 +876,27 @@ for epoch in range(next_epoch,training_epochs):
                 pred = sess.run( out_softmax, feed_dict={x: batch_x,resi_map0: batch_y,
                                                              above_zero : batch_y_nan, ss_2d : batch_y_ss,
                                                                 phase : False, learning_rate : lr, dropout : 0})
-                cost_i  = sess.run( cost, feed_dict={x: batch_x,resi_map0: batch_y,
+                c  = sess.run( cost, feed_dict={x: batch_x,resi_map0: batch_y,
                                                              above_zero : batch_y_nan, ss_2d : batch_y_ss,
                                                                 phase : False, learning_rate : lr, dropout : 0})
-                acc = accuracy((pred[k]+np.transpose(pred[k],(1,0,2)))//1,batch_y[k])
-                train_acc += [acc,]
+                for k in range(len(batch_y)):
+                    train_acc += [accuracy((pred[k]+np.transpose(pred[k],(1,0,2)))//1,batch_y[k]),]
                 # Compute average loss
-                avg_cost += [cost_i,]
+                avg_cost += [c,]
                 if True:
-                    f, ax = plt.subplots(1,7,figsize=(23,5));k=0
+                    f, ax = plt.subplots(1,6,figsize=(20,5));k=0
                     temp_pred = pred[k]+np.transpose(pred[k],(1,0,2))
                     ax[-3].imshow(temp_pred[:,:,0]*200//20)
-                    temp_pred2 = (temp_pred[:,:,0])*remove_diagonals(1+np.zeros((batch_y_nan.shape[1],batch_y_nan.shape[2])))
-                    temp_pred[:,:,0] = (temp_pred[:,:,0])*batch_y_nan[0,:,:,0]
-                    ax[0].imshow(temp_pred2[:,:]>=1)
-                    ax[1].imshow(temp_pred2[:,:]>=1.2)
-                    ax[2].imshow(temp_pred2[:,:]>=1.5)
-                    ax[3].imshow(1-batch_y_ss[0,:,:,0])
+                    temp_pred[:,:,0] = (temp_pred[:,:,0])*remove_diagonals(temp_pred[:,:,0]>0)           
+                    ax[0].imshow(temp_pred[:,:,0]>=1)
+                    ax[1].imshow(temp_pred[:,:,0]>=1.2)
+                    ax[2].imshow(temp_pred[:,:,0]>=1.5)
                     ax[-2].imshow(temp_pred[:,:,0] *200//20)
                     ax[-1].imshow(batch_y[k,:,:,0]>=1)
-                    ax[0].set_xlabel('pred bal_acc=\n%s (thres-50)'%accuracy(temp_pred[:,:,0]>=1,batch_y[k,:,:,0]>=1,False))
-                    ax[1].set_xlabel('pred bal_acc=\n%s (thres-20)'%accuracy(temp_pred[:,:,0]>=1.2,batch_y[k,:,:,0]>=1,False))
-                    ax[2].set_xlabel('pred bal_acc=\n%s (thres-25)'%accuracy(temp_pred[:,:,0]>=1.5,batch_y[k,:,:,0]>=1,False))
-                    ax[-2].set_xlabel('probabilities logloss=%s' %map(lambda x :str(x)[:5],(cost_i,acc)))
+                    ax[0].set_xlabel('pred bal_acc=%s (thres-50)'%np.round(accuracy(temp_pred[:,:,0]>=1,batch_y[k,:,:,0]>=1),2))
+                    ax[1].set_xlabel('pred bal_acc=%s (thres-20)'%np.round(accuracy(temp_pred[:,:,0]>=1.2,batch_y[k,:,:,0]>=1),2))
+                    ax[2].set_xlabel('pred bal_acc=%s (thres-25)'%np.round(accuracy(temp_pred[:,:,0]>=1.5,batch_y[k,:,:,0]>=1),2))
+                    ax[-2].set_xlabel('probabilities logloss=%s' %c)
                     ax[-1].set_xlabel('actual')
                     plt.savefig(   'TRAIN/'+ data2_name[i]+'.png');plt.close()
         for i in range(len(data2_x_val)):
@@ -825,54 +910,23 @@ for epoch in range(next_epoch,training_epochs):
                 pred =sess.run( out_softmax, feed_dict={x: batch_x,resi_map0: batch_y,
                                                      above_zero : batch_y_nan, ss_2d : batch_y_ss,
                                                         phase : False, learning_rate : lr, dropout : 0})
-                acc = accuracy((pred[k]+np.transpose(pred[k],(1,0,2)))//1,batch_y[k])
-                val_acc += [acc,]
-                temp_pred = pred[k]+np.transpose(pred[k],(1,0,2))
-                temp_pred[:,:,0] = (temp_pred[:,:,0])*batch_y_nan[0,:,:,0]
-                acc = accuracy(temp_pred[:,:,0]>=1.0,batch_y[k,:,:,0]>=1)
-                val_acc += [acc,]
-                if True and (batch_y_nan.shape[1] >=50 and batch_y_nan.shape[1] <=300) :
-                    f, ax = plt.subplots(1,7,figsize=(23,5));k=0
+                val_acc += [accuracy((pred[k]+np.transpose(pred[k],(1,0,2)))//1,batch_y[k]),]
+                if True:
+                    f, ax = plt.subplots(1,6,figsize=(20,5));k=0
                     temp_pred = pred[k]+np.transpose(pred[k],(1,0,2))
                     ax[-3].imshow(temp_pred[:,:,0]*200//20)
-                    temp_pred2 = (temp_pred[:,:,0])*remove_diagonals(1+np.zeros((batch_y_nan.shape[1],batch_y_nan.shape[2])))
-                    temp_pred[:,:,0] = (temp_pred[:,:,0])*batch_y_nan[0,:,:,0]
-                    ax[0].imshow(temp_pred2[:,:]>=.6)
-                    ax[1].imshow(temp_pred2[:,:]>=1.0)
-                    ax[2].imshow(temp_pred2[:,:]>=1.4)
-                    ax[3].imshow(1-batch_y_ss[0,:,:,0])
+                    temp_pred[:,:,0] = (temp_pred[:,:,0])*batch_y_nan[0,:,:,0]           
+                    ax[0].imshow(temp_pred[:,:,0]>=1)
+                    ax[1].imshow(temp_pred[:,:,0]>=1.2)
+                    ax[2].imshow(temp_pred[:,:,0]>=1.5)
                     ax[-2].imshow(temp_pred[:,:,0] *200//20)
                     ax[-1].imshow(batch_y[k,:,:,0]>=1)
-                    ax[0].set_xlabel('pred bal_acc=\n%s (thres-50)'%accuracy(temp_pred[:,:,0]>=.6,batch_y[k,:,:,0]>=1,False))
-                    ax[1].set_xlabel('pred bal_acc=\n%s (thres-40)'%accuracy(temp_pred[:,:,0]>=1.0,batch_y[k,:,:,0]>=1,False))
-                    ax[2].set_xlabel('pred bal_acc=\n%s (thres-30)'%accuracy(temp_pred[:,:,0]>=1.4,batch_y[k,:,:,0]>=1,False))
-                    ax[-2].set_xlabel('probabilities logloss=%s' %map(lambda x :str(x)[:5],(cost_i,acc)))
+                    ax[0].set_xlabel('pred bal_acc=%s (thres-50)'%np.round(accuracy(temp_pred[:,:,0]>=1,batch_y[k,:,:,0]>=1),2))
+                    ax[1].set_xlabel('pred bal_acc=%s (thres-20)'%np.round(accuracy(temp_pred[:,:,0]>=1.2,batch_y[k,:,:,0]>=1),2))
+                    ax[2].set_xlabel('pred bal_acc=%s (thres-25)'%np.round(accuracy(temp_pred[:,:,0]>=1.5,batch_y[k,:,:,0]>=1),2))
+                    ax[-2].set_xlabel('probabilities logloss=%s' %cost_i)
                     ax[-1].set_xlabel('actual')
-                    plt.savefig(   'VAL/'+ data2_name_val[i]+'.png',bbox_inches='tight');
-                    plt.savefig(   'rosetta/Log_restrain_large/'+ data2_name_val[i]+'.png',bbox_inches='tight');
-                    plt.close()
-                    dictt_RNA = { (1,0,0,0) : 'A' , (0,1,0,0) : 'U', (0,0,1,0) : 'G' , (0,0,0,1) : 'C' }
-                    dictt_SS = {  1.0 : '(', -1.0 : ')', 0. : '.'  }
-                    seq = ''
-                    for char in map(lambda x : dictt_RNA[tuple(x)],batch_x[0,:4,:,0].T):
-                        seq += char
-                    f1 = open('rosetta/Log_restrain_large/PA_fasta_%s'%data2_name_val[i],'w')
-                    f1.write('> %s\n'%data2_name_val[i])
-                    f1.write(seq.lower());f1.close()
-                    seq_ss = ''
-                    for char  in map(lambda x : dictt_SS[x],batch_x[0,5,:,0]):
-                        seq_ss += char
-                    f1 = open('rosetta/Log_restrain_large/PA_secstructa_%s'%data2_name_val[i],'w')
-                    f1.write('%s\n'%seq);f1.write(seq_ss);f1.close()                    
-                    for prob in [.5,.6,.75]:
-                        f1= open('rosetta/Log_restrain_large/weights_%s_%s' %(data2_name_val[i],prob),'w')
-                        f1.write('[ atompairs ]\n')
-                        for x1 in range(len(temp_pred)):
-                            for x2 in range(x1+3,len(temp_pred)):
-                                if temp_pred[x1,x2,0] <= prob*2:
-                                    #val = -1*np.log10(1-0.5*temp_pred[x1,x2,0])/0.3
-                                    f1.write('P %s P %s FLAT_HARMONIC 8 %s 8\n' %(x1+1,x2+1, 3))
-                        f1.close()
+                    plt.savefig(   'VAL/'+ data2_name_val[i]+'.png');plt.close()
         test_acc = []
         for i in range(len(data2_x_test)):
                 batch_x, batch_y = np.array([[data2_x_test[i],],]),np.array([data2_y_test[i],])
@@ -889,7 +943,7 @@ for epoch in range(next_epoch,training_epochs):
                 test_acc += [acc,]
                 temp_pred = pred[k]+np.transpose(pred[k],(1,0,2))
                 temp_pred[:,:,0] = (temp_pred[:,:,0])*batch_y_nan[0,:,:,0]
-                acc = accuracy(temp_pred[:,:,0]>=1.0,batch_y[k,:,:,0]>=1)
+                acc = accuracy(temp_pred[:,:,0]>=1.4,batch_y[k,:,:,0]>=1)
                 test_acc += [acc,]
                 if True:
                     f, ax = plt.subplots(1,8,figsize=(26,5));k=0

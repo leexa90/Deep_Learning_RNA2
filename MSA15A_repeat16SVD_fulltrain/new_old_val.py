@@ -26,7 +26,7 @@ puzzle = ['3OX0', '3OWZ', '3OXJ', '3OXE', '3OWZ', '3OWW', '3OXM', '3OWW', '3OWI'
           '4TZV', '4TZW', '4TZZ', '4LCK', '4TZZ', '4TZP', '4LCK', '4TZP', '5EAQ', '5DQK',
           '5EAO', '5DH6', '5DI2', '5DH8', '5DH7', '5DI4', '4R4V', '5V3I', '4R4P', '3V7E',
           '3V7E', '4L81', '4OQU', '4P9R', '4P95', '4QLM', '4QLN', '4XWF', '4XW7', '4GXY',
-          '5DDO', '5DDO', '5TPY','5T5A']
+          '5DDO', '5DDO', '5TPY','5T5A' ,'5DI4','5K7C','5DI4']
 
 data_test = {}
 data_train = {}
@@ -100,6 +100,7 @@ data1_keys_val = ['4v9e_aa', '5lyu_a', '4qjd_b', '4pr6_b', '5fq5_a', '4cxg_a',
                   '4frg_b', '1zn1_c']
 data1_keys_train = [x for x in data1_keys if (x not in data1_keys_val and x[0:4].upper() not in puzzle)] +\
                    [x for x in data1 if  len(data1[x][0]) > 500]
+data1_keys_train  = data1_keys_train [::20]
 def remove_diagonals(d):
     d = d.copy()
     d[0:2,0:2] = 0
@@ -662,7 +663,7 @@ learning_rate = tf.Variable(0,dtype= np.float32)
 update_ops = tf.get_collection(tf.GraphKeys.UPDATE_OPS)
 with tf.control_dependencies(update_ops):
     extra_optimizer = tf.train.MomentumOptimizer(learning_rate=learning_rate,momentum=0.5).minimize(cost)
-def accuracy(mat_model,answer):
+def accuracy(mat_model,answer,bal=True):
     mat_model = np.reshape(mat_model,(mat_model.shape[1],mat_model.shape[1]))
     answer = np.reshape(answer,(answer.shape[1],answer.shape[1]))
     score = [[0],[0],[0]]
@@ -674,7 +675,11 @@ def accuracy(mat_model,answer):
                         score[answer[i,j]] += [1,]
                     else:
                         score[answer[i,j]] += [0,]
-    return np.mean([np.mean(score[0]),np.mean(score[1])])
+    if bal==True:
+        return np.mean([np.mean(score[0]),np.mean(score[1])])
+    else:
+        return map(lambda x : str(x)[:5],(np.mean([np.mean(score[0]),np.mean(score[1])]),np.mean(score[0]+score[1])))
+
 
 import os
 saver = tf.train.Saver()

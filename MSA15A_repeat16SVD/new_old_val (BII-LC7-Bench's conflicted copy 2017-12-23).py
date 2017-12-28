@@ -111,7 +111,7 @@ data1_keys_val = ['4v9e_aa', '5lyu_a', '4qjd_b', '4pr6_b', '5fq5_a', '4cxg_a',
                   '4frg_b', '1zn1_c']
 data1_keys_train = [x for x in data1_keys if (x not in data1_keys_val and x[0:4].upper() not in puzzle)] +\
                    [x for x in data1 if  len(data1[x][0]) > 500]
-data1_keys_train= data1_keys_train[::10]
+data1_keys_train= data1_keys_train[::20]
 def remove_diagonals(d):
     d = d.copy()
     d[0:2,0:2] = 0
@@ -871,7 +871,7 @@ for epoch in range(next_epoch,training_epochs):
                 test_acc += [acc,]
                 temp_pred = pred[k]+np.transpose(pred[k],(1,0,2))
                 temp_pred[:,:,0] = (temp_pred[:,:,0])*batch_y_nan[0,:,:,0]
-                acc = accuracy(temp_pred[:,:,0]>=1.0,batch_y[k,:,:,0]>=1)
+                acc = accuracy(temp_pred[:,:,0]>=1.4,batch_y[k,:,:,0]>=1)
                 test_acc += [acc,]
                 if True:
                     f, ax = plt.subplots(1,8,figsize=(26,5));k=0
