@@ -100,6 +100,7 @@ data1_keys_val = ['4v9e_aa', '5lyu_a', '4qjd_b', '4pr6_b', '5fq5_a', '4cxg_a',
                   '4frg_b', '1zn1_c'][::3]
 data1_keys_train = [x for x in data1_keys if (x not in data1_keys_val and x[0:4].upper() not in puzzle)] +\
                    [x for x in data1 if  len(data1[x][0]) > 500]
+data1_keys_train = data1_keys_train[::10]
 def remove_diagonals(d):
     d = d.copy()
     d[0:2,0:2] = 0
