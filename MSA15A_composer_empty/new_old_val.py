@@ -4,7 +4,7 @@ import warnings
 import sys
 sys.path.append('../../../../')
 sys.path.append('../')
-import tensorflow as tf
+#import tensorflow as tf
 import numpy as np
 import matplotlib.pyplot as plt
 import random
@@ -90,6 +90,7 @@ data1_keys_val = [x.lower() for x in ['4PR6_B', '1DK1_B', '1EXD_B', '1FFY_T', '1
 data1_keys_train = [x for x in data1_keys if (x not in data1_keys_val and x[0:4].upper() not in puzzle)] +\
                    [x for x in data1 if  len(data1[x][0]) > 500]
 data1_keys_train = data1_keys_train[::1]
+die
 def remove_diagonals(d):
     d = d.copy()
     d[0:2,0:2] = 0
